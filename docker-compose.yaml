@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    restart: always
+    build:
+      context: .
+      args:                                                                      
+        PROD: ${PROD}
+        API_QL_URL: ${API_QL_URL}
+        SENTRY_DSN: ${SENTRY_DSN}
+        BASE_URL: ${BASE_URL}
+    command: yarn run start
+    ports:
+      - 127.0.0.1:8888:3000
