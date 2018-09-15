@@ -7,7 +7,7 @@ Env:
  
  
 ## Run local
-```API_QL_URL=https://golos-ql.mapala.net/ yarn run dev```
+```yarn run dev```
 
 ## Run docker
 * Create .env file.
