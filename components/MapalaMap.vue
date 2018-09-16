@@ -72,7 +72,7 @@ export default {
           maxWidth: 250,
           pixelOffset: {
             width: 0,
-            height: -35
+            height: -52
           }
         },
         position: {
