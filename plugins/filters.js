@@ -1,26 +1,13 @@
 import Vue from 'vue'
 import moment from 'moment'
-import marked from 'marked'
 import sbd from 'sbd'
 
 import config from '~/config'
 
-import prepare_html from '@/utils/prepare_html'
-
-
-
 Vue.filter('avatar', (user = '', size = 'small') => `https://steemitimages.com/u/${user}/avatar/${size}`)
 
-Vue.filter('html_preview', (post) => {
-  let html
-
-  if (post.meta.format == 'markdown') {
-    html = prepare_html(marked(post.body))
-  } else {
-    html = prepare_html(post.body)
-  }
-
-  return sbd.sentences(html.html, {
+Vue.filter('html_preview', (html) => {
+  return sbd.sentences(html, {
 		sanitize: true
 	}).slice(0, 2).join(' ')
 })
@@ -37,6 +24,6 @@ Vue.filter('formatDate', (value = '') => {
   return moment.utc(value.toString()).fromNow()
 })
 
-Vue.filter('golos_proxy', (value, size) => {
+Vue.filter('steem_proxy', (value, size) => {
   return `${config.img_proxy_prefix}${size}/${value}`
 })

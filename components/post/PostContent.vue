@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  div(v-html="html").content
+  div(v-html="body").content
 
 </template>
 
@@ -13,19 +13,6 @@ import prepare_html from '~/utils/prepare_html'
 
 export default {
   props: ['body', 'format'],
-
-  computed: {
-    html() {
-      let html
-      if (this.format == 'markdown') {
-        html = prepare_html(marked(this.body)).html
-      } else {
-        html = prepare_html(this.body).html
-      }
-
-      return html
-    }
-  }
 }
 </script>
 

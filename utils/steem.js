@@ -4,18 +4,21 @@ import steem from 'steem'
 import { Signature, PrivateKey, hash } from 'steem/lib/auth/ecc'
 
 import config from '@/config'
+import { preparePost, jsonParseSafe } from '~/utils/'
+
+
+export async function getAccount(name) {
+  let [account] = await steem.api.getAccountsAsync([name])
+  account.meta = jsonParseSafe(account.json_metadata)
+
+  return account
+}
 
 
 export async function getContent(author, permlink) {
   let post = await steem.api.getContentAsync(author, permlink)
 
-  try {
-    post.meta = JSON.parse(post.json_metadata)
-  } catch(e) {
-    post.meta = {}
-  }
-
-  return post
+  return preparePost(post)
 }
 
 

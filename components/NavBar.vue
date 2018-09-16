@@ -37,7 +37,7 @@ div
 
           .user_av
             img(v-if="account.meta.profile.profileImage"
-                :src="account.meta.profile.profileImage | golos_proxy('40x40')")
+                :src="account.meta.profile.profileImage | steem_proxy('40x40')")
 
         nuxt-link(v-if="!$store.getters['auth/isAuth']", :to="{name: 'login'}").login
           | Войти
@@ -66,7 +66,7 @@ div
 
           .user_av
             img(v-if="account.meta.profile.profileImage"
-                :src="account.meta.profile.profileImage | golos_proxy('40x40')")
+                :src="account.meta.profile.profileImage | steem_proxy('40x40')")
 
       .navbar-link
         a(target='_blank', href="https://t.me/mapala_ru").mr-2.white-text Телеграм чат/поддержка

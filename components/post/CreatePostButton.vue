@@ -4,7 +4,7 @@ no-ssr
     .av-wrap
       img(v-if="account.meta.profile.profileImage"
           class="user_av",
-          :src="account.meta.profile.profileImage | golos_proxy('64x64')")
+          :src="account.meta.profile.profileImage | steem_proxy('64x64')")
     .write-post.ml-2 Добавить публикацию
 
 </template>

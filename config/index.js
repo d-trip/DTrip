@@ -9,7 +9,7 @@ export default {
   tag_for_post: app_tags[0],
   pagination: 10,
 
-  img_proxy_prefix: 'https://imgp.golos.io/',
+  img_proxy_prefix: 'https://steemitimages.com/',
   API_QL_URL: process.env.API_QL_URL || 'http://127.0.0.1:5000/graphql',
 
   baseURI: 'https://golos.mapala.net/',

@@ -13,6 +13,7 @@
 import Feed from '~/components/post/Feed'
 import Account from '~/components/account/Account.vue'
 import MapalaMap from '@/components/MapalaMap'
+import { getAccount } from '~/utils/steem'
 
 export default {
   components: {
@@ -30,11 +31,7 @@ export default {
   },
 
   async asyncData({ app, route, error }) {
-    let client = app.apolloProvider.defaultClient
-
-    let { data: { account } } = await client.query({query: ACCOUNT_QUERY, variables: {
-      name: route.params.account.toLowerCase()
-    }})
+    let account = await getAccount(route.params.account)
 
     if (!account) return error({ statusCode: 404, message: 'Account not found' })
 

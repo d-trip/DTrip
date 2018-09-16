@@ -1,18 +1,19 @@
 <template lang="pug">
 div.pf
   div.head_img
-    img(v-if="account.meta.profile.coverImage" :src="account.meta.profile.coverImage")
+    img(v-if="account.meta.profile" :src="account.meta.profile.cover_image")
     i.back
 
   div.user
     div.round_av
-      img(v-if="account.meta.profile.profileImage" :src="account.meta.profile.profileImage | golos_proxy('240x240')")
+      //img(v-if="account.meta.profile" :src="account.meta.profile.profile_image | steem_proxy('128x128')")
+      img(v-if="account.meta.profile" :src="account.name | avatar('big')")
     div.name.verified
        | {{ account.name }}
 
   no-ssr
     .user-data.text-center
-      i.el-icon-location(v-if="profile.meta.mapalaProfile.location.properties.name")
+      i.el-icon-location(v-if="profile.meta.mapalaProfile")
         | {{ profile.meta.mapalaProfile.location.properties.name }}
 
       div
@@ -154,6 +155,7 @@ export default {
   .pf .round_av img{
     display: block;
     width: 100%;
+    height: 100%;
   }
   .pf .user .name{
     font-size: 26px;
