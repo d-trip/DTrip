@@ -6,6 +6,19 @@ import { Signature, PrivateKey, hash } from 'steem/lib/auth/ecc'
 import config from '@/config'
 
 
+export async function getContent(author, permlink) {
+  let post = await steem.api.getContentAsync(author, permlink)
+
+  try {
+    post.meta = JSON.parse(post.json_metadata)
+  } catch(e) {
+    post.meta = {}
+  }
+
+  return post
+}
+
+
 export async function createUniqPermlink(author, title) {
   // Возвращает уникальный пермлинк для поста
   let permlink = slug(title, {lower: true})

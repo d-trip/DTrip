@@ -4,19 +4,6 @@
     no-ssr
       create-post-button(v-if="this.$store.getters['auth/isAuth']")
 
-    //el-button-group.mb-3
-      el-button(type='primary', icon='el-icon-arrow-left') Previous Page
-      el-button(type='primary') Next Page
-      i.el-icon-arrow-right.el-icon-right
-
-    //.sort.mb-3
-      .button-text Сортировать по
-      //.sort-tab Дате создания
-      el-radio-group(v-model='radio4', size='medium')
-        el-radio-button(label='New York')
-        el-radio-button(label='Washington')
-
-
     feed
   .col.right-fixed-container(v-if="$device.isDesktop")
     no-ssr

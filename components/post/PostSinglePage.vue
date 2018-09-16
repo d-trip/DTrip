@@ -7,6 +7,7 @@
 
 <script>
 import Post from '~/components/post/Post.vue'
+import { getContent } from '~/utils/steem'
 
 
 export default {
@@ -18,16 +19,8 @@ export default {
   },
 
   async asyncData ({ store, route, error, app }) {
-    let client = app.apolloProvider.defaultClient
-
     let { author, permlink } = route.params
-
-    let {data: {post}} = await client.query({query: POST_QUERY, variables: {
-      identifier: `@${author.toLowerCase()}/${permlink}`,
-      linkifyImages: true,
-      isVoted: store.state.auth.account.name,
-      authorized: !!store.state.auth.wif
-    }})
+    let post = await getContent(author.toLowerCase(), permlink)
 
     if (!post) return error({ statusCode: 404, message: 'Публикация не найдена' })
 

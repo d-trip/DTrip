@@ -3,7 +3,6 @@
   .col
     .post-item.mb-3(:class="post.thumb ? 'w_i': ''")
       div(v-if="post.thumb")
-
         a(v-if="$device.isDesktop" @click="open_modal")
           .post-image
             img(:src="post.thumb | golos_proxy('480x320')", :alt="post.title", :title="post.title")
@@ -16,8 +15,7 @@
         .top-block
           .img-wrap
             nuxt-link.card-link(:to="{name: 'account', params: {account: post.author}}")
-              //img.user_av(v-if="post.author.meta.profile.profileImage"
-                          :src="post.author.meta.profile.profileImage | golos_proxy('64x64')"
+              img.user_av(:src="post.author | avatar"
                           :alt="'@' + post.author.name"
                           :title="'@' + post.author.name")
 
@@ -38,10 +36,10 @@
 
         a(v-if="$device.isDesktop" @click="open_modal")
           h2.write-header  {{ post.title }}
-          p.write-text {{ post.body | html_preview }}
+          p.write-text {{ post | html_preview }}
         nuxt-link(v-else :to="{name: 'post', params: {author: post.author, permlink: post.permlink}}")
           h2.write-header  {{ post.title }}
-          p.write-text {{ post.body | html_preview }}
+          p.write-text {{ post | html_preview }}
 
         post-bottom(:post="post")
             

@@ -1,7 +1,6 @@
 <template lang="pug">
 div
   div(v-html="html").content
-  //.content {{ html }}
 
 </template>
 
@@ -9,15 +8,8 @@ div
 import marked from 'marked'
 import { XmlEntities } from 'html-entities'
 import { banner_md } from '~/constants'
+import prepare_html from '~/utils/prepare_html'
 
-
-const entities = new XmlEntities()
-
-// TODO Доработать регулярку, negative lookahead support
-const image_regex = /(:?[\s>])(https?:\/\/(?:[\da-zA-Z]{1}(?:[\w\-\.]+\.)+(?:[\w]{2,5}))(?:\:[\d]{1,5})?\/(?:[^\s\/]+\/).*?\.(?:jpe?g|gif|png)(?:\?\w+=\w+(?:\&\w+=\w+)*)?)/igm
-
-
-//const image_regex = /(https?:\S*?\.(?:png|jpe?g|gif)(?:\?[^"']+?)?(?=<|\s))/
 
 export default {
   props: ['body', 'format'],
@@ -26,14 +18,9 @@ export default {
     html() {
       let html
       if (this.format == 'markdown') {
-        html = marked(this.body)
+        html = prepare_html(marked(this.body)).html
       } else {
-				// FIXME Теперь это делает бекенд
-				// Юзается только для редактора
-        html = entities.decode(this.body)
-        html = html.replace(image_regex, function(m) {
-          return `${m[0]}<img src="${m.substr(1)}"></img>`
-				})
+        html = prepare_html(this.body).html
       }
 
       return html

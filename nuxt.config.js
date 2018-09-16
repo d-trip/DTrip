@@ -69,9 +69,12 @@ module.exports = {
   ],
   apollo: {
     clientConfigs: {
-      default: '~/config/apollo'
+      default: {
+        httpEndpoint: process.env.API_QL_URL || 'http://localhost:5000/graphql',
+      },
     }
   },
+
   plugins: [
     // Плагин в котором лежат все вызовы при запуске клиента
     {ssr: false, src: '~/plugins/startapp.js'},
@@ -100,6 +103,8 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    cssSourceMap: false,
+
     /*
     ** Run ESLint on save
     */

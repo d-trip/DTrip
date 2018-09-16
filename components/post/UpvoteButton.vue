@@ -23,10 +23,7 @@ export default {
 
   data() {
     return {
-      tpv: 0,
       loading: false,
-
-      votes: []
     }
   },
 
@@ -37,24 +34,16 @@ export default {
     }),
 
     isVoted() {
-      return !!this.votes.filter(v => v.voter == this.name).length
+      return !!this.post.active_votes.filter(v => v.voter == this.name).length
+    },
+
+    tpv() {
+      return parseFloat(this.post.total_payout_value.replace(' STEEM', ''))
+             + parseFloat(this.post.total_pending_payout_value.replace(' STEEM', ''))
     }
   },
 
-  mounted() {
-    this.getVotes()
-  },
-
   methods: {
-    async getVotes() {
-      let r = await steem.api.getContentAsync(this.post.author, this.post.permlink)
-
-      this.votes = r.active_votes
-
-      this.tpv = parseFloat(r.total_payout_value.replace(' STEEM', ''))
-               + parseFloat(r.total_pending_payout_value.replace(' STEEM', ''))
-    },
-
     vote() {
         if (!this.$store.getters['auth/isAuth']) {
       	  return this.$notify({title: 'Vote error', message: 'Авторизируйтесь!', type: 'warning'})
@@ -78,18 +67,6 @@ export default {
               console.log(err)
             }
         })
-      
-
-			//try {
-
-
-      //	this.post.isVoted = true
-      //	this.$notify({title: 'Voted', type: 'success'})
-			//} catch (e) {
-      //	this.$notify({title: 'Vote error', message: e.message, type: 'error'})
-			//} finally {
-			//	this.loading = false
-			//}
     }
   },
 

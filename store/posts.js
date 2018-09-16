@@ -1,6 +1,7 @@
 import config from '~/config'
 import steem from 'steem'
 import { POSTS_QUERY } from '~/constants/queries.js'
+import { getContent } from '~/utils/steem'
 
 
 export const state = () => ({
@@ -22,16 +23,7 @@ export const actions = {
 
     // Load from node untill GraphqQL ready
     let posts = await Promise.all(
-      data.posts.edges.map(p => {
-        p = steem.api.getContentAsync(p.node.author, p.node.permlink)
-        try {
-          p.meta = JSON.parse(p.json_metadata)
-        } catch(e) {
-          p.meta = {}
-        }
-
-        return p
-      })
+      data.posts.edges.map(p => getContent(p.node.author, p.node.permlink))
     )
 
     commit('set_posts', [...state.list, ...posts])

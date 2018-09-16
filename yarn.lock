@@ -519,13 +519,6 @@ apollo-link-http-common@^0.2.4:
   dependencies:
     apollo-link "^1.2.2"
 
-apollo-link-http@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.5.4.tgz#b80b7b4b342c655b6a5614624b076a36be368f43"
-  dependencies:
-    apollo-link "^1.2.2"
-    apollo-link-http-common "^0.2.4"
-
 apollo-link-persisted-queries@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/apollo-link-persisted-queries/-/apollo-link-persisted-queries-0.2.1.tgz#723d43a8fdf1127939f0de6b86974b92c6cb24a2"
@@ -6528,7 +6521,7 @@ sax@>=0.6.0, sax@^1.2.4, sax@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-sbd@^1.0.12:
+sbd@^1.0.14:
   version "1.0.14"
   resolved "https://registry.yarnpkg.com/sbd/-/sbd-1.0.14.tgz#1f5db519fae551b0fe42141982e1d4423851be91"
   dependencies:
@@ -7580,7 +7573,7 @@ vue-infinite-loading@^2.3.1:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.3.3.tgz#44922eff526828725fdb3c025e4b3a6d1d61c273"
 
-vue-js-modal@^1.3.16:
+vue-js-modal@^1.3.26:
   version "1.3.26"
   resolved "https://registry.yarnpkg.com/vue-js-modal/-/vue-js-modal-1.3.26.tgz#00c8b9d4765e034c6b6535a2d6373117519f343f"
 
@@ -7907,9 +7900,9 @@ xmlbuilder@~9.0.1:
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
 
-xmldom@0.1.22:
-  version "0.1.22"
-  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.22.tgz#10de4e5e964981f03c8cc72fadc08d14b6c3aa26"
+xmldom@^0.1.27:
+  version "0.1.27"
+  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.1"
