@@ -45,6 +45,7 @@ module.exports = {
   },
   css: [
     '@/assets/css/main.css',
+    'vue-js-modal/dist/styles.css'
   ],
   modules: [
     '@nuxtjs/apollo',
