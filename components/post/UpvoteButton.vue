@@ -38,8 +38,8 @@ export default {
     },
 
     tpv() {
-      return parseFloat(this.post.total_payout_value.replace(' STEEM', ''))
-             + parseFloat(this.post.total_pending_payout_value.replace(' STEEM', ''))
+      return parseFloat(this.post.total_payout_value.replace(' SBD', ''))
+             + parseFloat(this.post.pending_payout_value.replace(' SBD', ''))
     }
   },
 
@@ -50,14 +50,12 @@ export default {
         }
 
 			  this.loading = true
-        golos.config.set('websocket', 'wss://ws18.golos.io')
-        golos.broadcast.vote(
-          this.wif, this.name, this.post.author.name,
+        steem.broadcast.vote(
+          this.wif, this.name, this.post.author,
           this.post.permlink, 10000, (err, res) => {
             err
               ? this.$notify({title: 'Vote error', message: err.message, type: 'warning'})
-              : this.$notify({title: 'Voted', type: 'success'});
-                this.getVotes()
+              : this.$notify({title: 'Voted', type: 'success'}); this.post.active_votes.push(res.operations[0][1])
 
 
             this.loading = false

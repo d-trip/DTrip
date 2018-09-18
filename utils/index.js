@@ -37,8 +37,9 @@ export function preparePost(post) {
   //renderedText = prepare_html(renderedText).html;
   let prepared = prepare_html(renderedText);
 
-  post.body = prepared.html
+  post.content = prepared.html
   post.images = prepared.images
+  post.thumb = prepared.images[0]
 
   return post
 }

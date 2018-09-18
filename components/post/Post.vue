@@ -26,7 +26,7 @@ div
 
     .content
       h1.c_header {{ post.title }}
-      post-content(:body="post.body", :format="post.meta.format")
+      post-content(:body="post.content", :format="post.meta.format")
     
     .col
       post-bottom(:post="post")

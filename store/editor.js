@@ -4,7 +4,7 @@ import Raven from 'raven-js'
 
 import steem from 'steem'
 import config from '~/config'
-import { prepare_json_metadata, createUniqPermlink } from '~/utils/steem'
+import { comment, createUniqPermlink } from '~/utils/steem'
 
 
 export const state = () => ({
@@ -24,7 +24,7 @@ export const state = () => ({
     },
     geometry: {
       type: 'Point',
-      coordinates: ['', '']
+      coordinates: []
     },
   }
 })
@@ -90,8 +90,8 @@ export const actions = {
 
     // TODO https://github.com/steemit/hivemind/blob/master/docs/communities.md
     // TODO https://github.com/steemit/condenser/pull/2995
-    return new Promise((resolve, reject) => {
-      steem.broadcast.comment(
+    try {
+      let res = await comment(
         rootState.auth.wif,
         '',
         config.tag_for_post,
@@ -99,21 +99,17 @@ export const actions = {
         permlink,
         state.title,
         body,
-        prepare_json_metadata({
-          tags: state.tags,
-          location: state.location,
-          format: state.format
-        }), (err, res) => {
-          if (err) {
-            Raven.captureMessage(err)
-            console.log(err)
-            reject(err.message)
-          } else {
-            commit('clear')
-            resolve(res)
-          }
-        }
+        {tags: state.tags,
+         location: state.location,
+         format: state.format}
       )
-    })
+        
+      commit('clear')
+      return res
+    } catch (e) {
+      Raven.captureMessage(e)
+      console.log(e)
+      throw e.message
+    }
   }
 }

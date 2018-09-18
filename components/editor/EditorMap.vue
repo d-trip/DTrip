@@ -2,14 +2,14 @@
 no-ssr
   .vue-map-container
     gmap-autocomplete(@place_changed="setCenter"
-                      :value="locationName"
+                      :value="marker.name"
                       :selectFirstOnEnter="true"
                       placeholder="Поиск локации").vue-map-search.form-control#search
 
     gmap-map(
       :zoom="zoom",
       :options="options",
-      :center="center",
+      :center="marker",
       ref="mmm",
       @click="moveMarker",
       map-type-id="terrain")
@@ -27,20 +27,16 @@ no-ssr
 
 <script>
 export default {
+  props: {
+    marker: {
+      type: Object,
+      default: () => ({ name: '', lat: 40, lng: -70})
+    }
+  },
+
   data() {
     return {
       zoom: 4,
-      locationName: '',
-
-      center: {
-        lat: 40,
-        lng: -70
-      },
-
-      marker: {
-        lat: 40,
-        lng: -70
-      },
 
       options: {
         minZoom: 1,
@@ -76,13 +72,6 @@ export default {
         this.locationName = r.formatted_address
 
         if (r) {
-          this.center = {
-            lat: marker.latLng.lat(),
-            lng: marker.latLng.lng()
-          }
-
-          this.marker = this.center
-
 					this.$emit('locationUpdated', {
 							properties: {
 								name: r.formatted_address,
@@ -91,8 +80,8 @@ export default {
 							geometry: {
 								type: 'Point',
 								coordinates: [
-									this.center.lng,
-									this.center.lat
+									marker.latLng.lng(),
+									marker.latLng.lat(),
 								]
 							}
 						}
@@ -103,14 +92,7 @@ export default {
 
     setCenter(location) {
       if(!location.geometry) return
-
       this.zoom = 15
-      this.center = {
-        lat: location.geometry.location.lat(),
-        lng: location.geometry.location.lng(),
-      }
-
-      this.marker = this.center
 
       this.$emit('locationUpdated', {
           properties: {

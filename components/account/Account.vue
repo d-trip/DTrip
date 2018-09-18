@@ -12,7 +12,7 @@ div.pf
 
   no-ssr
     .user-data.text-center
-      i.el-icon-location(v-if="profile.meta.mapalaProfile")
+      i.el-icon-location(v-if="profile.meta.mapalaProfile.location")
         | {{ profile.meta.mapalaProfile.location.properties.name }}
 
       // TODO Для стима

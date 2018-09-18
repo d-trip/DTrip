@@ -9,7 +9,8 @@ no-ssr
           input(v-model="editor.title", placeholder="title").form-control
 
       .col-4.d-flex.flex-row-reverse
-        div(v-show="editor.format == 'markdown'")
+        // FIXME Only markdown for a while
+        //div(v-show="editor.format == 'markdown'")
           button.btn.btn-secondary(@click="toggle_editor") HTML Редактор
 
         div(v-show="editor.format == 'html'")
@@ -30,7 +31,7 @@ no-ssr
 
     .row.mt-2
       .col
-        EditorMap(@locationUpdated="locationUpdated").editor-map
+        EditorMap(@locationUpdated="locationUpdated", :marker="marker").editor-map
 
     .row.mt-3
       .col
@@ -84,6 +85,16 @@ export default {
       editor: state => state.editor,
       account: state => state.auth.account
     }),
+
+    marker() {
+      if (this.editor && this.editor.location && this.editor.location.geometry.coordinates[0]) {
+        return {
+          lng: this.editor.location.geometry.coordinates[0],
+          lat: this.editor.location.geometry.coordinates[1],
+          name: this.editor.location.properties.name
+        }
+      }
+    },
   },
 
   async created() {

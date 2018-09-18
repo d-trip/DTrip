@@ -36,10 +36,10 @@
 
         a(v-if="$device.isDesktop" @click="open_modal")
           h2.write-header  {{ post.title }}
-          p.write-text {{ post.body | html_preview }}
+          p.write-text {{ post.content | html_preview }}
         nuxt-link(v-else :to="{name: 'post', params: {author: post.author, permlink: post.permlink}}")
           h2.write-header  {{ post.title }}
-          p.write-text {{ post.body | html_preview }}
+          p.write-text {{ post.content | html_preview }}
 
         post-bottom(:post="post")
             
@@ -119,8 +119,6 @@ export default {
 }
 
 .img-wrap {
-  background: url(~/assets/icons/account/icon-profile.svg) #fff no-repeat;
-  border-radius: 50%;
   margin-right: 8px;
   width: 40px;
   height: 40px;

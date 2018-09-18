@@ -14,6 +14,7 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 
+import { getContent } from '~/utils/steem'
 import Editor from '~/components/editor/Editor.vue'
 import Preview from '~/components/editor/Preview.vue'
 
@@ -35,13 +36,8 @@ export default {
     let permlink = route.params.permlink
 
     if (permlink) {
-      // Если это редактирование поста
-      let client = app.apolloProvider.defaultClient
-
-      let {data: {post}} = await client.query({query: MINIMAL_POST_QUERY, variables: {
-        identifier: `@${store.state.auth.account.name}/${permlink}`,
-        authorized: !!store.state.auth.wif
-      }})
+      // IF it is editing post
+      let post = await getContent(store.state.auth.account.name, permlink)
 
       editor.format = post.meta.format || 'html'
       store.commit('editor/clear')
@@ -51,6 +47,9 @@ export default {
       editor.title = post.title
       editor[editor.format] = post.body
       editor.tags = [...new Set([editor.tags[0], ...post.meta.tags])]
+      if (editor.location.geometry) {
+        editor.location = post.meta.location
+      }
 
       store.commit('editor/update_body')
     } else {
