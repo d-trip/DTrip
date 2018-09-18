@@ -54,4 +54,3 @@ export function jsonParseSafe(json) {
 
   return json
 }
-

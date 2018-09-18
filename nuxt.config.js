@@ -1,5 +1,6 @@
 const path = require('path')
 const MongoClient = require('mongodb').MongoClient
+//const golos_mongo_url = 'mongodb://mapala:mapala@golos-mongo.mapala.net:27017/Golos'
 const golos_mongo_url = 'mongodb://mapala:mapala@golos-mongo.mapala.net:27017/Golos'
 
 module.exports = {
@@ -155,19 +156,20 @@ module.exports = {
     ],
 
     async routes() {
-      const client = await MongoClient.connect(golos_mongo_url, { useNewUrlParser: true })
-      const db = client.db('Golos')
+      //const client = await MongoClient.connect(golos_mongo_url, { useNewUrlParser: true })
+      const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true })
+      const db = client.db('mapala_steemit')
 
       let [posts, authors] = await Promise.all([
-        db.collection("comment_object").find({'json_metadata.tags': 'mapala', 'depth': 0})
+        db.collection("post_model").find({'depth': 0})
             .project({author: true, permlink: true, last_update: true}).toArray(),
 
-        db.collection("account_object").find({'json_metadata.mapalaProfile': {'$exists': true}})
-            .project({name: true}).toArray()
+        //db.collection("account_object").find({'json_metadata.mapalaProfile': {'$exists': true}})
+        //    .project({name: true}).toArray()
       ])
 
       return [
-          ...authors.map(a => `/@${a.name}`),
+          //...authors.map(a => `/@${a.name}`),
           ...posts.map(p => ({ url: `/@${p.author}/${p.permlink}`, lastmodISO: p.last_update.toISOString()})),
       ]
     }
