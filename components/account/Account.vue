@@ -6,7 +6,6 @@ div.pf
 
   div.user
     div.round_av
-      //img(v-if="account.meta.profile" :src="account.meta.profile.profile_image | steem_proxy('128x128')")
       img(v-if="account.meta.profile" :src="account.name | avatar('big')")
     div.name.verified
        | {{ account.name }}
@@ -16,7 +15,8 @@ div.pf
       i.el-icon-location(v-if="profile.meta.mapalaProfile")
         | {{ profile.meta.mapalaProfile.location.properties.name }}
 
-      div
+      // TODO Для стима
+      //div
         el-button(v-if="$store.state.auth.account.name == account.name"
                   size="small" @click="showEditAccount = !showEditAccount").edit-button Редактировать
 
@@ -147,8 +147,6 @@ export default {
     border-radius: 50%;
     margin: 0 auto 20px;
     display: block;
-    background: url(~/assets/icons/account/icon-profile.svg) #fff no-repeat;
-    background-size: cover;
     position: relative;
     overflow: hidden;
   }

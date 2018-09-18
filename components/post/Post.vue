@@ -24,13 +24,13 @@ div
         span Редактировать
 
 
-    .content.mb-3
+    .content
       h1.c_header {{ post.title }}
       post-content(:body="post.body", :format="post.meta.format")
     
     .col
       post-bottom(:post="post")
-    //comments-block(:post="post")
+      comments-block(:post="post")
 
 </template>
 

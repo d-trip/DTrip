@@ -2,10 +2,9 @@
 no-ssr
   nuxt-link(:to="{name: 'editor-permlink'}", style="text-decoration: none;").add-post.mb-3
     .av-wrap
-      img(v-if="account.meta.profile.profileImage"
-          class="user_av",
-          :src="account.meta.profile.profileImage | steem_proxy('64x64')")
-    .write-post.ml-2 Добавить публикацию
+      img(class="user_av",
+          :src="account.name | avatar")
+    .write-post.ml-3 Добавить публикацию
 
 </template>
 
@@ -49,9 +48,4 @@ export default {
   cursor: pointer;
 }
 
-.add-post .av-wrap {
-  height: 40px;
-  width: 40px;
-  background: url(~/assets/icons/account/icon-profile.svg) #fff no-repeat;
-}
 </style>

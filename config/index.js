@@ -1,6 +1,6 @@
 // TODO В переменные окружения выносить это
-//const app_tags = process.env.PROD ? ['mapala', 'ru--mapala'] : ['mapala-dev']
-const app_tags = ['mapala']
+const app_tags = process.env.PROD ? ['mapala'] : ['mapala-test']
+//const app_tags = ['mapala']
 
  // TODO Может быть что то перенести в пользовательские настройки
 export default {

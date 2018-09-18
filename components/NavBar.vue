@@ -29,15 +29,14 @@ div
     no-ssr
       .navbar-items__right
         el-tooltip(class="item" effect="light" content="Поддержка/чат @mapala_ru" placement="bottom-end")
-          a(target='_blank', href="https://t.me/mapala_ru").mr-2
+          a(target='_blank', href="https://t.me/mapala").mr-2
             img(src="~/assets/icons/telegram.png").telegram
 
         nuxt-link(v-if="$store.getters['auth/isAuth']" :to="{name: 'account', params: {account: account.name}}").user-lk
           .user_name.mr-2 @{{ account.name }}
 
           .user_av
-            img(v-if="account.meta.profile.profileImage"
-                :src="account.meta.profile.profileImage | steem_proxy('40x40')")
+            img(:src="account.name | avatar")
 
         nuxt-link(v-if="!$store.getters['auth/isAuth']", :to="{name: 'login'}").login
           | Войти
@@ -51,7 +50,7 @@ div
               i.purce
               span.txt_i
                 | Кошелек
-              span(class="amount") {{ parseFloat(account.balanceValue) | convertGBG }}₽
+              span(class="amount") {{ parseFloat(account.balanceValue) }}$
 
             div.divd
             div.mn
@@ -65,8 +64,7 @@ div
           .user_name.mr-2 @{{ account.name }}
 
           .user_av
-            img(v-if="account.meta.profile.profileImage"
-                :src="account.meta.profile.profileImage | steem_proxy('40x40')")
+            img(:src="account.name | avatar")
 
       .navbar-link
         a(target='_blank', href="https://t.me/mapala_ru").mr-2.white-text Телеграм чат/поддержка

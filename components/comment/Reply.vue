@@ -6,7 +6,7 @@
 
     div.write_comment
       div.ca_w
-        img.user_av(:src="$store.state.auth.account.meta.profile.profileImage")
+        img.user_av(:src="$store.state.auth.account.name | avatar")
 
       div.write_w
         div.txt(
@@ -27,8 +27,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import steem from 'steem'
+
+import { mapState } from 'vuex'
+import { comment } from '~/utils/steem'
 
 export default {
   props: ['parentAuthor', 'parentPermlink'],
@@ -56,33 +58,31 @@ export default {
   },
 
   methods: {
-    addComment () {
+    async addComment () {
       let body = this.$refs.text.innerText
       if (!body) return this.$message.warning('Добавьте текст комментария')
 
       this.loading = true
 
-      golos.broadcast.comment(
-        this.auth.wif,
-        this.parentAuthor,
-        this.parentPermlink,
-        this.auth.account.name,
-        golos.formatter.commentPermlink(this.parentAuthor, this.parentPermlink),
-        '',
-        body,
-        {},
-        (err, res) => {
-          if (err) {
-            console.log(err)
-            this.$notify.error(err.message)
-            this.loading = false
-          } else {
-            this.$emit('newComment', res.operations[0][1])
-            this.endEdit()
-            this.loading = false
-          }
-        }
-      )
+      try {
+        let r = await comment(
+          this.auth.wif,
+          this.parentAuthor,
+          this.parentPermlink,
+          this.auth.account.name,
+          steem.formatter.commentPermlink(this.parentAuthor, this.parentPermlink), // FIXME Not working for "."
+          '',
+          body,
+          {}
+        )
+
+        this.$emit('newComment', r.operations[0][1])
+        this.endEdit()
+      } catch(e) {
+        this.$notify.error(e.message)
+      } finally {
+        this.loading = false
+      }
     },
 
     changeText (value) {
@@ -182,7 +182,6 @@ export default {
     width: 45px;
     height: 38px;
     margin: 10px;
-    overflow: hidden;
     border-radius: 50%;
   }
 

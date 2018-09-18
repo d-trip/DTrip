@@ -1,7 +1,7 @@
 <template lang="pug">
-  div.comment.mt-2
+  .comment.mt-2
     nuxt-link(:to="{name: 'account', params: {account: comment.author}}").user_av
-      //img(v-if="comment.author.meta.profile.profileImage" :src="comment.author.meta.profile.profileImage | steem_proxy('64x64')")
+      img(:src="comment.author | avatar")
 
     div.comment_body
       div.name_bl
@@ -17,18 +17,17 @@
       div(v-html="mdBody")
 
       div
-        span(@click="reply_toggle").mt-2.reply Ответить
+        span(v-if="$store.getters['auth/isAuth']" @click="reply_toggle").mt-2.reply Ответить
         no-ssr
           reply(v-if="show_reply"
-                :parentAuthor="comment.author.name"
+                :parentAuthor="comment.author"
                 :parentPermlink="comment.permlink"
                 @newComment="newComment"
                 ).mt-2
 
-      comment-item(v-for="child in childComments"
+      comment-item(v-for="child in comments"
                    :comment="child"
-                   :comments="comments"
-                   :key="comment.id"
+                   :key="child.id"
                    @newComment="newComment")
 </template>
 
@@ -36,11 +35,13 @@
 import { mapState } from 'vuex'
 import Reply from '~/components/comment/Reply.vue'
 import marked from 'marked'
+import { preparePost } from '~/utils/'
+import steem from 'steem'
 
 
 export default {
   name: 'comment-item',
-  props: ['comment', 'comments'],
+  props: ['comment'],
 
   components: {
     Reply
@@ -48,20 +49,19 @@ export default {
 
   data () {
     return {
+      comments: [],
       show_reply: false
     }
   },
 
+  async created() {
+    this.comments = await steem.api.getContentRepliesAsync(this.comment.author, this.comment.permlink)
+  },
+
   computed: {
     mdBody() {
-      return marked(this.comment.body)
+      return preparePost(this.comment).body
     },
-
-    childComments() {
-      return this.comments.filter(c => {
-        return c.parentPermlink == this.comment.permlink && c.parentAuthor == this.comment.author.name
-      })
-    }
   },
 
   methods: {
@@ -75,7 +75,8 @@ export default {
 
     newComment(comment) {
       this.reply_toggle()
-      this.$emit('newComment', comment)
+      comment.created = new Date().toISOString()
+      this.comments.push(comment)
     }
   }
 }
@@ -110,14 +111,10 @@ export default {
     word-break: break-word;
   }
 
-
   .comments_block .comment .comment_body iframe {
     max-width: 80%;
   }
 
-  .comments_block .comment .comment_body img {
-    max-width:100%;
-  }
 
   .comments_block .comment .user_page{
     text-decoration: none;

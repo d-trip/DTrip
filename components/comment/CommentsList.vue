@@ -3,17 +3,16 @@
     //div.show_more_comments_button(v-if="hasPostMoreComments", @click="fetchAllComments()")
       | {{ $t('show_comments') }}
 
-    comment-item(v-for="comment of rootComments"
+    comment-item(v-for="comment of comments"
                   :comment="comment"
-                  :comments="comments"
                   :key="comment.id"
                   @reply="reply"
-                  @newComment="pushComment")
+                  @newComment="new_comment")
 
     no-ssr
-      reply(:parentAuthor="post.author.name"
+      reply(:parentAuthor="post.author"
             :parentPermlink="post.permlink"
-            @newComment="pushComment"
+            @newComment="new_comment"
             ).mt-2
 
 </template>
@@ -21,6 +20,7 @@
 <script>
 import Reply from '~/components/comment/Reply.vue'
 import CommentItem from '~/components/comment/CommentItem.vue'
+import steem from 'steem'
 
 export default {
   props: ['post'],
@@ -31,15 +31,8 @@ export default {
     }
   },
 
-  created() {
-    // HACK Для того что бы на лету подставлять новые комменты в список
-    this.comments = JSON.parse(JSON.stringify(this.post.comments))
-  },
-
-  computed: {
-    rootComments() {
-      return this.comments.filter(c => c.parentPermlink == this.post.permlink)
-    },
+  async created() {
+    this.comments = await steem.api.getContentRepliesAsync(this.post.author, this.post.permlink)
   },
 
   methods: {
@@ -48,27 +41,9 @@ export default {
     },
 
     new_comment(comment) {
-      console.log('newComment')
-      
-      this.pushComment(comment)
-    },
-
-    pushComment(comment) {
-      // патчим под наш формат комментариев от golos-ql
       comment.created = new Date().toISOString()
-      comment.parentPermlink = comment.parent_permlink
-      comment.parentAuthor = comment.parent_author
-      comment.author = {
-        name: comment.author,
-        meta: {
-          profile: {
-            profileImage: this.$store.state.auth.account.meta.profile.profileImage
-          }
-        }
-      }
-
       this.comments.push(comment)
-    }
+    },
   },
 
   components: {

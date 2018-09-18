@@ -1,6 +1,5 @@
 import steem from 'steem'
-import { get_account } from '~/utils/steem.js'
-//import camelizeObject from 'camelcase-keys'
+import { getAccount } from '~/utils/steem'
 
 
 export const state = () => ({
@@ -21,7 +20,7 @@ export const mutations = {
 
   set_account: (state, account) => {
     state.account = account
-  }
+  },
 }
 
 export const actions = {
@@ -32,7 +31,6 @@ export const actions = {
       dispatch('fetch_account')
     }
   },
-
 
   async setLocation({ commit, state }, place) {
     // TODO Вынести в функцию getGeoJSON
@@ -71,7 +69,6 @@ export const actions = {
           {...state.account.meta, ...JSON.parse(result.operations[0][1].json_metadata)},
           {deep: true}
       )
-      console.log(state.account.meta)
     })
 
     //navigator.geolocation.getCurrentPosition((location) => {
@@ -82,21 +79,21 @@ export const actions = {
   },
 
   async authorization ({ app, rootState, commit, state, dispatch }, { wif, account }) {
-    if (!golos.auth.isWif(wif)) {
-      throw new Error('Это не приватный ключ')
+    if (!steem.auth.isWif(wif)) {
+      throw new Error('This is not a WIF key')
     }
 
-    account = await get_account(account)
+    account = await getAccount(account)
 
     if (!account) {
-      throw new Error('В GOLOS.IO нет такого пользователя')
+      throw new Error('Account not found')
     }
 
-    let user_pub = golos.auth.wifToPublic(wif)
+    let user_pub = steem.auth.wifToPublic(wif)
     let account_pub = account.posting.key_auths[0][0]
     
     if (user_pub !== account_pub) {
-      throw new Error('Ключ пользователя, не подходит к аккаунту')
+      throw new Error('This WIF is not for that account')
     }
 
     commit('set_wif', wif)
@@ -113,17 +110,14 @@ export const actions = {
     })
   },
 
-  async fetch_account ({ commit, state }, account_name) {
-    // TODO Подгрузка инфы о пользователе
-    let client = this.app.apolloProvider.defaultClient
+  async fetch_account ({ commit, dispatch, state }, account_name) {
+    let account = await getAccount(account_name || state.account.name)
 
-    let { data: { account } } = await client.query({query: ACCOUNT_QUERY, variables: {
-      name: account_name || state.account.name
-    }})
+    if (!account) {
+      dispatch('logout')
+    }
 
-    // TODO Создать mapalaProfile по дефолту если его нет
-
-    commit('set_account', JSON.parse(JSON.stringify(account)))
+    commit('set_account', account)
   }
 }
 

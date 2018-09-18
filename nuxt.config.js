@@ -75,7 +75,6 @@ module.exports = {
       },
     }
   },
-
   plugins: [
     // Плагин в котором лежат все вызовы при запуске клиента
     {ssr: false, src: '~/plugins/startapp.js'},
