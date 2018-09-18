@@ -60,7 +60,7 @@ export default {
 
   computed: {
     mdBody() {
-      return preparePost(this.comment).body
+      return preparePost(this.comment).content
     },
   },
 
