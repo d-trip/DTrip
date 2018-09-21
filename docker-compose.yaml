@@ -16,4 +16,4 @@ services:
 networks:
   default:
     external:
-      name: steemmapalabackend_default
+      name: steem-mapala-backend_default
