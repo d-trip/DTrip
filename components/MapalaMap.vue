@@ -2,7 +2,7 @@
 div
   gmap-autocomplete(@place_changed="setCenter"
                     :selectFirstOnEnter="true"
-                    placeholder="Поиск локации").vue-map-search.form-control#search
+                    placeholder="Loaction search").vue-map-search.form-control#search
   gmap-map(
     :options="options",
     :center="center",
@@ -11,10 +11,6 @@ div
     ref="mmm",
     map-type-id="terrain")
 
-    //gmap-autocomplete(:value="editor.location.name", @place_changed="setPlace").form-control
-    //gmap-autocomplete(value="asdf").form-control.search
-
-    // :position="{lat: parseFloat(marker.location.geometry.coordinates[0]), lng:parseFloat(marker.location.geometry.coordinates[1]) }",
     //gmap-cluster(:gridSize="1")
     gmap-marker(
       v-for="marker in markers",
@@ -136,7 +132,7 @@ export default {
       this.infoWindow.opened = true
 
       if (type == 'post') {
-        this.infoWindow.content = `<h6>${marker.title}</h6><p>${marker.body}</p>`
+        this.infoWindow.content = `<h6>${marker.title}</h6>`
 
         this.infoWindow.position = {
           lat: marker.jsonMetadata.location.geometry.coordinates[1],
