@@ -38,8 +38,8 @@ export function preparePost(post) {
   let prepared = prepare_html(renderedText);
 
   post.content = prepared.html
-  post.images = prepared.images
-  post.thumb = prepared.images[0]
+  post.images = [...prepared.images]
+  post.thumb = post.images[0]
 
   return post
 }
