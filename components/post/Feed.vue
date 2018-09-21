@@ -7,7 +7,7 @@ div
 
   no-ssr
     infinite-loading(@infinite="handleLoading", :distance="200", force-use-infinite-wrapper="true")
-      p(slot="no-more") Больше нет постов :(
+      p(slot="no-more") No more publication :(
 </template>
 
 <script>

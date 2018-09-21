@@ -17,7 +17,7 @@
       div(v-html="mdBody")
 
       div
-        span(v-if="$store.getters['auth/isAuth']" @click="reply_toggle").mt-2.reply Ответить
+        span(v-if="$store.getters['auth/isAuth']" @click="reply_toggle").mt-2.reply Reply
         no-ssr
           reply(v-if="show_reply"
                 :parentAuthor="comment.author"

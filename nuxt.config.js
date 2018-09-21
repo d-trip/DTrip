@@ -55,16 +55,15 @@ module.exports = {
     'nuxt-device-detect',
     '@nuxtjs/font-awesome',
     '@nuxtjs/sitemap',
-
     [
       '@nuxtjs/yandex-metrika',
       {
-        id: '50068957',
+        id: '50436844',
         webvisor: true,
         clickmap:true,
         // useCDN:false,
-        // trackLinks:true,
-        // accurateTrackBounce:true,
+        trackLinks: true,
+        //accurateTrackBounce: true,
       }
     ],
     /// '@/modules/custom-generate-routes.js',

@@ -5,7 +5,7 @@ no-ssr
       .col-8
         .input-group
           .input-group-prepend
-            .input-group-text Заголовок
+            .input-group-text Titile
           input(v-model="editor.title", placeholder="title").form-control
 
       .col-4.d-flex.flex-row-reverse
@@ -16,7 +16,7 @@ no-ssr
         div(v-show="editor.format == 'html'")
           button.btn.btn-secondary(@click="toggle_editor") Markdown
 
-        button.btn.btn-info(@click="clear").mr-auto Очистить
+        button.btn.btn-info(@click="clear").mr-auto Clear
 
     .row.mt-3
       .col
@@ -50,17 +50,17 @@ no-ssr
                     @keyup.enter.native="handleInputConfirm"
                     @blur="handleInputConfirm")
 
-          el-button(v-else-if="editor.tags.length < 5" class="button-new-tag" size="small" @click="showInput") + Добавить тег
+          el-button(v-else-if="editor.tags.length < 5" class="button-new-tag" size="small" @click="showInput") + Add tag
           el-button(:loading="image_loading"
                     @click="imageUploadHandler"
                     type="info"
                     size="small"
                     round
-                    icon="el-icon-upload").ml-auto Загрузить изображение
+                    icon="el-icon-upload").ml-auto Upload image
 
         .row.mt-3
           .col
-            el-button(type="primary" @click="_submit", :loading="loading") Отправить
+            el-button(type="primary" @click="_submit", :loading="loading") Publish
       
         // Cкрытый инпут для аплоада картинки
         input(ref="inputImage", @change="uploadImage", hidden, type="file")
@@ -231,16 +231,16 @@ export default {
     },
 
     async _submit() {
-      if (!this.editor.title) return this.$message.warning('Добавьте заголовок')
-      if (!this.editor[this.editor.format]) return this.$message.warning('Добавьте текст публикации')
-      if (!this.editor.location.properties.name) return this.$message.warning('Локация обязательна')
+      if (!this.editor.title) return this.$message.warning('Title is empty')
+      if (!this.editor[this.editor.format]) return this.$message.warning('Body is empty')
+      if (!this.editor.location.properties.name) return this.$message.warning('Location is required')
 
       this.loading = true
 
       try {
         await this.submit()
 
-        this.$alert('Ваш пост появится в ленте через несколько минут', 'Опубликованно', {
+        this.$alert('Your post will appear in the tape for a one minute.', 'Published', {
           confirmButtonText: 'OK',
           callback: () => this.$router.push({ name: 'index'})
         })

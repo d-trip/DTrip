@@ -21,7 +21,7 @@ div
       nuxt-link(v-show="$store.state.auth.account.name == post.author"
                 :to="{name: 'editor-permlink', params: {permlink: post.permlink}}").edit
       
-        span Редактировать
+        span Edit
 
 
     .content

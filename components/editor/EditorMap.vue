@@ -4,7 +4,7 @@ no-ssr
     gmap-autocomplete(@place_changed="setCenter"
                       :value="marker.name"
                       :selectFirstOnEnter="true"
-                      placeholder="Поиск локации").vue-map-search.form-control#search
+                      placeholder="Loaction search").vue-map-search.form-control#search
 
     gmap-map(
       :zoom="zoom",

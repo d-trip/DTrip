@@ -7,9 +7,9 @@
 
     .welcome-text
       h1
-        | Пиши о путешествиях, зарабатывай, путешествуй.
+        | Write about travel, earn, travel.
         br
-        | Повторяй бесконечно.
+        | Repeat.
 
 </template>
 

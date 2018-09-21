@@ -46,7 +46,7 @@ export default {
   methods: {
     vote() {
         if (!this.$store.getters['auth/isAuth']) {
-      	  return this.$notify({title: 'Vote error', message: 'Авторизируйтесь!', type: 'warning'})
+      	  return this.$notify({title: 'Vote error', message: 'Authorization is required!', type: 'warning'})
         }
 
 			  this.loading = true

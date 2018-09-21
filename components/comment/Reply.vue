@@ -15,7 +15,7 @@
           ref="text"
         )
         div.placeholder(v-show="!isEdit", @click="startComment")
-          | Добавить комментарий
+          | Reply
     div.send-comment(@click="addComment")
       i.fa.fa-paper-plane-o(style="font-size:24px")
 
@@ -60,7 +60,7 @@ export default {
   methods: {
     async addComment () {
       let body = this.$refs.text.innerText
-      if (!body) return this.$message.warning('Добавьте текст комментария')
+      if (!body) return this.$message.warning('Comment body is empty')
 
       this.loading = true
 
@@ -70,7 +70,7 @@ export default {
           this.parentAuthor,
           this.parentPermlink,
           this.auth.account.name,
-          steem.formatter.commentPermlink(this.parentAuthor, this.parentPermlink), // FIXME Not working for "."
+          steem.formatter.commentPermlink(this.parentAuthor, this.parentPermlink),
           '',
           body,
           {}

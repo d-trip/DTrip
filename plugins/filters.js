@@ -19,7 +19,7 @@ Vue.filter('convertGBG', (value = 0) => {
 
 
 Vue.filter('formatDate', (value = '') => {
-  moment.locale('ru')
+  moment.locale('en')
 
   return moment.utc(value.toString()).fromNow()
 })

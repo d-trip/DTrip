@@ -22,7 +22,7 @@ export default {
     let { author, permlink } = route.params
     let post = await getContent(author.toLowerCase(), permlink)
 
-    if (!post) return error({ statusCode: 404, message: 'Публикация не найдена' })
+    if (!post) return error({ statusCode: 404, message: 'Post not found' })
 
     return { post }
   }

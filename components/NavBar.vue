@@ -9,16 +9,16 @@ div
 
     .navbar-link
       el-popover(placement="bottom"
-                 title="Выплаты"
+                 title="Payouts"
                  width="300"
                  trigger="hover"
-                 content="Суммарная выплата авторам Mapala в рублях.")
+                 content="Total payment to the authors of Mapala in dollars.")
         h4(slot="reference").mb-0.white-text.btn
-          | Всего выплачено: {{ totalPayout | convertGBG }}₽
+          | Payouts: {{ totalPayout | convertGBG }}$
 
 
     .navbar-items
-      nuxt-link(:to="{name: 'about'}").white-text Вопросы и ответы (FAQ)
+      nuxt-link(:to="{name: 'about'}").white-text FAQ
       //.navbar-link
         nuxt-link(:to="{name: 'about'}").white-text Блог мапала
 
@@ -39,23 +39,23 @@ div
             img(:src="account.name | avatar")
 
         nuxt-link(v-if="!$store.getters['auth/isAuth']", :to="{name: 'login'}").login
-          | Войти
+          | Login
         div.right_button(v-else)
           div(@click="toggleMenu", class="open_menu", v-on-clickaway="closeMenu" )
-            | Меню 
+            | Menu 
 
           div.user_menu(:class="{ active : isMenuOpened }")
 
             nuxt-link(:to="{name: 'account', params: {account: account.name}}", class="wal")
               i.purce
               span.txt_i
-                | Кошелек
+                | Wallet
               span(class="amount") {{ parseFloat(account.balanceValue) }}$
 
             div.divd
             div.mn
               //nuxt-link(to="/settings" class="m_item") Настройки
-              a(href="#" class="m_item", @click.prevent="logout").white-text Выйти
+              a(href="#" class="m_item", @click.prevent="logout").white-text Logout
 
   no-ssr
     .mobile-menu(v-if="mobileMenuToggle")
@@ -67,21 +67,21 @@ div
             img(:src="account.name | avatar")
 
       .navbar-link
-        a(target='_blank', href="https://t.me/mapala_ru").mr-2.white-text Телеграм чат/поддержка
+        a(target='_blank', href="https://t.me/mapala").mr-2.white-text Telegram group/support
           img(src="~/assets/icons/telegram.png").telegram
 
       .navbar-link
-        nuxt-link(:to="{name: 'about'}").white-text Вопросы и ответы (FAQ)
+        nuxt-link(:to="{name: 'about'}").white-text FAQ
         //.navbar-link
           nuxt-link(:to="{name: 'about'}").white-text Блог мапала
 
       .navbar-link
         nuxt-link(v-if="!$store.getters['auth/isAuth']", :to="{name: 'login'}").login
-          | Войти
+          | Login
         div.right_button(v-else)
           div.mn
             //nuxt-link(to="/settings" class="m_item") Настройки
-            a(href="#" class="m_item", @click.prevent="logout").white-text Выйти
+            a(href="#" class="m_item", @click.prevent="logout").white-text Logout
 
 </template>
 
@@ -89,6 +89,7 @@ div
 import { mapState, mapMutations } from 'vuex'
 import { mixin as clickaway } from 'vue-clickaway'
 import { Loading } from 'element-ui'
+import steem from 'steem'
 
 
 export default {
@@ -109,7 +110,9 @@ export default {
     }
   },
 
-  created() {
+  async created() {
+    //let r = await steem.api.getStateAsync('/tranding/mapala')
+    //console.log(r)
     // TODO Сумма выплат
     //let client = this.$apolloProvider.defaultClient
 

@@ -3,51 +3,48 @@
   no-ssr
     .row.justify-content-center(v-if="$store.getters['auth/isAuth']")
       form.col-md-6.text-center
-        img(src="@/assets/img/mapala-logo.png", width="100", height="100").mb-3
-        h1.h3 Авторизация
-        p.text-muted.lead Вы авторизоавнны
+        h1.h3 Login
+        p.text-muted.lead You are authorized
 
     .row.justify-content-center(v-else)
-      form.col-md-6.text-center
-        img(src="@/assets/img/mapala-logo.png", width="100", height="100").mb-3
-        h1.h2 Авторизация
-        p.text-muted.lead Mapala работает на блокчейне 
-          a(href="https://golos.io", target="_blank")
-            img(src="https://golos.io/favicon.ico", height="15")
-            | Golos
+      form.col-lg-8.text-center
+        h1.h2 Login
+        p.text-muted.lead Mapala works on the blockchain
+          a(href="https://steem.io", target="_blank")
+            img(src="https://steem.io/favicon.ico?v=2", height="30")
+            | Steem
         hr
         .mb-2
-          | Для авторизации вам необходимо иметь аккаунт в блокчейне GOLOS
+          | For authorization, you need to have an account in the STEEM blockchain
           br
-          | Авторизируйтесь с помощью POSTING ключа
+          | Log in with the POSTING key
         //hr
         .input-group.mb-2
           .input-group-prepend
             span.input-group-text
               i.fa.fa-user-o
           // TODO При вводе аккаунта показывать кнопку для быстрого перехода к ключам
-          input.form-control(placeholder="Golos.io account name", v-model="account")
+          input.form-control(placeholder="STEEM account name", v-model="account")
         .input-group.mb-3
           .input-group-prepend
             span.input-group-text
               i.fa.fa-shield
-          input.form-control(placeholder="Golos.io POSTING key", v-model="wif")
+          input.form-control(placeholder="Private Posting key", type="password", v-model="wif")
         
-        el-button(type="info" :loading="loading" @click="auth").w-100 Авторизоваться
+        el-button(type="info" :loading="loading" @click="auth").w-100 Login
 
         hr
-        //p.lead Помощь
-        ul.list-unstyled.text-small.text-left
-          // TODO Здесь написать гайды на сайте самом
-          li
-            a(href="https://golos.io/create_account", target="_blank") Где зарегистрироваться?
-            |  Обязательно сохраните пароль!
+        p.lead Difficulty for login?
+
+        .text-left
+          a(href="https://golos.io/create_account", target="_blank") Where to register?
+          |  Be sure to save the password!
 
           div.mt-2
-            img(src='https://imgp.golos.io/0x0/https://i.imgsafe.org/d1b8f9e4d2.jpg' style="width: 100%;")
-            strong Чтобы получить свой приватный постинг ключ для Голос (он же Posting WiF)
-            p Зайдите в свой блог на Голосе. Нажмите кнопку "Кошелек" - затем кнопку "Разрешения" - затем кнопку справа от первого абзаца (где Постинг ключ) "Показать приватный ключ".
-            p
+            p What is private posting key? 
+              | You can find this key in the permissions section in your profile page on steemit.com.
+              img(src="https://about.d.tube/img/profile-permissions.png" style="width: 100%;")
+              p Go to your blog on the Steemit. Click the "Wallet" button - then the "Permissions" button - then the button to the right of the first paragraph (where the posting key is) "Show private key"
 
 
 

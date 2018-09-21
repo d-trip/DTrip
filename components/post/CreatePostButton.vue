@@ -4,7 +4,7 @@ no-ssr
     .av-wrap
       img(class="user_av",
           :src="account.name | avatar")
-    .write-post.ml-3 Добавить публикацию
+    .write-post.ml-3 Create a Publication
 
 </template>
 
