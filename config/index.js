@@ -12,7 +12,7 @@ export default {
   img_proxy_prefix: 'https://steemitimages.com/',
   API_QL_URL: process.env.API_QL_URL || 'http://127.0.0.1:5000/graphql',
 
-  baseURI: 'https://golos.mapala.net/',
+  baseURI: 'https://steem.mapala.net/',
 }
 
 export const map_options = {
