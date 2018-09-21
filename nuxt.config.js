@@ -157,7 +157,7 @@ module.exports = {
 
     async routes() {
       //const client = await MongoClient.connect(golos_mongo_url, { useNewUrlParser: true })
-      const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true })
+      const client = await MongoClient.connect('mongodb://db:27017', { useNewUrlParser: true })
       const db = client.db('mapala_steemit')
 
       let [posts, authors] = await Promise.all([
