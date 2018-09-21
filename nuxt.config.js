@@ -1,7 +1,5 @@
 const path = require('path')
 const MongoClient = require('mongodb').MongoClient
-//const golos_mongo_url = 'mongodb://mapala:mapala@golos-mongo.mapala.net:27017/Golos'
-const golos_mongo_url = 'mongodb://mapala:mapala@golos-mongo.mapala.net:27017/Golos'
 
 module.exports = {
   env: {
@@ -17,19 +15,19 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'Mapala | Пиши о путешествиях, зарабатывай, путешествуй.',
+    title: 'Mapala: Write about travel, earn, travel.',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description',
         name: 'description',
-        content: 'Mapala | Глобальная туристическая база знаний, социальная сеть и корпорация нового поколения. Bы можете писать статьи о ваших путешествиях, интересных местах и получать за это вознаграждение.'
+        content: 'Mapala is global tourist knowledge base, social network and a new generation corporation. You can write articles about your travels, interesting places and get paid for it.'
       },
       { property: 'og:image', content: '/mapala.png' },
 			{ name: "msapplication-TileColor", content: "#da532c"},
 			{ name: "theme-color", content: "#ffffff"},
 
-      { name: "yandex-verification", content: "9a1b6ff8a7e81790" },
+      { name: "yandex-verification", content: "3001fd7a8873feea"},
       { name: "google-site-verification", content: "9I09Urp97DzUqnO2i2B8l7ddZ14vCiSWDoZlFIf7ilE"}
     ],
 
@@ -155,7 +153,6 @@ module.exports = {
     ],
 
     async routes() {
-      //const client = await MongoClient.connect(golos_mongo_url, { useNewUrlParser: true })
       const client = await MongoClient.connect('mongodb://db:27017', { useNewUrlParser: true })
       const db = client.db('mapala_steemit')
 
