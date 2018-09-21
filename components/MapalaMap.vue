@@ -59,10 +59,9 @@ export default {
     return {
       zoom: 4,
       center: {
-        lat: 40.748817,
-        lng: -73.985428
+        lat: 48,
+        lng: 30
       },
-
       infoWindow: {
         options: {
           maxWidth: 250,
