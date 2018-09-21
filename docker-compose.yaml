@@ -11,7 +11,7 @@ services:
         BASE_URL: ${BASE_URL}
     command: yarn run start
     ports:
-      - 127.0.0.1:8888:3000
+      - 127.0.0.1:5001:3000
 
 networks:
   default:
