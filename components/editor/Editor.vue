@@ -16,7 +16,7 @@ no-ssr
         div(v-show="editor.format == 'html'")
           button.btn.btn-secondary(@click="toggle_editor") Markdown
 
-        button.btn.btn-info(@click="clear").mr-auto Clear
+        button.btn.btn-info(@click="clear").ml-auto Clear
 
     .row.mt-3
       .col

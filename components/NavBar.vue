@@ -7,7 +7,7 @@ div
         h2.mb-0
           | MAPALA
 
-    .navbar-link
+    //.navbar-link
       el-popover(placement="bottom"
                  title="Payouts"
                  width="300"
@@ -18,7 +18,7 @@ div
 
 
     .navbar-items
-      nuxt-link(:to="{name: 'about'}").white-text FAQ
+      //nuxt-link(:to="{name: 'about'}").white-text FAQ
       //.navbar-link
         nuxt-link(:to="{name: 'about'}").white-text Блог мапала
 
@@ -70,7 +70,7 @@ div
         a(target='_blank', href="https://t.me/mapala").mr-2.white-text Telegram group/support
           img(src="~/assets/icons/telegram.png").telegram
 
-      .navbar-link
+      //.navbar-link
         nuxt-link(:to="{name: 'about'}").white-text FAQ
         //.navbar-link
           nuxt-link(:to="{name: 'about'}").white-text Блог мапала
