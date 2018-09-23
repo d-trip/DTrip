@@ -76,13 +76,13 @@ export const actions = {
     if (!body.includes('https://steem.mapala.net/from-mapala.png')) {
       if (state.format == 'markdown') {
         body += `
-          \n\n[![From Mapala](https://steem.mapala.net/from-mapala.png)](${url})
+          \n\n[![From Mapala](https://steem.mapala.net/from-mapala.png?update=1)](${url})
         `
       } else {
         body += `
           \n\n
           <a href="${url}">
-            <img src="https://steem.mapala.net/from-mapala.png" alt="From Mapala">
+            <img src="https://steem.mapala.net/from-mapala.png?update=1" alt="From Mapala">
           </a>
         `
       }
