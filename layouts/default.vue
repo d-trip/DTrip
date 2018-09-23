@@ -4,9 +4,9 @@ div
     .fixed-top
       nav-bar
 
-  modals-container 
-
   welcome-banner
+
+  modals-container 
 
   .container-fluid.main
     nuxt
