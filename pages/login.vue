@@ -37,7 +37,7 @@
         p.lead Difficulty for login?
 
         .text-left
-          a(href="https://golos.io/create_account", target="_blank") Where to register?
+          a(href="https://signup.steemit.com/", target="_blank") Where to register?
           |  Be sure to save the password!
 
           div.mt-2
