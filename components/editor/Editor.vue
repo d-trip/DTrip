@@ -31,7 +31,8 @@ no-ssr
 
     .row.mt-2
       .col
-        EditorMap(@locationUpdated="locationUpdated", :marker="marker").editor-map
+        el-checkbox(v-model="withLocation") Include location
+        EditorMap(v-show="withLocation" @locationUpdated="locationUpdated", :marker="marker").editor-map
 
     .row.mt-3
       .col
@@ -51,12 +52,18 @@ no-ssr
                     @blur="handleInputConfirm")
 
           el-button(v-else-if="editor.tags.length < 5" class="button-new-tag" size="small" @click="showInput") + Add tag
+
+          el-tooltip(class="item" effect="dark" content="Publication type" placement="top")
+            el-select(v-model="editor.type" placeholder="Publication type" size="small").ml-4
+              el-option(v-for="item in POST_TYPES" :key="item.value" :label="item.label" :value="item.value")
+
+          // Image uploader
           el-button(:loading="image_loading"
                     @click="imageUploadHandler"
                     type="info"
                     size="small"
                     round
-                    icon="el-icon-upload").ml-auto Upload image
+                    icon="wel-icon-upload").ml-auto Upload image
 
         .row.mt-3
           .col
@@ -72,12 +79,47 @@ no-ssr
 import { mapState, mapActions, mapMutations } from 'vuex'
 import { uploadImage } from '~/utils/steem'
 import EditorMap from '~/components/editor/EditorMap.vue'
+import { POST_TYPES } from '~/constants'
 
 export default {
   layout: 'full-width',
 
   components: {
     EditorMap
+  },
+
+  data() {
+    return {
+      loading: false,
+      image_loading: false,
+      codemirror: null,
+      withLocation: false,
+
+      POST_TYPES: POST_TYPES,
+
+      inputVisible: false,
+      inputValue: '',
+
+      editorOptions: {
+        theme: 'snow',
+        placeholder: 'Заголовок',
+        bounds: '#write_text',
+        modules: {
+          toolbar: {
+            container: [['bold', 'italic'], [{ 'header': 1 }, { 'header': 2 }],
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }], [{ 'align': [] }],
+              [{ 'script': 'sub' }, { 'script': 'super' }], ['link'], ['video'],
+              ['image'], ['blockquote'], ['clean']],
+            handlers: {
+              image: this.imageHandler
+            }
+          },
+          clipboard: {
+            matchVisual: false
+          }
+        }
+      },
+    }
   },
 
   computed: {
@@ -129,37 +171,6 @@ export default {
         store.dispatch('showTopToggle')
       }
 		}
-  },
-
-  data() {
-    return {
-      loading: false,
-      image_loading: false,
-      codemirror: null,
-
-      inputVisible: false,
-      inputValue: '',
-
-      editorOptions: {
-        theme: 'snow',
-        placeholder: 'Заголовок',
-        bounds: '#write_text',
-        modules: {
-          toolbar: {
-            container: [['bold', 'italic'], [{ 'header': 1 }, { 'header': 2 }],
-              [{ 'list': 'ordered' }, { 'list': 'bullet' }], [{ 'align': [] }],
-              [{ 'script': 'sub' }, { 'script': 'super' }], ['link'], ['video'],
-              ['image'], ['blockquote'], ['clean']],
-            handlers: {
-              image: this.imageHandler
-            }
-          },
-          clipboard: {
-            matchVisual: false
-          }
-        }
-      },
-    }
   },
 
   methods: {
@@ -233,7 +244,7 @@ export default {
     async _submit() {
       if (!this.editor.title) return this.$message.warning('Title is empty')
       if (!this.editor[this.editor.format]) return this.$message.warning('Body is empty')
-      if (!this.editor.location.properties.name) return this.$message.warning('Location is required')
+      if (this.withLocation && !this.editor.location.properties.name) return this.$message.warning('Location is empty')
 
       this.loading = true
 
