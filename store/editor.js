@@ -72,23 +72,10 @@ export const actions = {
     }
 
     let permlink = state.permlink || await createUniqPermlink(rootState.auth.account.name, state.title)
-    let url = `https://steem.mapala.net/@${rootState.auth.account.name}/${permlink}`
+    //let url = `https://dtrip.app/@${rootState.auth.account.name}/${permlink}`
     let body = state[state.format]
 
-    if (!body.includes('https://steem.mapala.net/from-mapala.png')) {
-      if (state.format == 'markdown') {
-        body += `
-          \n\n[![From Mapala](https://steem.mapala.net/from-mapala.png?update=1)](${url})
-        `
-      } else {
-        body += `
-          \n\n
-          <a href="${url}">
-            <img src="https://steem.mapala.net/from-mapala.png?update=1" alt="From Mapala">
-          </a>
-        `
-      }
-    }
+    // TODO DTrip banner or link to original post
 
     // TODO https://github.com/steemit/hivemind/blob/master/docs/communities.md
     // TODO https://github.com/steemit/condenser/pull/2995

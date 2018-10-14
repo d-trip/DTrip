@@ -2,12 +2,12 @@
 .row
   .col-md-4
     no-ssr
-      create-post-button(v-if="this.$store.getters['auth/isAuth']")
+      create-post-button(v-if="this.$store.getters['auth/user']")
 
     feed
   .col.right-fixed-container(v-if="$device.isDesktop")
     no-ssr
-      mapala-map#map
+      trip-map#map
 </template>
 
 <style>
@@ -28,7 +28,7 @@
 <script>
 import Feed from '@/components/post/Feed'
 import CreatePostButton from '@/components/post/CreatePostButton'
-import MapalaMap from '@/components/MapalaMap'
+import TripMap from '@/components/TripMap'
 
 
 export default {
@@ -43,7 +43,7 @@ export default {
   components: {
     Feed,
     CreatePostButton,
-    MapalaMap
+    TripMap
   },
 }
 

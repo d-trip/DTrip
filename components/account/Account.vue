@@ -6,14 +6,14 @@ div.pf
 
   div.user
     div.round_av
-      img(v-if="account.meta.profile" :src="account.name | avatar('big')")
+      img(v-if="account.meta.profile" :src="account.name | avatar('large')")
     div.name.verified
        | {{ account.name }}
 
   no-ssr
     .user-data.text-center
-      i.el-icon-location(v-if="profile.meta.mapalaProfile.location")
-        | {{ profile.meta.mapalaProfile.location.properties.name }}
+      i.el-icon-location(v-if="profile.meta.dtripProfile.location")
+        | {{ profile.meta.dtripProfile.location.properties.name }}
 
       // TODO Для стима
       //div
@@ -34,16 +34,18 @@ div.pf
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import EditAccount from '~/components/account/EditAccount.vue'
 
 export default {
   props: ['account'],
 
   computed: {
+    ...mapGetters('auth', ['user']),
+
     profile() {
-      if (this.$store.state.auth.account.name == this.account.name) {
-        return this.$store.state.auth.account
+      if (this.user && this.user.name == this.account.name) {
+        return this.$store.state.auth.user
       } else {
         return this.account
       }
@@ -61,8 +63,9 @@ export default {
   },
 
 	head () {
-    let desc = `Пользователь mapala @${this.account.name}`
-    let title = `@${this.account.name} | Mapala`
+    // TODO There dynamic user data
+    let desc = `DTrip user: @${this.account.name}`
+    let title = `DTrip: @${this.account.name}`
 
 		return {
 			title: title,
@@ -152,7 +155,6 @@ export default {
   }
   .pf .round_av img{
     display: block;
-    width: 100%;
     height: 100%;
   }
   .pf .user .name{

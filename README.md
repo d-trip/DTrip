@@ -1,4 +1,4 @@
-Golos.mapala client
+DTrip client
 
 > Nuxt.js
 

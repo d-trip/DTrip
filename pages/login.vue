@@ -1,4 +1,5 @@
 <template lang="pug">
+// FIXME This page for authorization by wif
 .container.mt-5
   no-ssr
     .row.justify-content-center(v-if="$store.getters['auth/isAuth']")
@@ -9,7 +10,7 @@
     .row.justify-content-center(v-else)
       form.col-lg-8.text-center
         h1.h2 Login
-        p.text-muted.lead Mapala works on the blockchain
+        p.text-muted.lead DTrip works on the blockchain
           a(href="https://steem.io", target="_blank")
             img(src="https://steem.io/favicon.ico?v=2", height="30")
             | Steem

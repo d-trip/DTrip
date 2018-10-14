@@ -1,11 +1,11 @@
 import Vue from 'vue'
-// TODO Сделать глобальную обработку для отображения
+// TODO Add all errors handler
 //Vue.config.errorHandler = function (err, vm, info) {
 //
 //}
 
 export default ({app: { store }}) => {
-  // FIXME Сделать отслеживание локи
+  // FIXME Ask for user location
   //navigator.geolocation.getCurrentPosition(function(location) {
   //  console.log(location.coords.latitude)
   //  console.log(location.coords.longitude)
@@ -15,6 +15,5 @@ export default ({app: { store }}) => {
 
   window.onNuxtReady(() => {
     store.dispatch('auth/init')
-    //store.dispatch('golos/init') TODO Пользовательские настройки
   })
 }

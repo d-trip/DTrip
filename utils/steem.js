@@ -40,7 +40,7 @@ export async function getAccount(name) {
   
   // Apps data
   if (!('profile' in account.meta)) account.meta.profile = {}
-  if (!('mapalaProfile' in account.meta)) account.meta.mapalaProfile = {}
+  if (!('dtripProfile' in account.meta)) account.meta.dtripProfile = {}
 
   return account
 }

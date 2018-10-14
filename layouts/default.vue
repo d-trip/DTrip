@@ -16,7 +16,6 @@ div
 <script>
 import NavBar from '@/components/NavBar'
 import WelcomeBanner from '@/components/WelcomeBanner.vue'
-//import MapalaMap from '@/components/MapalaMap'
 
 export default {
   head: {
@@ -27,7 +26,6 @@ export default {
   components: {
     NavBar,
     WelcomeBanner,
-    //MapalaMap
   }
 }
 </script>

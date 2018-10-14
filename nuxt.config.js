@@ -15,15 +15,15 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'Mapala: Write about travel, earn, travel.',
+    title: 'DTrip: Write about travel, earn, travel.',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description',
         name: 'description',
-        content: 'Mapala is global tourist knowledge base, social network and a new generation corporation. You can write articles about your travels, interesting places and get paid for it.'
+        content: 'DTrip is global tourist knowledge base, social network and a new generation corporation. You can write articles about your travels, interesting places and get paid for it.'
       },
-      { property: 'og:image', content: '/mapala.png' },
+      // { property: 'og:image', content: '' },
 			{ name: "msapplication-TileColor", content: "#da532c"},
 			{ name: "theme-color", content: "#ffffff"},
 
@@ -91,6 +91,7 @@ module.exports = {
     '~/plugins/vuex-router-sync.js',
     '~/plugins/elements.js',
     '~/plugins/element-ui.js',
+    '~/plugins/steemconnect'
   ],
   /*
   ** Customize the progress bar color
@@ -154,13 +155,13 @@ module.exports = {
 
     async routes() {
       const client = await MongoClient.connect('mongodb://db:27017', { useNewUrlParser: true })
-      const db = client.db('mapala_steemit')
+      const db = client.db('dtrip_steem')
 
       let [posts, authors] = await Promise.all([
         db.collection("post_model").find({'depth': 0})
             .project({author: true, permlink: true, last_update: true}).toArray(),
 
-        //db.collection("account_object").find({'json_metadata.mapalaProfile': {'$exists': true}})
+        //db.collection("account_object").find({'json_metadata.dtripProfile': {'$exists': true}})
         //    .project({name: true}).toArray()
       ])
 

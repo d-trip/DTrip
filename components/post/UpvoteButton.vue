@@ -14,7 +14,7 @@
 <script>
 import steem from 'steem'
 import Raven from 'raven-js'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import Round from '~/components/elements/svg/round.vue'
 
@@ -28,13 +28,10 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      wif: state => state.auth.wif,
-      name: state => state.auth.account.name,
-    }),
+    ...mapGetters('auth', ['user']),
 
     isVoted() {
-      return !!this.post.active_votes.filter(v => v.voter == this.name).length
+      return this.user ? !!this.post.active_votes.filter(v => v.voter == this.user.name).length : false
     },
 
     tpv() {
@@ -44,27 +41,25 @@ export default {
   },
 
   methods: {
-    vote() {
-        if (!this.$store.getters['auth/isAuth']) {
-      	  return this.$notify({title: 'Vote error', message: 'Authorization is required!', type: 'warning'})
-        }
+    async vote() {
+      if (!this.$store.getters['auth/user']) {
+        return this.$notify({title: 'Vote error', message: 'Authorization is required!', type: 'warning'})
+      }
 
-			  this.loading = true
-        steem.broadcast.vote(
-          this.wif, this.name, this.post.author,
-          this.post.permlink, 10000, (err, res) => {
-            err
-              ? this.$notify({title: 'Vote error', message: err.message, type: 'warning'})
-              : this.$notify({title: 'Voted', type: 'success'}); this.post.active_votes.push(res.operations[0][1])
+      this.loading = true
+      
+      try {
+        let err, res = await this.$steemconnect.vote(this.user.name, this.post.author, this.post.permlink, 10000)
 
-
-            this.loading = false
-
-            if (err) {
-              Raven.captureMessage(err)
-              console.log(err)
-            }
-        })
+        err
+          ? this.$notify({title: 'Vote error', message: err.message, type: 'warning'})
+          : this.$notify({title: 'Voted', type: 'success'}); this.post.active_votes.push(res.result.operations[0][1])
+      } catch (e) {
+        this.$notify({title: 'Vote error', message: e.error_description, type: 'warning'})
+        Raven.captureMessage(e)
+      } finally {
+        this.loading = false
+      }
     }
   },
 

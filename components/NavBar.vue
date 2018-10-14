@@ -3,24 +3,22 @@ div
   .top-navbar
     .navbar-link.navbar-link-brand
       nuxt-link(:to="{name: 'index'}").main_logo
-        img(src="~/assets/img/mapala-logo.png")
+        //img(src="") TODO Main logo
         h2.mb-0
-          | MAPALA
+          | DTrip
 
     //.navbar-link
       el-popover(placement="bottom"
                  title="Payouts"
                  width="300"
                  trigger="hover"
-                 content="Total payment to the authors of Mapala in dollars.")
+                 content="Total payment to the authors of DTrip in dollars.")
         h4(slot="reference").mb-0.white-text.btn
           | Payouts: {{ totalPayout | convertGBG }}$
 
 
     .navbar-items
       //nuxt-link(:to="{name: 'about'}").white-text FAQ
-      //.navbar-link
-        nuxt-link(:to="{name: 'about'}").white-text Блог мапала
 
 
     .navbar-link.navbar-link__toggle(@click="mobileMenuToggle = !mobileMenuToggle")
@@ -28,17 +26,17 @@ div
       
     no-ssr
       .navbar-items__right
-        el-tooltip(class="item" effect="light" content="Telegram group/support @mapala" placement="bottom-end")
-          a(target='_blank', href="https://t.me/mapala").mr-2
+        //el-tooltip(class="item" effect="light" content="Telegram support @avral" placement="bottom-end")
+          //a(target='_blank', href="https://t.me/avral").mr-2
             img(src="~/assets/icons/telegram.png").telegram
 
-        nuxt-link(v-if="$store.getters['auth/isAuth']" :to="{name: 'account', params: {account: account.name}}").user-lk
-          .user_name.mr-2 @{{ account.name }}
+        nuxt-link(v-if="user" :to="{name: 'account', params: {account: user.name}}").user-lk
+          .user_name.mr-2 @{{ user.name }}
 
           .user_av
-            img(:src="account.name | avatar")
+            img(:src="user.name | avatar")
 
-        nuxt-link(v-if="!$store.getters['auth/isAuth']", :to="{name: 'login'}").login
+        a(v-if="!user" @click="login").login
           | Login
         div.right_button(v-else)
           div(@click="toggleMenu", class="open_menu", v-on-clickaway="closeMenu" )
@@ -46,11 +44,11 @@ div
 
           div.user_menu(:class="{ active : isMenuOpened }")
 
-            nuxt-link(:to="{name: 'account', params: {account: account.name}}", class="wal")
+            nuxt-link(:to="{name: 'account', params: {account: user.name}}", class="wal")
               i.purce
               span.txt_i
                 | Wallet
-              span(class="amount") {{ parseFloat(account.balanceValue) }}$
+              span(class="amount") {{ parseFloat(user.balanceValue) }}$
 
             div.divd
             div.mn
@@ -60,14 +58,14 @@ div
   no-ssr
     .mobile-menu(v-if="mobileMenuToggle")
       .navbar-link
-        nuxt-link(v-if="$store.getters['auth/isAuth']" :to="{name: 'account', params: {account: account.name}}").user-lk
-          .user_name.mr-2 @{{ account.name }}
+        nuxt-link(v-if="user" :to="{name: 'account', params: {account: user.name}}").user-lk
+          .user_name.mr-2 @{{ user.name }}
 
           .user_av
-            img(:src="account.name | avatar")
+            img(:src="user.name | avatar")
 
       .navbar-link
-        a(target='_blank', href="https://t.me/mapala").mr-2.white-text Telegram group/support
+       // a(target='_blank', href="https://t.me/avral").mr-2.white-text Telegram group/support
           img(src="~/assets/icons/telegram.png").telegram
 
       //.navbar-link
@@ -76,7 +74,7 @@ div
           nuxt-link(:to="{name: 'about'}").white-text Блог мапала
 
       .navbar-link
-        nuxt-link(v-if="!$store.getters['auth/isAuth']", :to="{name: 'login'}").login
+        nuxt-link(v-if="!user", :to="{name: 'login'}").login
           | Login
         div.right_button(v-else)
           div.mn
@@ -86,7 +84,7 @@ div
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 import { mixin as clickaway } from 'vue-clickaway'
 import { Loading } from 'element-ui'
 import steem from 'steem'
@@ -105,20 +103,8 @@ export default {
 
   watch: {
     $route (to, from){
-      // Закрываем мобльную менюшку когда уходим куда то
       this.mobileMenuToggle = false
     }
-  },
-
-  async created() {
-    //let r = await steem.api.getStateAsync('/tranding/mapala')
-    //console.log(r)
-    // TODO Сумма выплат
-    //let client = this.$apolloProvider.defaultClient
-
-    //client.query({query: MAPALA_TOTAL_PAYOUT_QUERY})
-      //.then(r => console.log(r.data.stats * 2.60424))
-      //.then(r => this.totalPayout = r.data.stats.posts.totalPayout)
   },
 
   methods: {
@@ -127,8 +113,14 @@ export default {
       navs.forEach(nav => nav.classList.toggle('navbar-toggle-show'))
     },
 
+    async login() {
+      window.location = this.$steemconnect.getLoginURL()
+    },
+
     logout() {
-      this.$store.dispatch('auth/logout')
+      this.$store.commit('auth/set_user', null)
+
+
     },
 
     toggleMenu () {
@@ -145,9 +137,7 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      account: state => state.auth.account
-    })
+    ...mapGetters('auth', ['user']),
   },
 }
 </script>
@@ -215,7 +205,7 @@ export default {
 }
 
 .login {
-  color: #88ade0;
+  color: #88ade0 !important;
   font: 700 14px PT Sans;
   display: block;
   align-items: center;
@@ -330,93 +320,9 @@ export default {
     padding-right: 30px;
   }
 
-  .top_left_block {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .main_logoMobile {
-    margin-left: 0!important;
-  }
   .main_logo img {
     height: 38px;
     margin-right: 6px;
-  }
-
-  .main_header .user{
-    right: 0;
-    top: 0;
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    padding: 0;
-    line-height: 42px;
-  }
-  .main_header a {
-    color: #fff;
-    text-decoration: none;
-  }
-
-  .main_header .user_name{
-    color: #fff;
-    font-size: 14px;
-    font-weight: 700;
-  }
-  .main_header .user_logo{
-    margin-left: 12px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-
-  .main_header .no_avatar{
-    margin-left: 12px;
-    width: 27px;
-    height: 27px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  .main_header .user_logo img{
-    display: block;
-    width: 100%;
-  }
-
-
-  .main_header .open_menuMobile{
-    width: 69px;
-  }
-
-  .main_header .login{
-    color: #88ade0;
-    font: 700 14px PT Sans;
-    display: block;
-    align-items: center;
-    width: 70px;
-    padding-left: 7px;
-    height: 102%;
-    line-height: 42px;
-    box-sizing: border-box;
-    background: url('~assets/icons/icon-login.svg') no-repeat 53px center;
-    cursor: pointer;
-    transition: color .2s ease;
-    text-decoration: none;
-    margin-left: 10px;
-  }
-
-  .main_header .login:hover{
-    color: #fff;
-  }
-
-
-  .main_header .divider{
-    width: 1px;
-    background: #4d5169;
-    height: 42px;
-    box-shadow: 0 -2px 7px 0 #2a2c3e;
   }
 
   .right_button {
@@ -517,121 +423,9 @@ export default {
     align-items: center;
   }
 
-  .change_lang input {
-    display: none;
-  }
-
-  .change_lang .lab{
-    font: 700 18px/58px 'PT Sans';
-    color: white;
-  }
-
-  .change_lang {
-    font: 700 14px/58px PT Sans;
-    letter-spacing: .3px;
-    color: #fff;
-    transition: 1s all;
-    margin-left: 0;
-    cursor: pointer;
-    position: relative;
-    height: 42px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 15px;
-  }
-
-  .change_lang:first-child {
-    /*margin-left:;: 15px;*/
-  }
-
-  .switch_lang img {
-    width: 25px;
-    height: 25px;
-    border: 1px solid white;
-    border-radius: 50%;
-    padding: 2px;
-    background: #fff;
-    margin-right: 10px;
-  }
-
-  .switch_lang {
-    line-height: 0;
-    cursor: pointer;
-    transition: all 0.5s;
-    display: flex;
-    align-items: center;
-    opacity: .5;
-  }
-
-  .radio_wrapper:not(:last-child) {
-    margin-right:20px;
-  }
-
-  .switch_lang:hover {
-    opacity: 1;
-  }
-
-
-  .top-right-block {
-    display: flex;
-  }
-  .top-right-block .username_wrapper {
-    padding: 0 20px;
-  }
-
-  .radio_wrapper input[type="radio"]:checked + label{
-    opacity: 1;
-  }
-
-/*
-@media screen and (max-width: 600px) {
-  .username_wrapper {
-    display: none;
-  }
-
-  .top_left_block {
-    flex: 1;
-  }
-
-  .top-right-block {
-    justify-content: space-between;
-  }
-
-}
-
-*/
-
 @media screen and (max-width: 800px) {
   .main_logo h2 {
     font-size: 13px;
   }
 }
-
-.mapala-fest-link {
-  display: flex;
-  align-items: center;
-  background: transparent !important;
-  border: none !important;
-  font-size: 12px !important;
-}
-
-.mapala-fest-link span {
-  color: #fff;
-  font-style: oblique;
-}
-
-@media screen and (max-width: 500px) {
-  .mapala-fest-link {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .slogan {
-    display: none;
-  }
-}
-
-
 </style>

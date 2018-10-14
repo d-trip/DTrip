@@ -16,4 +16,4 @@ services:
 networks:
   default:
     external:
-      name: steem-mapala-backend_default
+      name: steem-dtrip-backend_default

@@ -18,7 +18,7 @@ div
           // Старый стандарт
           //.location(v-else) {{ post.meta.location.name }}
 
-      nuxt-link(v-show="$store.state.auth.account.name == post.author"
+      nuxt-link(v-show="user && user.name == post.author"
                 :to="{name: 'editor-permlink', params: {permlink: post.permlink}}").edit
       
         span Edit
@@ -35,13 +35,10 @@ div
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import PostContent from '~/components/post/PostContent.vue'
 import CommentsBlock from '~/components/comment/CommentsBlock.vue'
 import PostBottom from '~/components/post/PostBottom.vue'
-import { mapState, mapActions } from 'vuex'
-import marked from 'marked'
-import xmldom from 'xmldom'
-import prepare_html from '~/utils/prepare_html'
 
 
 export default {
@@ -53,9 +50,13 @@ export default {
     PostBottom
   },
 
+  computed: {
+    ...mapGetters('auth', ['user'])
+  },
+
 	head () {
     let desc = this.$options.filters.html_preview(this.post)
-    let title = `${this.post.title} | Mapala`
+    let title = `DTrip: ${this.post.title}`
 
 		return {
 			title: title,
@@ -101,14 +102,14 @@ export default {
 
   .next_post {
     /* background: url('~/assets/icon-prev.svg') no-repeat; */
-    transform: rotateZ(180deg);
-    width: 70px;
+    cursor: pointer;
     height: 70px;
     position: fixed;
-    cursor: pointer;
-    z-index: 102;
-    top: 48%;
     right: calc((100% - 866px)/2 - 130px);
+    top: 48%;
+    transform: rotateZ(180deg);
+    width: 70px;
+    z-index: 102;
   }
   .post-content .edit {
     font: 700 14px/36px 'PT Sans';

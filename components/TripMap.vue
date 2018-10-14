@@ -21,7 +21,6 @@ div
       @click="open_modal(marker)"
       @mouseover="openInfoWindow(marker, 'post')",
       @mouseout="infoWindow.opened = false",
-      icon="https://mapala.net/pointer.png"
       )
 
     gmap-marker(
@@ -85,7 +84,7 @@ export default {
   },
 
   async created() {
-    // TODO Маркеры для аккаунтов
+    // TODO Markers for accounts
     //let client = this.$apolloProvider.defaultClient
 
     //let { data } = await client.query({query: ACCOUNT_MARKERS_QUERY})
@@ -97,8 +96,8 @@ export default {
     //  return {
     //    name: e.name,
     //    coords: {
-    //      lat: e.meta.mapalaProfile.location.geometry.coordinates[0],
-    //      lng: e.meta.mapalaProfile.location.geometry.coordinates[1]
+    //      lat: e.meta.dtripProfile.location.geometry.coordinates[0],
+    //      lng: e.meta.dtripProfile.location.geometry.coordinates[1]
     //    },
 
     //    icon: 'https://imgp.golos.io/32x32/' + avatar

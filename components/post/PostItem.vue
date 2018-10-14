@@ -30,7 +30,7 @@
             // Старый стандарт
             .location(v-else) {{ post.meta.location.name }}
 
-          nuxt-link(v-show="$store.state.auth.account == post.author"
+          nuxt-link(v-show="user && user.name == post.author"
                     :to="{name: 'editor-permlink', params: {permlink: post.permlink}}").icon.ml-auto
             i.fa.fa-edit
 
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 import PostModal from '~/components/post/PostModal.vue'
 import PostBottom from '~/components/post/PostBottom.vue'
 
@@ -61,8 +61,9 @@ export default {
 	},
 
   computed: {
+    ...mapGetters('auth', ['user']),
+
     ...mapState({
-      auth: state => state.auth,
       editor: state => state.editor
     })
   },

@@ -11,9 +11,6 @@ button {
   outline: 0;
 }
 
-.post-content img[src*="steem.mapala.net/from-mapala.png"] {
-    display: none !important;
-}
 
 .icon {
     display: block;

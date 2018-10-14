@@ -15,7 +15,7 @@ div
 
 <script>
 import NavBar from '@/components/NavBar'
-import MapalaMap from '@/components/MapalaMap'
+import TripMap from '@/components/TripMap'
 
 export default {
   head: {
@@ -25,7 +25,7 @@ export default {
   },
   components: {
     NavBar,
-    MapalaMap
+    TripMap
   }
 }
 </script>

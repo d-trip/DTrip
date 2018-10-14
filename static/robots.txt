@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://steem.mapala.net/sitemap.xml
+Sitemap: https://dtrip.app/sitemap.xml

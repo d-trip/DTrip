@@ -1,4 +1,4 @@
-const APP_DOMAIN = 'steem.mapala.net'
+const APP_DOMAIN = 'dtrip.app'
 
 const urlChar = '[^\\s"<>\\]\\[\\(\\)]'
 const urlCharEnd = urlChar.replace(/\]$/, '.,\']') // insert bad chars to end on

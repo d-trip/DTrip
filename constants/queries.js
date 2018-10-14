@@ -1,20 +1,9 @@
 import gql from 'graphql-tag'
 
 
-export const MAPALA_TOTAL_PAYOUT_QUERY = gql`
-{
-  stats {
-    posts {
-      totalPayout(category: "mapala")
-    }
-  }
-}
-`
-
-
 export const ACCOUNT_MARKERS_QUERY = gql`
 {
-  accounts(meta: {notNull: "mapalaProfile.location"}) {
+  accounts(meta: {notNull: "dtripProfile.location"}) {
     edges {
       node {
       	name
@@ -22,7 +11,7 @@ export const ACCOUNT_MARKERS_QUERY = gql`
           profile {
             profileImage
           }
-          mapalaProfile {
+          dtripProfile {
             location {
               geometry {
                 coordinates
@@ -43,7 +32,7 @@ query account($name: String!) {
     balanceValue
     jsonMetadata
     meta {
-      mapalaProfile {
+      dtripProfile {
         location {
           properties
         }
@@ -134,11 +123,15 @@ query account($bbox: [[Float]]!) {
 export const POSTS_QUERY = gql`
 query posts ($after: String,
              $first: Int!,
-             $author: String)
+             $author: String,
+             $type: String)
 {
   posts(after: $after,
         first: $first,
-        author: $author)
+        author: $author,
+        filters: {
+          type: $type
+        })
   {
     edges {
       node {

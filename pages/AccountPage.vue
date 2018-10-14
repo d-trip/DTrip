@@ -5,21 +5,21 @@
     feed
   .col.right-fixed-container(v-if="$device.isDesktop")
     no-ssr
-      mapala-map#map
+      trip-map#map
 
 </template>
 
 <script>
 import Feed from '~/components/post/Feed'
 import Account from '~/components/account/Account.vue'
-import MapalaMap from '@/components/MapalaMap'
+import TripMap from '@/components/TripMap'
 import { getAccount } from '~/utils/steem'
 
 export default {
   components: {
     Feed,
     Account,
-    MapalaMap
+    TripMap
   },
 
   async fetch ({ app, store, commit, route }) {

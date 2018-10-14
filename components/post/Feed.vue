@@ -3,6 +3,9 @@
 // TODO В ленту подгружать не полные посты полный пост только в модалке или странице
 // Скорее всего решится proxy в 1.6 vue
 div
+  //el-radio-group(v-model='type' size="small" @change="changeType")
+    el-radio-button(label="all")
+    el-radio-button(v-for="type in POST_TYPES" :key="type.value" :label="type.value")
   post-item(v-for="post in posts", :post="post", :key="post.id")
 
   no-ssr
@@ -12,20 +15,32 @@ div
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { POST_TYPES } from '~/constants'
 
 import PostItem from '@/components/post/PostItem'
 
 
 export default {
+  data() { 
+    return {
+      showFilters: false,
+      POST_TYPES
+    }
+  },
+
   computed: {
     ...mapState({
-      posts: state => state.posts.list
+      posts: state => state.posts.list,
     })
   },
   methods: {
     ...mapActions({
       fetch_posts: 'posts/fetch_posts'
     }),
+
+    changeType(type) {
+      console.log(type)
+    },
 
     handleLoading($state) {
       const posts_count = this.posts.length

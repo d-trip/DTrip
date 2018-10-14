@@ -8,10 +8,16 @@ export const state = () => ({
   list: [],
   author: undefined,
 
-  after: undefined
+  after: undefined,
+  type: 'all'
 })
 
 export const actions = {
+  update_type ({ state, commit }, type = 'all') {
+    commit('set_posts', [])
+    commit('set_type', type)
+  },
+
   async fetch_posts({ rootState, state, commit }) {
     let client = this.app.apolloProvider.defaultClient
 
@@ -19,6 +25,7 @@ export const actions = {
       first: config.pagination,
       author: state.author,
       after: state.after,
+      type: state.type == 'all' ? undefined : state.type
     }})
 
     // Load from node untill GraphqQL ready
@@ -40,21 +47,14 @@ export const actions = {
 }
 
 export const mutations = {
-  set_posts: (state, posts) => {
-    state.list = posts
-  },
+  set_type: (state, type) => state.type = type,
+  set_posts: (state, posts) => state.list = posts,
+  set_after: (state, after) => state.after = after,
+  set_author: (state, author) => state.author = author,
 
   clear: (state) => {
     state.list = []
     state.after = undefined
     state.author = undefined
   },
-
-  set_author: (state, author) => {
-    state.author = author
-  },
-
-  set_after: (state, after) => {
-    state.after = after
-  }
 }

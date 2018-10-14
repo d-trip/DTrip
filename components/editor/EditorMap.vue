@@ -18,7 +18,6 @@ no-ssr
         :position="marker",
         :draggable="true",
         @dragend="dragend"
-        icon="https://mapala.net/pointer.png"
       )
 
       //gmap-polygon(:paths="paths" :editable="true" @paths_changed="updateEdited($event)")
@@ -74,6 +73,7 @@ export default {
         if (r) {
 					this.$emit('locationUpdated', {
 							properties: {
+                // TODO Add country code
 								name: r.formatted_address,
 							},
 
@@ -96,6 +96,7 @@ export default {
 
       this.$emit('locationUpdated', {
           properties: {
+            // TODO Add country code
             name: location.formatted_address,
           },
 

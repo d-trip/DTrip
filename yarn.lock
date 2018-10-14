@@ -2210,6 +2210,13 @@ cross-fetch@^1.1.1:
     node-fetch "1.7.3"
     whatwg-fetch "2.0.3"
 
+cross-fetch@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-2.2.2.tgz#a47ff4f7fc712daba8f6a695a11c948440d45723"
+  dependencies:
+    node-fetch "2.1.2"
+    whatwg-fetch "2.0.4"
+
 cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-5.1.0.tgz#e8bd0efee58fcff6f8f94510a0a554bbfa235449"
@@ -4735,6 +4742,10 @@ node-fetch@1.7.3, node-fetch@^1.0.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
+node-fetch@2.1.2:
+  version "2.1.2"
+  resolved "http://registry.npmjs.org/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
+
 node-fetch@^2.1.2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.2.0.tgz#4ee79bde909262f9775f731e3656d0db55ced5b5"
@@ -6541,6 +6552,13 @@ sbd@^1.0.14:
   dependencies:
     sanitize-html "^1.18.4"
 
+sc2-sdk@^2.0.0-beta.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/sc2-sdk/-/sc2-sdk-2.0.1.tgz#3ce4587ad32b3abd418fd0b50f43225ecaf876c7"
+  dependencies:
+    babel-runtime "^6.26.0"
+    cross-fetch "^2.2.2"
+
 schema-utils@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-0.3.0.tgz#f5877222ce3e931edae039f17eb3716e7137f8cf"
@@ -6892,9 +6910,9 @@ std-env@^1.1.0:
   dependencies:
     is-ci "^1.1.0"
 
-steem@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/steem/-/steem-0.7.1.tgz#c7275977912bfc36945cc39876a774556dca8621"
+steem@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/steem/-/steem-0.7.2.tgz#97f30f6236bb40454e9ddbf3bae461a8138d6fce"
   dependencies:
     "@steemit/rpc-auth" "^1.1.0"
     bigi "^1.4.2"
@@ -7649,6 +7667,12 @@ vue-server-renderer@^2.5.17:
     serialize-javascript "^1.3.0"
     source-map "0.5.6"
 
+vue-steemconnect@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/vue-steemconnect/-/vue-steemconnect-0.3.1.tgz#c034ff2a783e6274f991ab39990592108d1a9ed1"
+  dependencies:
+    sc2-sdk "^2.0.0-beta.0"
+
 vue-style-loader@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-3.1.2.tgz#6b66ad34998fc9520c2f1e4d5fa4091641c1597a"
@@ -7801,6 +7825,10 @@ webpack@^3.11.0:
 whatwg-fetch@2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
+
+whatwg-fetch@2.0.4:
+  version "2.0.4"
+  resolved "http://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
 whatwg-fetch@>=0.10.0:
   version "3.0.0"
