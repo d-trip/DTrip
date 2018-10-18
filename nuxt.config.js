@@ -44,7 +44,7 @@ module.exports = {
   },
   css: [
     '@/assets/css/main.css',
-    //'vue-js-modal/dist/styles.css'
+    'vue-js-modal/dist/styles.css' // FIXME not working by default
   ],
   modules: [
     '@nuxtjs/apollo',
