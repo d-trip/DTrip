@@ -106,10 +106,18 @@ export function prepare_json_metadata (m) {
   return meta
 }
 
-// TODO Метод для смены ноды
-
-
 export async function uploadImage (file, auth) {
+  // IF steemconnect mode we use busy.org for images host
+  if (true) { // now only steemconnect
+    const formData = new FormData()
+    formData.append('file', file)
+
+    const res = await axios.post('https://ipfs.busy.org/upload',
+      formData, {headers: {'content-type': 'multipart/form-data'}}
+    )
+    return res.data.url
+  }
+
   const username = auth.account.name
   const d = PrivateKey.fromWif(auth.wif)
 
