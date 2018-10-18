@@ -29,10 +29,20 @@ no-ssr
             v-model="editor.html"
           )
 
+
+    .row.mt-2
+      .col.d-flex
+        el-checkbox(v-model="withLocation") Include location
+
+          // Image uploader
+        el-button(:loading="image_loading"
+                  @click="imageUploadHandler"
+                  size="small"
+                  icon="el-icon-upload").ml-auto Upload image
     .row.mt-2
       .col
-        el-checkbox(v-model="withLocation") Include location
         EditorMap(v-show="withLocation" @locationUpdated="locationUpdated", :marker="marker").editor-map
+
 
     .row.mt-3
       .col
@@ -58,13 +68,6 @@ no-ssr
             el-select(v-model="editor.tags[1]" placeholder="Publication type" size="small").ml-2
               el-option(v-for="item in POST_TYPES" :key="item.value" :label="item.label" :value="item.value")
 
-          // Image uploader
-          el-button(:loading="image_loading"
-                    @click="imageUploadHandler"
-                    type="info"
-                    size="small"
-                    round
-                    icon="wel-icon-upload").ml-auto Upload image
 
         .row.mt-3
           .col
