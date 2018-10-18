@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
-
 import { getContent } from '~/utils/steem'
 import Editor from '~/components/editor/Editor.vue'
 import Preview from '~/components/editor/Preview.vue'
@@ -37,7 +35,7 @@ export default {
 
     if (permlink) {
       // IF it is editing post
-      let post = await getContent(store.state.auth.account.name, permlink)
+      let post = await getContent(store.state.auth.user.name, permlink)
 
       editor.format = post.meta.format || 'html'
       store.commit('editor/clear')

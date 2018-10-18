@@ -18,7 +18,6 @@ export const state = () => ({
   permlink: null,
   body: '',
   tags: [config.tag_for_post],
-  type: POST_TYPES[0].value,
   location: {
     properties: {
       name: '',
@@ -45,7 +44,6 @@ export const mutations = {
     state[state.format] = ''
     state.tags = [config.tag_for_post]
     state.permlink = null
-    state.type = POST_TYPES[0].value,
 
     // GeoJOSON standart
     state.location = {
@@ -81,15 +79,13 @@ export const actions = {
     // TODO https://github.com/steemit/condenser/pull/2995
     try {
       let res = await comment(
-        rootState.auth.wif,
         '',
         config.tag_for_post,
-        rootState.auth.account.name,
+        rootState.auth.user.name,
         permlink,
         state.title,
         body,
         {tags: state.tags,
-         type: state.type,
          location: state.location,
          format: state.format}
       )

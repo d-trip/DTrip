@@ -39,7 +39,6 @@ export default {
 
       options: {
         minZoom: 1,
-        //mapTypeControl: false,
         fullscreenControl: false,
 
         mapTypeControlOptions: {

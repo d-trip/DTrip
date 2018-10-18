@@ -39,7 +39,7 @@ no-ssr
         .d-flex
           el-tag(:key="index"
                   v-for="(tag, index) in editor.tags"
-                  :closable="index != 0"
+                  :closable="manageAppTags(index)"
                   :disable-transitions="false"
                   @close="handleClose(tag)") {{ tag }}
 
@@ -51,10 +51,11 @@ no-ssr
                     @keyup.enter.native="handleInputConfirm"
                     @blur="handleInputConfirm")
 
-          el-button(v-else-if="editor.tags.length < 5" class="button-new-tag" size="small" @click="showInput") + Add tag
+          el-button(v-else-if="1 < editor.tags.length && editor.tags.length < 5"
+                    class="button-new-tag" size="small" @click="showInput") + Custom tag
 
-          el-tooltip(class="item" effect="dark" content="Publication type" placement="top")
-            el-select(v-model="editor.type" placeholder="Publication type" size="small").ml-4
+          el-tooltip(v-if="!editor.tags[1]" class="item" effect="dark" content="Publication type" placement="top")
+            el-select(v-model="editor.tags[1]" placeholder="Publication type" size="small").ml-2
               el-option(v-for="item in POST_TYPES" :key="item.value" :label="item.label" :value="item.value")
 
           // Image uploader
@@ -93,7 +94,7 @@ export default {
       loading: false,
       image_loading: false,
       codemirror: null,
-      withLocation: false,
+      withLocation: true,
 
       POST_TYPES: POST_TYPES,
 
@@ -174,6 +175,18 @@ export default {
   },
 
   methods: {
+    manageAppTags(index) {
+      let tagsCount = this.editor.tags.length
+
+      if (index == 0) {
+        return false
+      } else if (tagsCount > 2 && index == 1) {
+        return false
+      } else {
+        return true
+      }
+    },
+
     imageHandler () {
       const range = this.myQuillEditor.getSelection()
       const value = prompt('What is the image URL')
@@ -245,6 +258,7 @@ export default {
       if (!this.editor.title) return this.$message.warning('Title is empty')
       if (!this.editor[this.editor.format]) return this.$message.warning('Body is empty')
       if (this.withLocation && !this.editor.location.properties.name) return this.$message.warning('Location is empty')
+      if (!this.editor.tags[1]) return this.$message.warning('Select publication type tag!')
 
       this.loading = true
 

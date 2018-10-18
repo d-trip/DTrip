@@ -1,5 +1,6 @@
 // TODO move to env
-const app_tags = process.env.PROD ? ['dtrip'] : ['dtrip-test']
+//const app_tags = process.env.PROD ? ['dtrip'] : ['dtrip-test']
+const app_tags = ['dtrip']
 
 export default {
   app: 'dtrip/0.1',
