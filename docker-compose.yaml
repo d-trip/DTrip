@@ -2,6 +2,7 @@ version: '3'
 services:
   web:
     restart: always
+    image: avral/dtrip
     build:
       context: .
       args:                                                                      
