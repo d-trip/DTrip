@@ -19,6 +19,7 @@
 <script>
 import config from '~/config'
 import UpvoteButton from '~/components/post/UpvoteButton.vue'
+import PostModal from '~/components/post/PostModal.vue'
 
 
 export default {

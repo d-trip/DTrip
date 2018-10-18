@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import slug from 'slug'
 import axios from 'axios'
 import steem from 'steem'
@@ -9,10 +10,9 @@ import config from '@/config'
 import { preparePost, jsonParseSafe } from '~/utils/'
 
 
-export async function comment(wif, parentAuthor, parentPermlink, author, permlink, title, body, meta) {
+export async function comment(parentAuthor, parentPermlink, author, permlink, title, body, meta) {
   try {
-    let res = await steem.broadcast.commentAsync(
-        wif,
+    let res = await Vue.SteemConnect().comment(
         parentAuthor,
         parentPermlink,
         author,
@@ -22,12 +22,29 @@ export async function comment(wif, parentAuthor, parentPermlink, author, permlin
         prepare_json_metadata(meta)
     )
 
-    return res
+    return res.result
   } catch (e) {
     Raven.captureMessage(e)
     console.log(e)
     throw e
   }
+
+  //try {
+  //  let res = await steem.broadcast.commentAsync(
+  //      wif,
+  //      parentAuthor,
+  //      parentPermlink,
+  //      author,
+  //      slug(permlink),
+  //      prepare_json_metadata(meta)
+  //  )
+
+  //  return res
+  //} catch (e) {
+  //  Raven.captureMessage(e)
+  //  console.log(e)
+  //  throw e
+  //}
 }
 
 

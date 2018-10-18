@@ -1,12 +1,12 @@
 <template lang="pug">
-  div(v-if="$store.getters['auth/isAuth']",
+  div(v-if="user",
       :class="{ comment_storing: isStoring }",
       class="write_comment_wrapper"
       v-loading="loading")
 
     div.write_comment
       div.ca_w
-        img.user_av(:src="$store.state.auth.account.name | avatar")
+        img.user_av(:src="user.name | avatar")
 
       div.write_w
         div.txt(
@@ -29,7 +29,7 @@
 <script>
 import steem from 'steem'
 
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import { comment } from '~/utils/steem'
 
 export default {
@@ -52,9 +52,7 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      auth: state => state.auth
-    })
+    ...mapGetters('auth', ['user'])
   },
 
   methods: {
@@ -66,10 +64,9 @@ export default {
 
       try {
         let r = await comment(
-          this.auth.wif,
           this.parentAuthor,
           this.parentPermlink,
-          this.auth.account.name,
+          this.user.name,
           steem.formatter.commentPermlink(this.parentAuthor, this.parentPermlink),
           '',
           body,
