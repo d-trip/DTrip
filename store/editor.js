@@ -65,11 +65,15 @@ export const actions = {
   },
 
   async submit({ state, commit, dispatch, rootState }) {
-    if (!rootState.auth.wif && !rootState.auth.account.name) {
-      throw new Error('Добавьте постинг ключ или имя пользователя')
+    //if (!rootState.auth.wif && !rootState.auth.account.name) {
+    //  throw new Error('Добавьте постинг ключ или имя пользователя')
+    //}
+
+    if (!rootState.auth.user) {
+      throw new Error('Pleace login!')
     }
 
-    let permlink = state.permlink || await createUniqPermlink(rootState.auth.account.name, state.title)
+    let permlink = state.permlink || await createUniqPermlink(rootState.auth.user.name, state.title)
     //let url = `https://dtrip.app/@${rootState.auth.account.name}/${permlink}`
     let body = state[state.format]
 

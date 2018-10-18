@@ -265,15 +265,16 @@ export default {
       try {
         await this.submit()
 
-        this.$alert('Your post will appear in the tape for a one minute.', 'Published', {
+        this.$alert('Your post will appear in the feed for a one minute.', 'Published', {
           confirmButtonText: 'OK',
           callback: () => this.$router.push({ name: 'index'})
         })
       } catch (e) {
-          this.$notify.error({
-            title: 'Error',
-            message: JSON.stringify(e)
-          })
+        console.log(e)
+        this.$notify.error({
+          title: 'Error',
+          message: JSON.stringify(e)
+        })
       } finally {
         this.loading = false
       }
