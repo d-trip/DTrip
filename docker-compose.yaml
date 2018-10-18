@@ -16,4 +16,4 @@ services:
 networks:
   default:
     external:
-      name: steem-dtrip-backend_default
+      name: dtripapi_default
