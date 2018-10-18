@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import VueSteemConnect from 'vue-steemconnect'
 
+import config from '~/config'
+
 Vue.use(VueSteemConnect, {
   app: 'dtrip.app',
-  callbackURL: 'http://localhost:3000/auth',
+  callbackURL: config.AUTH_CALLBACK,
   scope: ['vote', 'comment', 'comment_options', 'custom_json']
 })
 

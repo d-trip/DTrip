@@ -10,8 +10,7 @@ export default {
 
   img_proxy_prefix: 'https://steemitimages.com/',
   API_QL_URL: process.env.API_QL_URL || 'http://127.0.0.1:5000/graphql',
-
-  baseURI: 'https://dtrip.app/',
+  AUTH_CALLBACK: process.env.BASE_URL + 'auth',
 }
 
 export const map_options = {

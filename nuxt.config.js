@@ -7,7 +7,6 @@ module.exports = {
     API_QL_URL: process.env.API_QL_URL || 'http://localhost:5000/graphql',
     BACKEND_API: process.env.BACKEND_API || 'http://127.0.0.1:8000/api/',
     SENTRY_DSN: process.env.SENTRY_DSN || null,
-    // TODO Поменять везде базовый урл
     BASE_URL: process.env.BASE_URL || 'http://localhost:3000/',
   },
 
@@ -32,11 +31,12 @@ module.exports = {
     ],
 
     link: [
-			{ rel: "apple-touch-icon",  sizes: "180x180", href: "/apple-touch-icon.png"},
-			{ rel: "manifest", href: "/site.webmanifest"},
-    	{ rel: "mask-icon", href: "/safari-pinned-tab.svg", color: "#5bbad5"},
-			{ rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png"},
-			{ rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png"},
+      // TODO Logo here
+			///{ rel: "apple-touch-icon",  sizes: "180x180", href: "/apple-touch-icon.png"},
+			///{ rel: "manifest", href: "/site.webmanifest"},
+    	///{ rel: "mask-icon", href: "/safari-pinned-tab.svg", color: "#5bbad5"},
+			///{ rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png"},
+			///{ rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png"},
 
       // TODO Выпилить бутстрап полностью и взять только утилиты и сетку
 			//{ rel: "stylesheet", type: "text/css", href: "https://cdn.jsdelivr.net/npm/bootstrap-utilities@4.0.0/bootstrap-utilities.css"},
