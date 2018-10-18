@@ -2,8 +2,8 @@ FROM mhart/alpine-node:9.11.1
 
 ENV HOST 0.0.0.0
 
-ARG API_QL_URL
-ARG PROD
+ARG API_QL_URL=https://api.dtrip.app/graphql
+ARG PROD=True
 ARG SENTRY_DSN
 ARG BASE_URL
 
