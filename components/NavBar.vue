@@ -74,7 +74,7 @@ div
           nuxt-link(:to="{name: 'about'}").white-text Блог мапала
 
       .navbar-link
-        nuxt-link(v-if="!user", :to="{name: 'login'}").login
+        a(v-if="!user" @click="login").login
           | Login
         div.right_button(v-else)
           div.mn
@@ -119,8 +119,6 @@ export default {
 
     logout() {
       this.$store.commit('auth/set_user', null)
-
-
     },
 
     toggleMenu () {
