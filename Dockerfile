@@ -4,12 +4,10 @@ ENV HOST 0.0.0.0
 
 ARG API_QL_URL=https://api.dtrip.app/graphql
 ARG PROD=True
-ARG SENTRY_DSN
 ARG BASE_URL=https://dtrip.app/
 
 ENV API_QL_URL ${API_QL_URL}
 ENV PROD ${PROD}
-ENV SENTRY_DSN ${SENTRY_DSN}
 ENV BASE_URL ${BASE_URL}
 
 ADD package.json /app/
