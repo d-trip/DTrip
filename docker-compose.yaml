@@ -9,6 +9,7 @@ services:
         PROD: ${PROD}
         API_QL_URL: ${API_QL_URL}
         BASE_URL: ${BASE_URL}
+        SENTRY_DSN: ${SENTRY_DSN}
     environment:
       - SENTRY_DSN=${SENTRY_DSN}
     command: yarn run start
