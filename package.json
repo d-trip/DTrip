@@ -29,6 +29,7 @@
     "nuxt": "^1.4.2",
     "nuxt-device-detect": "^1.1.1",
     "pug": "^2.0.3",
+    "raven-js": "^3.27.0",
     "remarkable": "^1.7.1",
     "sbd": "^1.0.14",
     "simplemde": "^1.11.2",
