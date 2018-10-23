@@ -74,8 +74,24 @@ export const actions = {
     }
 
     let permlink = state.permlink || await createUniqPermlink(rootState.auth.user.name, state.title)
-    //let url = `https://dtrip.app/@${rootState.auth.account.name}/${permlink}`
+    let url = `https://dtrip.app/@${rootState.auth.user.name}/${permlink}`
     let body = state[state.format]
+
+    if (!body.includes('PUBLISHED BY DTRIP.APP')) {
+      if (state.format == 'markdown') {
+        body += `
+          \n\n[PUBLISHED BY DTRIP.APP](${url})
+        `
+      } else {
+        body += `
+          \n\n
+          <a href="${url}">
+            PUBLISHED BY DTRIP.APP
+          </a>
+        `
+      }
+    }
+
 
     // TODO DTrip banner or link to original post
 
