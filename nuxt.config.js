@@ -7,6 +7,7 @@ module.exports = {
     API_QL_URL: process.env.API_QL_URL || 'http://localhost:5000/graphql',
     BACKEND_API: process.env.BACKEND_API || 'http://127.0.0.1:8000/api/',
     BASE_URL: process.env.BASE_URL || 'http://localhost:3000/',
+    SENTRY_DSN: process.env.SENTRY_DSN
   },
 
   /*
