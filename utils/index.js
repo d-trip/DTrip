@@ -14,6 +14,10 @@ export function preparePost(post) {
   let prepare
   post.meta = jsonParseSafe(post.json_metadata)
 
+  // Hide link to dtrip
+  let r = /\[PUBLISHED BY DTRIP.APP\]\(.*\)/
+  post.body = post.body.replace(r, '')
+
   let text = post.body
   if (!text) text = ''; // text can be empty, still view the link meta data
   let html = false;
