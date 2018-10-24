@@ -10,8 +10,15 @@ Env:
 ```yarn run dev```
 
 ## Run docker
-* Create .env file.
+Create .env file
+```
+docker-compose pull && docker-compose up -d
+```
 
-* ```docker-compose up -d --build```
+or build by you self
+
+```
+docker-compose up -d --build
+```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
