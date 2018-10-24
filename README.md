@@ -1,9 +1,7 @@
 DTrip client
 
-> Nuxt.js
-
 Env:
-  API_QL_URL
+> API_QL_URL: dtrip-api url
  
  
 ## Run local
