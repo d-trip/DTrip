@@ -1,8 +1,4 @@
 import Vue from 'vue'
-// TODO Add all errors handler
-//Vue.config.errorHandler = function (err, vm, info) {
-//
-//}
 
 export default ({app: { store }}) => {
   // FIXME Ask for user location

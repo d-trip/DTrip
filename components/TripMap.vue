@@ -158,7 +158,7 @@ export default {
       const map = this.$refs.mmm.$mapObject
       const bounds = map.getBounds()
 
-      const boundingBox = [[bounds.b.b, bounds.f.b], [bounds.b.f, bounds.f.f]]
+      const boundingBox = [[bounds.j.j, bounds.l.j], [bounds.j.l, bounds.l.l]]
 
       this.fetch_markers(boundingBox)
     }
