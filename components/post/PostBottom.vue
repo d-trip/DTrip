@@ -41,7 +41,7 @@ export default {
 
     share() {
       // TODO Вынести домен в конфиг
-      this.$copyText(`${config.baseURI}@${this.post.author}/${this.post.permlink}`)
+      this.$copyText(`${process.env.BASE_URL}@${this.post.author}/${this.post.permlink}`)
       this.$message('Link to publication copied to clipboard')
     }
   }
