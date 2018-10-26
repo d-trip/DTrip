@@ -48,7 +48,7 @@ div
               i.purce
               span.txt_i
                 | Wallet
-              span(class="amount") {{ parseFloat(user.balanceValue) }}$
+              span(class="amount") {{ user.balance }}
 
             div.divd
             div.mn
