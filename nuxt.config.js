@@ -109,7 +109,7 @@ module.exports = {
   },
 
   router: {
-    mode: SPA ? 'hash' : 'universal',
+    mode: SPA ? 'hash' : 'history',
     linkActiveClass: 'active',
 
     extendRoutes(routes, resolve) {
