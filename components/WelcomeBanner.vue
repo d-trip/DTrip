@@ -1,10 +1,9 @@
 <template lang="pug">
-.welcome-banner(v-if="show && !this.$store.getters['auth/isAuth']")
-  a.close-button(aria-label="Close" @click="show = !show")
+.welcome-banner(v-if="$store.state.showWelcome && !this.$store.getters['auth/isAuth']")
+  a.close-button(aria-label="Close" @click="$store.commit('showWelcome', false)")
     span(aria-hidden="true") &times;
 
   .welcome
-
     .welcome-text
       h1
         | Write about travel, earn, travel.
@@ -12,16 +11,6 @@
         | Repeat.
 
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      show: true
-    }
-  }
-}
-</script>
 
 <style>
 .close-button {

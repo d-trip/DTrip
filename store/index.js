@@ -2,7 +2,8 @@ export const strict = false
 
 
 export const state = () => ({
-  showTop: true
+  showTop: true,
+  showWelcome: true
 })
 
 export const actions = {
@@ -12,7 +13,6 @@ export const actions = {
 }
 
 export const mutations = {
-  showTop: (state, showTop) => {
-    state.showTop = showTop
-  }
+  showTop: (state, showTop) => state.showTop = showTop,
+  showWelcome: (state, showWelcome) => state.showWelcome = showWelcome,
 }
