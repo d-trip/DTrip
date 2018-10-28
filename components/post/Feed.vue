@@ -1,30 +1,24 @@
 <template lang="pug">
-// FIXME При возвращении на ленту, не сохраняется место скрола
-// TODO В ленту подгружать не полные посты полный пост только в модалке или странице
-// Скорее всего решится proxy в 1.6 vue
 div
-  //el-radio-group(v-model='type' size="small" @change="changeType")
-    el-radio-button(label="all")
-    el-radio-button(v-for="type in POST_TYPES" :key="type.value" :label="type.value")
   post-item(v-for="post in posts", :post="post", :key="post.id")
 
   no-ssr
-    infinite-loading(@infinite="handleLoading", :distance="200", force-use-infinite-wrapper="true")
-      p(slot="no-more") No more publication :(
+    // FIXME When going to account page, triggers multiple times
+    infinite-loading(:identifier="infiniteId" @infinite="handleLoading", :distance="200", force-use-infinite-wrapper="true")
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import { POST_TYPES } from '~/constants'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 import PostItem from '@/components/post/PostItem'
 
 
 export default {
+  props: ['infiniteId'],
+
   data() { 
     return {
       showFilters: false,
-      POST_TYPES
     }
   },
 
@@ -37,10 +31,6 @@ export default {
     ...mapActions({
       fetch_posts: 'posts/fetch_posts'
     }),
-
-    changeType(type) {
-      console.log(type)
-    },
 
     handleLoading($state) {
       const posts_count = this.posts.length

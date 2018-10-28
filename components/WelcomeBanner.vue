@@ -1,5 +1,5 @@
 <template lang="pug">
-.welcome-banner(v-show="show && !this.$store.getters['auth/isAuth']")
+.welcome-banner(v-if="show && !this.$store.getters['auth/isAuth']")
   a.close-button(aria-label="Close" @click="show = !show")
     span(aria-hidden="true") &times;
 

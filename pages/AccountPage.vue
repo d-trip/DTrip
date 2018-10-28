@@ -24,6 +24,7 @@ export default {
 
   async fetch ({ app, store, commit, route }) {
     store.dispatch('posts/set_author', route.params.account)
+    store.commit('posts/set_by', 'blog')
 
     if (process.server) {
       await store.dispatch('posts/fetch_posts')
