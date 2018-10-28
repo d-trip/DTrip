@@ -64,6 +64,11 @@ export default {
   border: solid 1px rgba(72, 84, 101, 0.2);
 }
 
-.sort-tab {
+.el-radio-group {
+  display: flex;
+}
+
+.el-radio-button, .el-radio-button__inner {
+  width: 100%;
 }
 </style>
