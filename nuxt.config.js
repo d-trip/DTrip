@@ -67,11 +67,11 @@ module.exports = {
     {ssr: false, src: '~/plugins/vue-quill-editor.js'},
     {ssr: false, src: '~/plugins/vue-notification.js'},
     {ssr: false, src: '~/plugins/vue-clipboard2.js'},
+    {ssr: false, src: '~/plugins/infiniteload.js'},
     // {ssr: false, src: '~/plugins/vue-tel-imput.js'},
 
     '~/plugins/vue-js-modal',
     '~/plugins/vue-google-maps',
-    '~/plugins/infiniteload.js',
     '~/plugins/filters.js',
     '~/plugins/vuex-router-sync.js',
     '~/plugins/elements.js',
