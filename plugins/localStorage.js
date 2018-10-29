@@ -10,7 +10,7 @@ export default ({store}) => {
 
   // Do not use localStorage for SPA/IPFS version
   if (!process.env.isSPA) {
-    paths.append('auth')
+    paths.push('auth')
   }
 
   createPersistedState({
