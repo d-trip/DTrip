@@ -2,10 +2,12 @@ const path = require('path')
 const MongoClient = require('mongodb').MongoClient
 
 const isSPA = process.argv.includes('--spa')
-const isDev = process.argv.includes('dev')
+const isDev = process.env.npm_lifecycle_event == 'dev'
 
 module.exports = {
   env: {
+    isSPA,
+
     PROD: process.env.PROD || false,
     API_QL_URL: process.env.API_QL_URL || 'http://localhost:5000/graphql',
     BACKEND_API: process.env.BACKEND_API || 'http://127.0.0.1:8000/api/',
