@@ -4,10 +4,11 @@
     no-ssr
       create-post-button(v-if="this.$store.getters['auth/user']")
 
-    el-radio-group(v-model='by' size="small" @change="changeBy")
-      el-radio-button(label="created")
-      el-radio-button(label="trending")
-      el-radio-button(label="hot")
+    no-ssr
+      el-radio-group(v-model='by' size="small" @change="changeBy")
+        el-radio-button(label="created")
+        el-radio-button(label="trending")
+        el-radio-button(label="hot")
 
     feed(:infiniteId="infiniteId")
   .col.right-fixed-container(v-if="$device.isDesktop")

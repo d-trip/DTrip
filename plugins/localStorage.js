@@ -7,6 +7,6 @@ export default ({store}) => {
 
   createPersistedState({
       key: VERSION,
-      paths: ['auth', 'editor']
+      paths: ['auth', 'editor', 'showWelcome']
   })(store)
 }
