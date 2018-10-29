@@ -3465,6 +3465,12 @@ gauge@~2.7.3:
     strip-ansi "^3.0.1"
     wide-align "^1.1.0"
 
+geo-hash@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/geo-hash/-/geo-hash-0.0.2.tgz#b43a81770c998f69da3b8d69a4106a4a8eb1e147"
+  dependencies:
+    sortable-hash "0.0.0"
+
 get-caller-file@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"
@@ -6865,6 +6871,10 @@ sort-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-1.1.2.tgz#441b6d4d346798f1b4e49e8920adfba0e543f9ad"
   dependencies:
     is-plain-obj "^1.0.0"
+
+sortable-hash@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/sortable-hash/-/sortable-hash-0.0.0.tgz#7a567aa021d37e6abdcd9e3c949d5d81b16b0cdf"
 
 source-list-map@^2.0.0:
   version "2.0.0"
