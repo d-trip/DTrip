@@ -61,11 +61,11 @@ no-ssr
                     @keyup.enter.native="handleInputConfirm"
                     @blur="handleInputConfirm")
 
-          el-button(v-else-if="1 < editor.tags.length && editor.tags.length < 5"
-                    class="button-new-tag" size="small" @click="showInput") + Custom tag
+          el-button(v-else-if="editor.tags.length < 3"
+                    class="button-new-tag" size="small" @click="showInput") + Add tag
 
-          el-tooltip(v-if="!editor.tags[1]" class="item" effect="dark" content="Publication type" placement="top")
-            el-select(v-model="editor.tags[1]" placeholder="Publication type" size="small").ml-2
+          el-tooltip(v-if="editor.tags.length == 3" class="item" effect="dark" content="Publication type" placement="top")
+            el-select(v-model="editor.tags[3]" placeholder="Publication type" size="small").ml-2
               el-option(v-for="item in POST_TYPES" :key="item.value" :label="item.label" :value="item.value")
 
 
@@ -182,12 +182,12 @@ export default {
     manageAppTags(index) {
       let tagsCount = this.editor.tags.length
 
-      if (index == 0) {
-        return false
-      } else if (tagsCount > 2 && index == 1) {
-        return false
-      } else {
+      if (index < 4 && tagsCount <= 3) {
         return true
+      } else if (index == 3 && tagsCount == 4) {
+        return true
+      } else {
+        false
       }
     },
 

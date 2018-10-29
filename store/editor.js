@@ -17,7 +17,7 @@ export const state = () => ({
   title: '',
   permlink: null,
   body: '',
-  tags: [config.tag_for_post],
+  tags: [],
   geohash: '',
   location: {
     properties: {
@@ -43,7 +43,7 @@ export const mutations = {
     state.title = ''
     state.body = ''
     state[state.format] = ''
-    state.tags = [config.tag_for_post]
+    state.tags = []
     state.permlink = null
     state.geohash = ''
 
@@ -75,8 +75,10 @@ export const actions = {
       throw new Error('Pleace login!')
     }
 
+    let tags = state.tags.includes(config.tag_for_post) ? state.tags : state.tags.concat([config.tag_for_post])
+
     let permlink = state.permlink || await createUniqPermlink(rootState.auth.user.name, state.title)
-    let url = `https://dtrip.app/@${rootState.auth.user.name}/${permlink}`
+    let url = `${process.env.BASE_URL}@${rootState.auth.user.name}/${permlink}`
     let body = state[state.format]
 
     if (!body.includes('PUBLISHED BY DTRIP.APP')) {
@@ -102,12 +104,12 @@ export const actions = {
     try {
       let res = await comment(
         '',
-        config.tag_for_post,
+        state.tags[0],
         rootState.auth.user.name,
         permlink,
         state.title,
         body,
-        {tags: state.tags,
+        {tags: tags,
          geohash: state.geohash,
          location: state.location,
          format: state.format}

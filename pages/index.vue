@@ -31,6 +31,7 @@ export default {
 
   async fetch({ store }) {
     store.dispatch('posts/set_by', 'created')
+    store.commit('posts/set_author', undefined)
 
     if (process.server) {
       await store.dispatch('posts/fetch_posts')

@@ -1,4 +1,5 @@
 <template lang="pug">
+// TODO https://steemhunt.com/sign-up
 div
   .top-navbar
     .navbar-link.navbar-link-brand

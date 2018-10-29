@@ -45,9 +45,10 @@ export default {
       editor.title = post.title
       editor[editor.format] = post.body
       editor.tags = [...new Set([editor.tags[0], ...post.meta.tags])]
-      if (editor.location.geometry) {
-        editor.location = post.meta.location
-      }
+      editor.location = post.meta.location
+
+      if (post.meta.geohash) editor.geohash = post.meta.geohash
+
 
       store.commit('editor/update_body')
     } else {
