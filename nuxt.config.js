@@ -1,7 +1,8 @@
 const path = require('path')
 const MongoClient = require('mongodb').MongoClient
 
-const SPA = process.argv.includes('--spa')
+const isSPA = process.argv.includes('--spa')
+const isDev = process.argv.includes('dev')
 
 module.exports = {
   env: {
@@ -102,14 +103,14 @@ module.exports = {
         })
       }
 
-      if (SPA) {
+      if (isSPA) {
         config.output.publicPath = './_nuxt/'
       }
     },
   },
 
   router: {
-    mode: SPA ? 'hash' : 'history',
+    mode: isSPA ? 'hash' : 'history',
     linkActiveClass: 'active',
 
     extendRoutes(routes, resolve) {
@@ -136,7 +137,7 @@ module.exports = {
     maxAge: 1000 * 60 * 2
   },
 
-  sitemap: SPA ? {
+  sitemap: isSPA ? {
     //cacheTime: 1000 * 60 * 15,
     gzip: true,
     exclude: [
@@ -163,6 +164,7 @@ module.exports = {
   } : undefined,
 
   sentry: {
-    dsn: process.env.SENTRY_DSN || 'https://e00d35317557416b9ef3e69b7df52b50@sentry.io/1306350'
+    dsn: process.env.SENTRY_DSN || 'https://e00d35317557416b9ef3e69b7df52b50@sentry.io/1306350',
+    disabled: isDev
   }
 }
