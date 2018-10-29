@@ -78,7 +78,7 @@ export const actions = {
     let tags = state.tags.includes(config.tag_for_post) ? state.tags : state.tags.concat([config.tag_for_post])
 
     let permlink = state.permlink || await createUniqPermlink(rootState.auth.user.name, state.title)
-    let url = `${process.env.BASE_URL}@${rootState.auth.user.name}/${permlink}`
+    let url = `${config.BASE_URL}@${rootState.auth.user.name}/${permlink}`
     let body = state[state.format]
 
     if (!body.includes('PUBLISHED BY DTRIP.APP')) {
