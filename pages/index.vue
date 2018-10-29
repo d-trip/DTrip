@@ -5,10 +5,19 @@
       create-post-button(v-if="this.$store.getters['auth/user']")
 
     no-ssr
+      el-input(placeholder="Type something"
+               prefix-icon="el-icon-search"
+               v-model="search"
+               v-show="by == 'search'"
+               @keyup.enter.native="infiniteReset"
+               ).mb-2
+
+    no-ssr
       el-radio-group(v-model='by' size="small" @change="changeBy")
         el-radio-button(label="created")
         el-radio-button(label="trending")
         el-radio-button(label="hot")
+        el-radio-button(label="search")
 
     feed(:infiniteId="infiniteId")
   .col.right-fixed-container(v-if="$device.isDesktop")
@@ -20,13 +29,22 @@
 import Feed from '@/components/post/Feed'
 import CreatePostButton from '@/components/post/CreatePostButton'
 import TripMap from '@/components/TripMap'
+import { mapMutations } from 'vuex'
 
 
 export default {
   data() {
     return {
+      search: '',
+
       by: 'created',
-      infiniteId: +new Date()
+      infiniteId: +new Date(),
+    }
+  },
+
+  watch: {
+    search(s) {
+      this.set_search(s)
     }
   },
 
@@ -46,9 +64,19 @@ export default {
   },
 
   methods: {
-    changeBy(by) {
-      this.$store.dispatch('posts/set_by', by)
+    ...mapMutations('posts', ['set_search']),
+
+    infiniteReset() {
+      this.$store.dispatch('posts/set_by', this.by)
       this.infiniteId += 1
+    },
+
+    changeBy(by) {
+      if (by == 'search') {
+				this.$store.commit('posts/set_posts', [])
+			} else {
+				this.infiniteReset()
+			}
     }
   },
 }

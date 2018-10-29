@@ -1,7 +1,9 @@
+// TODO This module need refactoring
 import axios from 'axios'
 import config from '~/config'
 import { Client } from 'dsteem'
 import { preparePost } from '~/utils/'
+import { getContent } from '~/utils/steem'
 
 var client = new Client('https://api.steemit.com')
 
@@ -16,16 +18,30 @@ export const state = () => ({
   },
 
   // DiscussionsBy
-  by: 'created'
+  by: 'created',
+
+  // AskSteeem
+	pg: 1,
+  search: ''
 })
 
 
 export const actions = {
   async fetch_posts({ rootState, state, commit, dispatch }) {
-    let posts
+    let posts = []
 
     if (state.by == 'blog') {
       posts = await client.database.getDiscussions(state.by, {tag: state.author, limit: config.limit,  ...state.last})
+    } else if (state.by == 'search') {
+      if (state.pg > 10) return
+
+      let { data } = await axios.get(
+				`https://api.asksteem.com/search?q=${state.search}+AND+tags:${config.tag_for_post}&pg=${state.pg}`
+			)
+
+      posts = await Promise.all(data.results.map(p => getContent(p.author, p.permlink)))
+
+			commit('set_pg', state.pg += 1)
     } else {
       posts = await client.database.getDiscussions(state.by, {tag: config.tag_for_post, limit: config.limit, ...state.last})
     }
@@ -58,9 +74,11 @@ export const actions = {
 }
 
 export const mutations = {
+  set_pg: (state, pg) => state.pg = pg,
   set_type: (state, type) => state.type = type,
   set_posts: (state, posts) => state.list = posts,
   set_author: (state, author) => state.author = author,
+  set_search: (state, search) => state.search = search,
   set_by: (state, by) => state.by = by,
 
   set_after: (state, {author, permlink}) => {
@@ -69,6 +87,8 @@ export const mutations = {
   },
 
   clear: (state) => {
+    state.pg = 1
+
     state.list = []
     state.last.start_author = undefined
     state.last.start_permlink = undefined
