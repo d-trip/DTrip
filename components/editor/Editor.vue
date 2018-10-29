@@ -84,6 +84,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import { uploadImage } from '~/utils/steem'
 import EditorMap from '~/components/editor/EditorMap.vue'
 import { POST_TYPES } from '~/constants'
+import geohash from 'geo-hash'
 
 export default {
   layout: 'full-width',
@@ -254,6 +255,9 @@ export default {
     },
 
     locationUpdated(location) {
+      let [lon, lat] = location.geometry.coordinates
+
+      this.editor.geohash = geohash.encode(lat, lon)
       this.editor.location = location
     },
 

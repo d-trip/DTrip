@@ -18,6 +18,7 @@ export const state = () => ({
   permlink: null,
   body: '',
   tags: [config.tag_for_post],
+  geohash: '',
   location: {
     properties: {
       name: '',
@@ -44,6 +45,7 @@ export const mutations = {
     state[state.format] = ''
     state.tags = [config.tag_for_post]
     state.permlink = null
+    state.geohash = ''
 
     // GeoJOSON standart
     state.location = {
@@ -106,6 +108,7 @@ export const actions = {
         state.title,
         body,
         {tags: state.tags,
+         geohash: state.geohash,
          location: state.location,
          format: state.format}
       )
