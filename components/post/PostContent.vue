@@ -5,12 +5,6 @@ div
 </template>
 
 <script>
-import marked from 'marked'
-import { XmlEntities } from 'html-entities'
-import { banner_md } from '~/constants'
-import prepare_html from '~/utils/prepare_html'
-
-
 export default {
   props: ['body', 'format'],
 }
