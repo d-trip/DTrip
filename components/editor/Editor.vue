@@ -159,8 +159,10 @@ export default {
         return true
       } else if (index == 3 && tagsCount == 4) {
         return true
+      } else if (index == 4) {
+        return true
       } else {
-        false
+        return false
       }
     },
 

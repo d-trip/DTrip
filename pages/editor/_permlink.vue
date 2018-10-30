@@ -44,7 +44,7 @@ export default {
 
       editor.title = post.title
       editor[editor.format] = post.body
-      editor.tags = [...new Set([editor.tags[0], ...post.meta.tags])]
+      editor.tags = post.meta.tags
       editor.location = post.meta.location
 
       if (post.meta.geohash) editor.geohash = post.meta.geohash
