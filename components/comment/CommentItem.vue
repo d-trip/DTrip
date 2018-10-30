@@ -1,5 +1,5 @@
 <template lang="pug">
-  .comment.mt-2
+  .comment.mt-3
     nuxt-link(:to="{name: 'account', params: {account: comment.author}}").user_av
       img(:src="comment.author | avatar")
 
@@ -102,13 +102,8 @@ export default {
     width: 100%;
   }
 
-  .comments_block .comment .comment_body{
+  .comments_block .comment .comment_body {
     width: calc(100% - 55px);
-    font: 16px 'PT Sans';
-    letter-spacing: -1px;
-    color: #20262d;
-    margin-bottom: 1px;
-    word-break: break-word;
   }
 
   .comments_block .comment .comment_body iframe {
