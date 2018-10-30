@@ -1,6 +1,6 @@
 <template lang="pug">
 .row
-  .col(v-loading="loading").loading
+  .col(v-loading="loading").loading.post-in-modal
     post(v-if="post" :post="post")
     not-found(v-if="notFound").mt-5
 
@@ -49,30 +49,11 @@ export default {
 </script>
 
 <style>
+.post-in-modal {
+  padding: 10px 50px;
+}
+
 .loading {
   min-height: 300px;
 }
-
-  .prev_post {
-    width: 70px;
-    height: 70px;
-    position: fixed;
-    top: 48%;
-    left: calc((100% - 866px)/2 - 130px);
-    z-index: 102;
-    /* background: url('~/assets/icon-prev.svg') no-repeat; */
-    cursor: pointer;
-  }
-
-  .next_post {
-    /* background: url('~/assets/icon-prev.svg') no-repeat; */
-    transform: rotateZ(180deg);
-    width: 70px;
-    height: 70px;
-    position: fixed;
-    cursor: pointer;
-    z-index: 102;
-    top: 48%;
-    right: calc((100% - 866px)/2 - 130px);
-  }
 </style>

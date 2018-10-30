@@ -1,3 +1,9 @@
+@media (max-width: 992px) {
+   .container {
+      width: 100%;
+   }
+}
+
 .vue-map-container {
   height: 100%;
   width: 100%;
