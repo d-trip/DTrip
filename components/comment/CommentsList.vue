@@ -2,18 +2,18 @@
   div
     //div.show_more_comments_button(v-if="hasPostMoreComments", @click="fetchAllComments()")
       | {{ $t('show_comments') }}
+    no-ssr
+      reply(:parentAuthor="post.author"
+            :parentPermlink="post.permlink"
+            :root="true"
+            @newComment="new_comment"
+            ).mt-3
 
     comment-item(v-for="comment of comments"
                   :comment="comment"
                   :key="comment.id"
                   @reply="reply"
                   @newComment="new_comment")
-
-    no-ssr
-      reply(:parentAuthor="post.author"
-            :parentPermlink="post.permlink"
-            @newComment="new_comment"
-            ).mt-2
 
 </template>
 

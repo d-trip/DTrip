@@ -16,14 +16,15 @@
 
       div(v-html="mdBody")
 
-      div
-        span(v-if="$store.getters['auth/isAuth']" @click="reply_toggle").mt-2.reply Reply
-        no-ssr
-          reply(v-if="show_reply"
-                :parentAuthor="comment.author"
-                :parentPermlink="comment.permlink"
-                @newComment="newComment"
-                ).mt-2
+      no-ssr
+        span(v-if="$store.getters['auth/user']" @click="reply_toggle").mt-2.reply Reply
+      no-ssr
+        reply(v-if="show_reply"
+              :parentAuthor="comment.author"
+              :parentPermlink="comment.permlink"
+              @newComment="newComment"
+              @cancel="show_reply = false"
+              ).mt-2
 
       comment-item(v-for="child in comments"
                    :comment="child"
