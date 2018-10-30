@@ -1,5 +1,4 @@
 import marked from 'marked'
-import slug from 'slug'
 import Raven from 'raven-js'
 
 import steem from 'steem'

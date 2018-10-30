@@ -23,13 +23,6 @@ no-ssr
         div(v-show="editor.format == 'markdown'")
           textarea.form-control
 
-        div(v-show="editor.format == 'html'")
-          .quill-editor(
-            v-quill:myQuillEditor="editorOptions",
-            v-model="editor.html"
-          )
-
-
     .row.mt-2
       .col.d-flex
         el-checkbox(v-model="withLocation") Include location
@@ -104,26 +97,6 @@ export default {
 
       inputVisible: false,
       inputValue: '',
-
-      editorOptions: {
-        theme: 'snow',
-        placeholder: 'Заголовок',
-        bounds: '#write_text',
-        modules: {
-          toolbar: {
-            container: [['bold', 'italic'], [{ 'header': 1 }, { 'header': 2 }],
-              [{ 'list': 'ordered' }, { 'list': 'bullet' }], [{ 'align': [] }],
-              [{ 'script': 'sub' }, { 'script': 'super' }], ['link'], ['video'],
-              ['image'], ['blockquote'], ['clean']],
-            handlers: {
-              image: this.imageHandler
-            }
-          },
-          clipboard: {
-            matchVisual: false
-          }
-        }
-      },
     }
   },
 
@@ -189,12 +162,6 @@ export default {
       } else {
         false
       }
-    },
-
-    imageHandler () {
-      const range = this.myQuillEditor.getSelection()
-      const value = prompt('What is the image URL')
-      this.myQuillEditor.insertEmbed(range.index, 'image', value)
     },
 
     async uploadImage (e) {

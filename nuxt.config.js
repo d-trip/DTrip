@@ -29,27 +29,26 @@ module.exports = {
       // { property: 'og:image', content: '' },
 			{ name: "msapplication-TileColor", content: "#da532c"},
 			{ name: "theme-color", content: "#ffffff"},
-
-      { name: "yandex-verification", content: "3001fd7a8873feea"},
-      { name: "google-site-verification", content: "9I09Urp97DzUqnO2i2B8l7ddZ14vCiSWDoZlFIf7ilE"}
     ],
 
     link: [
       // TODO Logo here
 			{ rel: 'icon', type: 'image/x-icon', href: 'favicon.ico'},
-
-      // TODO Выпилить бутстрап полностью и взять только утилиты и сетку
-			//{ rel: "stylesheet", type: "text/css", href: "https://cdn.jsdelivr.net/npm/bootstrap-utilities@4.0.0/bootstrap-utilities.css"},
     ],
   },
+
   css: [
-    '@/assets/css/main.css',
-    'vue-js-modal/dist/styles.css' // FIXME not working by default
+    '@/assets/css/bootstrap.css',
+		'element-ui/lib/theme-chalk/index.css',
+    //'@/assets/css/grid.css', // TODO Remove bootstrap
+    '@/assets/css/bootstrap-utilities.css',
+    'vue-js-modal/dist/styles.css', // FIXME not working by default
+    '@/assets/css/main.css'
   ],
+
   modules: [
     '@nuxtjs/apollo',
     '@nuxtjs/sentry',
-    'bootstrap-vue/nuxt',
     'nuxt-device-detect',
     '@nuxtjs/font-awesome',
     '@nuxtjs/sitemap',
@@ -67,7 +66,6 @@ module.exports = {
 
     {ssr: false, src: '~/plugins/localStorage.js'},
     {ssr: false, src: '~/plugins/vuelidate.js'},
-    {ssr: false, src: '~/plugins/vue-quill-editor.js'},
     {ssr: false, src: '~/plugins/vue-notification.js'},
     {ssr: false, src: '~/plugins/vue-clipboard2.js'},
     {ssr: false, src: '~/plugins/infiniteload.js'},

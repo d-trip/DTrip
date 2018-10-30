@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import slug from 'slug'
 import axios from 'axios'
 import steem from 'steem'
 import Raven from 'raven-js'
@@ -7,6 +6,7 @@ import Raven from 'raven-js'
 import { Signature, PrivateKey, hash } from 'steem/lib/auth/ecc'
 
 import config from '@/config'
+import { slug } from '~/utils'
 import { preparePost, jsonParseSafe } from '~/utils/'
 
 
@@ -72,7 +72,7 @@ export async function getContent(author, permlink) {
 
 export async function createUniqPermlink(author, title) {
   // Возвращает уникальный пермлинк для поста
-  let permlink = slug(title, {lower: true})
+  let permlink = slug(title)
 
   let isExists = await steem.api.getContentAsync(author, permlink)
 
