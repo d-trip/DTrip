@@ -21,6 +21,11 @@ export const actions = {
     }
   },
 
+  logout({ commit }) {
+    commit('set_user', null)
+    commit('set_access_token', null)
+  },
+
   async setLocation({ commit, state }, place) {
     // TODO Вынести в функцию getGeoJSON
     // TODO Вынести в функцию для мержа стейта аккаунта

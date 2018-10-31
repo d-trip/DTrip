@@ -18,8 +18,8 @@ div
           | Payouts: {{ totalPayout | convertGBG }}$
 
 
-    .navbar-items
-      //nuxt-link(:to="{name: 'about'}").white-text FAQ
+    //.navbar-items
+      nuxt-link(:to="{name: 'about'}").white-text FAQ
 
 
     .navbar-link.navbar-link__toggle(@click="mobileMenuToggle = !mobileMenuToggle")
@@ -31,30 +31,36 @@ div
           //a(target='_blank', href="https://t.me/avral").mr-2
             img(src="~/assets/icons/telegram.png").telegram
 
-        nuxt-link(v-if="user" :to="{name: 'account', params: {account: user.name}}").user-lk
+        //nuxt-link(v-if="user" :to="{name: 'account', params: {account: user.name}}").user-lk
+        .user-lk(v-if="user" @click="toggleMenu").noselect
           .user_name.mr-2 @{{ user.name }}
 
           .user_av
             img(:src="user.name | avatar")
 
-        a(v-if="!user" @click="login").login
-          | Login
-        div.right_button(v-else)
-          div(@click="toggleMenu", class="open_menu", v-on-clickaway="closeMenu" )
+          i.el-icon-caret-bottom.ml-2
+
+        //a(v-if="!user" @click="login").login
+        el-button(v-else @click="login" size="small" type="text").login Login 
+          i.fa.fa-sign-in
+        //div.right_button(v-else)
+        //el-button(icon="el-icon-search" size="small" circle)
+          //div(@click="toggleMenu" v-on-clickaway="closeMenu" )
             | Menu 
 
-          div.user_menu(:class="{ active : isMenuOpened }")
+        div.user_menu(v-if="user" :class="{ active : isMenuOpened }").noselect
+          nuxt-link(:to="{name: 'account', params: {account: user.name}}", class="wal")
+            i.purce
+            span.txt_i
+              | Wallet
+            span(class="amount") {{ user.balance }}
 
-            nuxt-link(:to="{name: 'account', params: {account: user.name}}", class="wal")
-              i.purce
-              span.txt_i
-                | Wallet
-              span(class="amount") {{ user.balance }}
-
-            div.divd
-            div.mn
-              //nuxt-link(to="/settings" class="m_item") Настройки
-              a(href="#" class="m_item", @click.prevent="logout").white-text Logout
+          div.divd
+          div.mn
+            //nuxt-link(to="/settings" class="m_item") Настройки
+            a(href="#" class="m_item", @click.prevent="logout").white-text Notifications
+            a(href="#" class="m_item", @click.prevent="logout").white-text Profile
+            a(href="#" class="m_item", @click.prevent="logout").white-text Logout
 
   no-ssr
     .mobile-menu(v-if="mobileMenuToggle")
@@ -72,7 +78,7 @@ div
       //.navbar-link
         nuxt-link(:to="{name: 'about'}").white-text FAQ
         //.navbar-link
-          nuxt-link(:to="{name: 'about'}").white-text Блог мапала
+          //nuxt-link(:to="{name: 'about'}").white-text Блог мапала
 
       .navbar-link
         a(v-if="!user" @click="login").login
@@ -119,7 +125,7 @@ export default {
     },
 
     logout() {
-      this.$store.commit('auth/set_user', null)
+      this.$store.dispatch('auth/logout')
     },
 
     toggleMenu () {
@@ -159,6 +165,7 @@ export default {
 .user-lk {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .user_name {
@@ -169,7 +176,10 @@ export default {
  
 .top-navbar {
   height: 42px;
-  background-image: linear-gradient(180deg,#5d7394,#4b5e7a);
+  /* background-image: linear-gradient(180deg,#5d7394,#4b5e7a); */
+  /* background-color: rgb(85, 118, 151); */
+  background-color: rgb(96, 112, 132);
+  color: #eaecee;
   display: flex;
   padding: 0px 30px;
   font-family: sans-serif;
@@ -204,24 +214,13 @@ export default {
 }
 
 .login {
-  color: #88ade0 !important;
+  color: #fff;
   font: 700 14px PT Sans;
-  display: block;
-  align-items: center;
-  width: 70px;
-  padding-left: 7px;
-  height: 102%;
-  line-height: 42px;
-  box-sizing: border-box;
-  background: url('~assets/icons/icon-login.svg') no-repeat 53px center;
   cursor: pointer;
-  transition: color .2s ease;
-  text-decoration: none;
-  margin-left: 10px;
 }
 
 .login:hover{
-  color: #fff;
+  color: #red !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -333,7 +332,7 @@ export default {
   }
 
   .user_menu {
-    background: #5d7394;
+    background-color: rgb(96, 112, 132);
     width: 350px;
     display: none;
     padding: 35px 0 16px;

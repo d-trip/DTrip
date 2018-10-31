@@ -50,7 +50,7 @@ export default {
 
 <style>
 .post-in-modal {
-  padding: 10px 50px;
+  padding: 15px 50px 30px 50px;
 }
 
 .loading {
