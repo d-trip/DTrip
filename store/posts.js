@@ -33,7 +33,7 @@ export const actions = {
     if (state.by == 'blog') {
       posts = await client.database.getDiscussions(state.by, {tag: state.author, limit: config.limit,  ...state.last})
     } else if (state.by == 'search') {
-      if (state.pg > 10) return
+      if (!state.search || state.pg > 10) return
 
       let { data } = await axios.get(
 				`https://api.asksteem.com/search?q=${state.search}+AND+tags:${config.tag_for_post}&pg=${state.pg}`
