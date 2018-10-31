@@ -58,8 +58,8 @@ div
           div.divd
           div.mn
             //nuxt-link(to="/settings" class="m_item") Настройки
-            a(href="#" class="m_item", @click.prevent="logout").white-text Notifications
-            a(href="#" class="m_item", @click.prevent="logout").white-text Profile
+            //a(href="#" class="m_item", @click.prevent="logout").white-text Notifications
+            nuxt-link(v-if="user" :to="{name: 'account', params: {account: user.name}}").m_item.white-text Profile
             a(href="#" class="m_item", @click.prevent="logout").white-text Logout
 
   no-ssr
@@ -110,7 +110,7 @@ export default {
 
   watch: {
     $route (to, from){
-      this.mobileMenuToggle = false
+      this.isMenuOpened = false
     }
   },
 
