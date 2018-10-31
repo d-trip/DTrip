@@ -55,6 +55,7 @@ export default {
   },
 
   methods: {
+    // TODO Refactoring is important
     moveMarker(location) {
       this.dragend(location)
     },
@@ -65,27 +66,12 @@ export default {
         'latLng': marker.latLng
       }, r => {
         if (!(r && r[0])) return
-        r = r[0]
+        let location = r[0]
 
-        this.locationName = r.formatted_address
+        location.geometry.location.lng = () => marker.latLng.lng()
+        location.geometry.location.lat = () => marker.latLng.lat()
 
-        if (r) {
-					this.$emit('locationUpdated', {
-							properties: {
-                // TODO Add country code
-								name: r.formatted_address,
-							},
-
-							geometry: {
-								type: 'Point',
-								coordinates: [
-									marker.latLng.lng(),
-									marker.latLng.lat(),
-								]
-							}
-						}
-					)
-        }
+        this.setCenter(location)
       })
     },
 
@@ -93,10 +79,16 @@ export default {
       if(!location.geometry) return
       this.zoom = 15
 
+      var filtered_array = location.address_components.filter(address_component => {
+          return address_component.types.includes("country")
+      })
+
+      var country = filtered_array.length ? filtered_array[0].short_name: ""
+
       this.$emit('locationUpdated', {
           properties: {
-            // TODO Add country code
             name: location.formatted_address,
+            country: country,
           },
 
           geometry: {

@@ -224,6 +224,7 @@ export default {
     },
 
     locationUpdated(location) {
+      console.log(location)
       let [lon, lat] = location.geometry.coordinates
 
       this.editor.geohash = geohash.encode(lat, lon)
