@@ -177,8 +177,9 @@ export default {
 .top-navbar {
   height: 42px;
   /* background-image: linear-gradient(180deg,#5d7394,#4b5e7a); */
-  /* background-color: rgb(85, 118, 151); */
-  background-color: rgb(96, 112, 132);
+  background-color: rgb(85, 118, 151);
+  /* background-color: rgb(96, 112, 132); */
+  /* background-color: rgb(80, 113, 158); */
   color: #eaecee;
   display: flex;
   padding: 0px 30px;
@@ -332,7 +333,7 @@ export default {
   }
 
   .user_menu {
-    background-color: rgb(96, 112, 132);
+    background-color: rgb(85, 118, 151);
     width: 350px;
     display: none;
     padding: 35px 0 16px;
