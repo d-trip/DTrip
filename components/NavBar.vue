@@ -32,10 +32,10 @@ div
             img(src="~/assets/icons/telegram.png").telegram
 
         //nuxt-link(v-if="user" :to="{name: 'account', params: {account: user.name}}").user-lk
-        .user-lk(v-if="user" @click="toggleMenu").noselect
+        .user-lk(v-if="user" @click="toggleMenu" v-on-clickaway="closeMenu").noselect
           .user_name.mr-2 @{{ user.name }}
 
-          .user_av
+          .avatar-inside
             img(:src="user.name | avatar")
 
           i.el-icon-caret-bottom.ml-2
@@ -132,10 +132,6 @@ export default {
       this.isMenuOpened = !this.isMenuOpened
     },
 
-    openMenu () {
-      this.isMenuOpened = true
-    },
-
     closeMenu () {
       this.isMenuOpened = false
     }
@@ -153,7 +149,7 @@ export default {
   background-image: linear-gradient(180deg,#5d7394,#4b5e7a);
 }
 
-.user_av {
+.avatar-inside {
   height: 32px;
   width: 32px;
 }

@@ -84,6 +84,12 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+  .avatar-inside {
+    width: 38px;
+    height: 38px;
+    margin-right: 10px;
+  }
+
   .comments_block .comment{
     display: flex;
     flex-wrap: wrap;

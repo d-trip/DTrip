@@ -1,9 +1,8 @@
 <template lang="pug">
 no-ssr
   nuxt-link(:to="{name: 'editor-permlink'}", style="text-decoration: none;").add-post.mb-3
-    .av-wrap
-      img(class="user_av",
-          :src="user.name | avatar")
+    .avatar-inside
+      img(:src="user.name | avatar")
     .write-post.ml-3 Create a Publication
 
 </template>
