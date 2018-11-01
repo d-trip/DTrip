@@ -54,6 +54,7 @@ no-ssr
                     @keyup.enter.native="handleInputConfirm"
                     @blur="handleInputConfirm")
 
+          // TODO Implement situation when dtrip tag is already added
           el-button(v-else-if="editor.tags.length < 3"
                     class="button-new-tag" size="small" @click="showInput") + Add tag
 
@@ -103,7 +104,7 @@ export default {
   computed: {
     ...mapState({
       editor: state => state.editor,
-      account: state => state.auth.account
+      user: state => state.auth.user
     }),
 
     marker() {
@@ -241,10 +242,8 @@ export default {
       try {
         await this.submit()
 
-        this.$alert('Your post will appear in the feed for a one minute.', 'Published', {
-          confirmButtonText: 'OK',
-          callback: () => this.$router.push({ name: 'index'})
-        })
+        this.$router.push({ name: 'AccountPage', params: {account: this.user.name}})
+        this.$notify.success('Published')
       } catch (e) {
         console.log(e)
         this.$notify.error({
