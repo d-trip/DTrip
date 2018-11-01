@@ -74,6 +74,7 @@ export default {
     changeBy(by) {
       if (by == 'search') {
 				this.$store.commit('posts/set_posts', [])
+        this.$store.dispatch('posts/set_by', this.by)
 			} else {
 				this.infiniteReset()
 			}
