@@ -1,7 +1,7 @@
 <template lang="pug">
   .comment.mt-3
-    nuxt-link(:to="{name: 'account', params: {account: comment.author}}").user_av
-      img(:src="comment.author | avatar")
+    nuxt-link(:to="{name: 'account', params: {account: comment.author}}").avatar-inside
+      img(:src="comment.author | avatar('medium')")
 
     div.comment_body
       div.name_bl
@@ -87,20 +87,6 @@ export default {
   .comments_block .comment{
     display: flex;
     flex-wrap: wrap;
-  }
-
-  .comments_block .comment .user_av{
-    width: 40px;
-    height: 40px;
-    overflow: hidden;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 15px;
-  }
-
-  .comments_block .comment .user_av img{
-    display: block;
-    width: 100%;
   }
 
   .comments_block .comment .comment_body {

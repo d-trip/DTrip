@@ -4,7 +4,7 @@ import sbd from 'sbd'
 
 import config from '~/config'
 
-Vue.filter('avatar', (user = '', size = 'small') => `https://steemitimages.com/u/${user}/avatar/${size}`)
+Vue.filter('avatar', (user = '', size = 'medium') => `https://steemitimages.com/u/${user}/avatar/${size}`)
 
 Vue.filter('html_preview', (html) => {
   return sbd.sentences(html, {

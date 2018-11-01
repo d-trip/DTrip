@@ -14,10 +14,10 @@
       .short
         .top-block
           .img-wrap
-            nuxt-link.card-link(:to="{name: 'account', params: {account: post.author}}")
-              img.user_av(:src="post.author | avatar"
-                          :alt="'@' + post.author.name"
-                          :title="'@' + post.author.name")
+            nuxt-link.card-link(:to="{name: 'account', params: {account: post.author}}").avatar-inside
+              img(:src="post.author | avatar"
+                  :alt="'@' + post.author"
+                  :title="'@' + post.author")
 
           .name-block.mr-2
             nuxt-link.name(:to="{name: 'account', params: {account: post.author}}") @{{ post.author }}
