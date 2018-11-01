@@ -73,7 +73,9 @@ export const actions = {
     commit('set_author', author)
   },
 
-  set_by({ commit }, by) {
+  set_by({ commit, state }, by) {
+    if (state.by == by) return
+
     commit('clear')
     commit('set_by', by)
   }
