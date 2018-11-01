@@ -1,4 +1,5 @@
 <template lang="pug">
+// TODO Youtube/DTube videos not rendering
 div
   div(v-html="body").content
 

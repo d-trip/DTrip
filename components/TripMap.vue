@@ -11,11 +11,10 @@ div
     ref="mmm",
     map-type-id="terrain")
 
-    //gmap-cluster(:gridSize="1")
     gmap-marker(
-      v-for="marker in markers",
+      v-for="marker in post_markers",
       :key="marker.permlink",
-      :position="{lat: marker.jsonMetadata.location.geometry.coordinates[1], lng: marker.jsonMetadata.location.geometry.coordinates[0] }",
+      :position="{lat: marker.meta.location.geometry.coordinates[1], lng: marker.meta.location.geometry.coordinates[0] }",
       :clickable="true",
       :draggable="false",
       @click="open_modal(marker)"
@@ -47,6 +46,8 @@ div
 </template>
 
 <script>
+import axios from 'axios'
+
 import { map_options } from '@/config'
 import { mapActions, mapState } from 'vuex'
 import PostModal from '~/components/post/PostModal.vue'
@@ -79,11 +80,13 @@ export default {
 
       options: map_options,
 
+      post_markers: [],
 			account_markers: []
     }
   },
 
   async created() {
+    this.fetch_posts()
     // TODO Markers for accounts
     //let client = this.$apolloProvider.defaultClient
 
@@ -116,6 +119,19 @@ export default {
       'fetch_markers': 'map/fetch_markers'
     }),
 
+    async fetch_posts() {
+      // TODO Fetching by bbox with geohashes
+      let q = 'https://api.asksteem.com/search?q=meta.app:dtrip AND meta.location.geometry.type:Point&include=meta'
+
+      let requests = []
+      for (let i = 1; i < 11; i++) {
+        requests.push(axios.get(q + `&pg=${i}`))
+      }
+
+      requests = await Promise.all(requests)
+      this.post_markers = [].concat(...requests.map(r => r.data.results))
+    },
+
     setCenter(location) {
       if(!location.geometry) return
 
@@ -133,8 +149,8 @@ export default {
         this.infoWindow.content = `<h6>${marker.title}</h6>`
 
         this.infoWindow.position = {
-          lat: marker.jsonMetadata.location.geometry.coordinates[1],
-          lng: marker.jsonMetadata.location.geometry.coordinates[0]
+          lat: marker.meta.location.geometry.coordinates[1],
+          lng: marker.meta.location.geometry.coordinates[0]
         }
       } else {
         this.infoWindow.content = `Здесь сейчас находится <span class="name">@${marker.name}</span>`
@@ -155,12 +171,7 @@ export default {
     },
 
     async updateMarkers() {
-      const map = this.$refs.mmm.$mapObject
-      const bounds = map.getBounds()
-
-      const boundingBox = [[bounds.j.j, bounds.l.j], [bounds.j.l, bounds.l.l]]
-
-      this.fetch_markers(boundingBox)
+      // TODO Implement Filre
     }
   },
 
