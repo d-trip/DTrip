@@ -59,7 +59,13 @@ export const actions = {
       if (posts.length == 0) return await dispatch('fetch_posts')
     }
 
-    commit('set_posts', [...new Set([...state.list, ...posts])])
+    let new_list = [...state.list, ...posts]
+
+    // Remove dublicates
+    var uniq = new Set(new_list.map(e => JSON.stringify(e)));
+    var res = Array.from(uniq).map(e => JSON.parse(e));
+
+    commit('set_posts', res)
   },
 
   set_author({ state, commit }, author) {
