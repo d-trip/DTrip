@@ -177,6 +177,7 @@ export default {
 }
 
 .post-modal {
+  margin-bottom: 50px !important;
   top: 70px !important;
 }
 </style>
