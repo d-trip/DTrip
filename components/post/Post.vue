@@ -2,8 +2,8 @@
 .post-content
   .top_block
     .img_wrap
-      nuxt-link(:to="{name: 'post', params: {author: post.author, permlink: post.permlink}}").user_av
-        img.user_av(:src="post.author | avatar")
+      nuxt-link(:to="{name: 'post', params: {author: post.author, permlink: post.permlink}}").avatar-inside
+        img(:src="post.author | avatar")
 
     div.name_block
       nuxt-link.name(:to="{name: 'account', params: {account: post.author}}") @{{ post.author }}
