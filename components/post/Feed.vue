@@ -4,7 +4,8 @@ div
 
   no-ssr
     // FIXME When going to account page, triggers multiple times
-    infinite-loading(:identifier="infiniteId" @infinite="handleLoading", :distance="200", force-use-infinite-wrapper="true")
+    //infinite-loading(:identifier="infiniteId" @infinite="handleLoading", :distance="200", force-use-infinite-wrapper="true")
+    infinite-loading(:identifier="infiniteId" @infinite="handleLoading")
 </template>
 
 <script>
