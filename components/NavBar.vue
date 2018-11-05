@@ -93,6 +93,7 @@ export default {
 <style scoped>
 a {
   color: #fff;
+  text-decoration: none;
 }
 
 .right {
