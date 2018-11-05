@@ -21,6 +21,10 @@
     p Log in, after that go to main page and click 
       b Create a publication 
       | button.
+
+    h1 Where does the money come from?
+    p The STEEM blockchain keeps printing new STEEM everyday. These new printed STEEM are given out as rewards.
+                
 </template>
 
 <script>
