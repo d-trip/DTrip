@@ -2,18 +2,23 @@
 div
   #mySidenav.sidenav
     a.closebtn(href="#", @click="close") ×
-    a(href='#') About
-    a(href='#') Services
-    a(href='#') Clients
+    nuxt-link(to="about") About
+    nuxt-link(to="faq") FAQ
 
-    a(href='#').mt-auto Contact
-
+    .bottom
+      a(href='https://github.com/d-trip' target="_blank") GitHub
   .open(@click="open")
     i.fa.fa-bars
 </template>
 
 <script>
 export default {
+  watch: {
+    $route() {
+      this.close()
+    }
+  },
+
   methods: {
     open() {
       document.getElementById("mySidenav").style.width = "230px";
@@ -37,7 +42,7 @@ export default {
     right: 0px;
     background-color: #fff;
     overflow-x: hidden;
-    padding-top: 60px;
+    padding-top: 15px;
     transition: 0.2s;
 }
 
@@ -67,8 +72,12 @@ export default {
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
+}
+
+.bottom {
+  bottom: 0;
+  position: absolute;
 }
 
 .open {
