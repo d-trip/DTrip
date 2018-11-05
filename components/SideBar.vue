@@ -4,15 +4,20 @@ div
     a.closebtn(href="#", @click="close") ×
     nuxt-link(to="about") About
     nuxt-link(to="faq") FAQ
+    a(href="https://cloudflare-ipfs.com/ipns/dtrip.app" target="_blank") IPFS Version
 
     .bottom
-      a(href='https://github.com/d-trip' target="_blank") GitHub
-  .open(@click="open")
+      a(href='https://github.com/d-trip/dtrip' target="_blank") GitHub
+  .open(@click="open" v-on-clickaway="close")
     i.fa.fa-bars
 </template>
 
 <script>
+import { mixin as clickaway } from 'vue-clickaway'
+
 export default {
+  mixins: [clickaway],
+
   watch: {
     $route() {
       this.close()
