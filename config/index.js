@@ -5,8 +5,7 @@ const app_tags = ['dtrip']
 let BASE_URL = process.env.BASE_URL
 
 if (process.env.isSPA) {
-  let port = location.port ? `:${location.port}` : ''
-  BASE_URL = `${location.protocol}//${location.hostname}${port}/#/`
+  BASE_URL = location.href.split('/#/')[0] + "/#/"
 }
 
 
