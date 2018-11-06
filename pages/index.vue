@@ -67,7 +67,7 @@ export default {
     ...mapMutations('posts', ['set_search']),
 
     infiniteReset() {
-      this.$store.dispatch('posts/set_by', this.by)
+      this.$store.commit('posts/clear')
       this.infiniteId += 1
     },
 
