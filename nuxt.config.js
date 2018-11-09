@@ -84,6 +84,8 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
 
+
+
   /*
   ** Build configuration
   */
@@ -131,6 +133,12 @@ module.exports = {
   loading: {
     color: 'white',
     height: '3px'
+  },
+
+  loadingIndicator: {
+    name: 'fading-circle',
+    color: '#409EFF',
+    background: 'white'
   },
 
   cache: {
