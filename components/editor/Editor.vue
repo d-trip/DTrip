@@ -25,7 +25,13 @@ no-ssr
 
     .row.mt-2
       .col.d-flex
-        el-checkbox(v-model="withLocation") Include location
+        el-checkbox(v-model="withLocation")
+          span
+            | Include location
+            | (Integrated with 
+            img(:src="'steemitworldmap' | avatar" height="15")
+            a( href="https://steemitworldmap.com" target="_blank") SteemitWorldMap
+            | )
 
           // Image uploader
         el-button(:loading="image_loading"
@@ -128,6 +134,9 @@ export default {
       promptURLs: true,
       initialValue: this.editor.markdown,
 
+      // TODO Insert imge in cursor position
+      hideIcons: ['image'],
+
       // TODO previewRender: 
 	    //autosave: {
 		  //  enabled: true,
@@ -229,6 +238,19 @@ export default {
 
       this.editor.geohash = geohash.encode(lat, lon)
       this.editor.location = location
+
+      // TODO Description
+      //theDescription = $("#blogCodeDescription").val();
+      let stemit_wm_tag = `[//]:# (!steemitworldmap ${lat.toFixed(6)} lat ${lon.toFixed(6)} long ${''} d3scr)`
+
+      // SteemitWorldMap integration
+      if (this.editor.markdown.includes('[//]:# (!steemitworldmap ')) {
+        this.editor.markdown = this.editor.markdown.replace(/.*\[\/\/\]:# \(!steemitworldmap.*?\)/gmi, stemit_wm_tag)
+      } else {
+        this.editor.markdown += `\n${stemit_wm_tag}`
+      }
+
+      this.codemirror.getDoc().setValue(this.editor.markdown)
     },
 
     async _submit() {
