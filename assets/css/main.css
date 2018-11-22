@@ -1,3 +1,15 @@
+.pointer {
+    cursor: pointer;
+}
+
+.location {
+    line-height: 20px;
+    color: #7e8793;
+    padding: 6px 0px 0px 23px;
+    position: relative;
+    background: url('~/assets/icons/icon-location.svg') no-repeat left 3px;
+}
+
 .v--modal {
     margin-top: 60px;
     margin-bottom: 60px;
@@ -104,18 +116,6 @@ button {
     height: 100%;
     border-radius: 50%;
 }
-
-.location {
-    margin-top: 4px;
-    font-size: 16px;
-    line-height: 18px;
-    letter-spacing: -.5px;
-    color: #7e8793;
-    padding-left: 12px;
-    position: relative;
-    background: 
-}
-
 
 .mutted-text {
   font-style: normal;

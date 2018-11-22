@@ -2,33 +2,37 @@
 .row
   .col-md-4
     no-ssr
-      create-post-button(v-if="this.$store.getters['auth/user']")
+      div
+        create-post-button(v-if="this.$store.getters['auth/user']")
 
-    no-ssr
-      el-input(placeholder="Type something"
-               prefix-icon="el-icon-search"
-               v-model="search"
-               v-show="by == 'search'"
-               @keyup.enter.native="infiniteReset"
-               ).mb-2
+        search(v-if="$route.name == 'index-accounts' || by =='search'"
+               placeholder="Where you going?" prefix-icon="el-icon-search" @enter="setSearch")
 
-    no-ssr
-      el-radio-group(v-model='by' size="small" @change="changeBy")
-        el-radio-button(label="created")
-        el-radio-button(label="trending")
-        el-radio-button(label="hot")
-        el-radio-button(label="search")
+        .d-flex.tabs.mt-2
+          nuxt-link(tag="button" :to="{name: 'index'}").el-radio-button__inner posts
+          nuxt-link(tag="button" :to="{name: 'index-accounts'}").el-radio-button__inner users
 
-    feed(:infiniteId="infiniteId")
+        .mt-2(v-if="$route.name == 'index'")
+          el-radio-group(v-model='by' size="mini" @change="changeBy" )
+            el-radio-button(label="created")
+            el-radio-button(label="trending")
+            el-radio-button(label="hot")
+            el-radio-button(label="search")
+          feed(:infiniteId="infiniteId")
+
+        nuxt-child(v-else :search="search")
+
+
   .col.right-fixed-container(v-if="$device.isDesktop")
     no-ssr
       trip-map#map
 </template>
 
 <script>
-import Feed from '@/components/post/Feed'
-import CreatePostButton from '@/components/post/CreatePostButton'
-import TripMap from '@/components/TripMap'
+import Feed from '~/components/post/Feed'
+import CreatePostButton from '~/components/post/CreatePostButton'
+import Search from '~/components/elements/Search'
+import TripMap from '~/components/TripMap'
 import { mapMutations } from 'vuex'
 
 
@@ -60,11 +64,17 @@ export default {
   components: {
     Feed,
     CreatePostButton,
-    TripMap
+    TripMap,
+    Search
   },
 
   methods: {
     ...mapMutations('posts', ['set_search']),
+
+    setSearch(search) {
+      this.search = search
+      this.infiniteReset()
+    },
 
     infiniteReset() {
       this.$store.commit('posts/clear')
@@ -76,6 +86,7 @@ export default {
 				this.$store.commit('posts/set_posts', [])
         this.$store.dispatch('posts/set_by', this.by)
 			} else {
+        this.search = ''
 				this.infiniteReset()
 			}
     }
@@ -85,6 +96,31 @@ export default {
 </script>
 
 <style>
+.tabs button {
+  padding: 9px 15px;
+  font-size: 12px;
+  border-radius: 4px 0 0 4px;
+  -webkit-box-shadow: none!important;
+  box-shadow: none!important;
+}
+
+.tabs button:first-child {
+  border-right: 0px;
+  border-left: 1px solid #dcdfe6;
+}
+
+.tabs button:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.tabs .active.nuxt-link-exact-active {
+  color: #fff;
+  background-color: #409EFF;
+  border-color: #409EFF;
+  -webkit-box-shadow: -1px 0 0 0 #409EFF;
+  box-shadow: -1px 0 0 0 #409EFF;
+}
+
 .sort {
   display: flex;
   align-items: center;

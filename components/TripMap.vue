@@ -20,7 +20,7 @@ div
       @click="open_modal(marker)"
       @mouseover="openInfoWindow(marker, 'post')",
       @mouseout="infoWindow.opened = false",
-      )
+    )
 
     gmap-marker(
       v-for="marker in account_markers",
@@ -32,7 +32,7 @@ div
       @click="$router.push({name: 'account', params: { account: marker.name }})"
       @mouseover="openInfoWindow(marker, 'account')",
       @mouseout="infoWindow.opened = false",
-      )
+    )
 
     gmap-info-window(
       :options="infoWindow.options",
@@ -40,7 +40,7 @@ div
       :content="infoWindow.content",
       :position="infoWindow.position",
       @closeclick="infoWindow.opened=false"
-      )
+    )
 
 
 </template>

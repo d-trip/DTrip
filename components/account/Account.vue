@@ -11,19 +11,23 @@ div.pf
        | {{ account.name }}
 
   no-ssr
-    .user-data.text-center
-      i.el-icon-location(v-if="profile.meta.dtripProfile.location")
-        | {{ profile.meta.dtripProfile.location.properties.name }}
+    .user-data
+      .location(v-if="profile.meta.profile.location").mb-1
+        | {{ profile.meta.profile.location }}
 
-      // TODO Для стима
-      //div
-        el-button(v-if="$store.state.auth.account.name == account.name"
-                  size="small" @click="showEditAccount = !showEditAccount").edit-button Редактировать
+      .leader(v-if="profile.meta.profile.about").mb-1
+        | {{ profile.meta.profile.about }}
 
-        edit-account(v-if="showEditAccount").mt-3
+      div
+        el-button(v-if="user && user.name == account.name"
+                  size="small" @click="showEditAccount = !showEditAccount").edit-button Edit
+
+        // TODO Accept guests!
+
+        edit-account(v-if="showEditAccount" @editingStop="showEditAccount = false").mt-3
 
 //  div.bottom_bl
-    nuxt-link.but.ic.set(:to="{name: 'index'}")
+    nuxt-link
       | Задания
 
     nuxt-link.but.ic.set(:to="{name: 'index'}")
@@ -94,7 +98,7 @@ export default {
 
 <style>
 .user-data {
-  padding: 15px;
+  padding: 25px;
 }
 
 .edit-button {
