@@ -2,7 +2,8 @@
 div
   .row
     .col
-      el-checkbox(v-model="profile.accepting_guests") Accepting Guests
+      el-checkbox(false-label="no" true-label="yes" v-model="profile.accepting_guests") Accepting Guests
+      el-checkbox(false-label="no" true-label="yes" label="Wants to Meet Up", v-model="profile.wants_meet_up")
   .row
     .col
       label Loaction:
@@ -31,32 +32,23 @@ export default {
     this.profile = this.user.meta.profile
   },
 
-  watch: {
-    profile: {
-      handler(lol, b, c) {
-        console.log(lol, b, c)
-      },
-      deep: true
-    }
-  },
-
   computed: {
     ...mapGetters('auth', ['user']),
   },
 
   methods: {
-    ...mapActions({
-      'setLocation': 'auth/setLocation'
-    }),
+    ...mapActions('auth', ['profileUpdate']),
+
+    setLocation(location) {
+      this.user.meta.profile.location = location.formatted_address
+    },
 
     changeAcceptGuests(accepting_guests) {
       this.user.meta.profile.accepting_guests = accepting_guests
     },
 
     update() {
-      console.log(Object.entries(this.user.meta.profile).map(([key, val]) => `${key}=${val}`).join('&'))
-      //axios.get('https://steemconnect.com/sign/profile-update', {params: this.user.meta.profile})
-
+      this.profileUpdate()
       this.$emit('editingStop')
     }
   }

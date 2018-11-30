@@ -18,7 +18,6 @@ export default {
   limit: 50,
 
   img_proxy_prefix: 'https://steemitimages.com/',
-  API_QL_URL: process.env.API_QL_URL || 'http://127.0.0.1:5000/graphql',
   AUTH_CALLBACK: BASE_URL + 'auth',
 }
 

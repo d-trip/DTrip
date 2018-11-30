@@ -15,8 +15,7 @@ div.pf
       .location(v-if="profile.meta.profile.location").mb-1
         | {{ profile.meta.profile.location }}
 
-      .leader(v-if="profile.meta.profile.about").mb-1
-        | {{ profile.meta.profile.about }}
+      about(:profile="profile.meta.profile")
 
       div
         el-button(v-if="user && user.name == account.name"
@@ -40,6 +39,7 @@ div.pf
 <script>
 import { mapGetters } from 'vuex'
 import EditAccount from '~/components/account/EditAccount.vue'
+import About from '~/components/account/About'
 
 export default {
   props: ['account'],
@@ -63,7 +63,8 @@ export default {
   },
 
   components: {
-    EditAccount
+    EditAccount,
+    About
   },
 
 	head () {

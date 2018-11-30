@@ -1,9 +1,25 @@
 <template lang="pug">
 div
-  .filters
-    el-checkbox(label="Accepting guests", v-model="acceptingGuests")
-    el-checkbox(label="Wants to Meet Up", v-model="wantsTomeetUp")
+  .filters.mt-2
+    .row
+      .col
+        el-checkbox(label="Accepting guests", v-model="accepting_guests" @change="reset")
+      .col
+        el-checkbox(label="Wants to Meet Up", v-model="wants_meet_up" @change="reset")
+      //.col TODO
+        //el-tooltip(placement="right" content="User create publications for SteemitWorldMap")
+        el-checkbox(false-label="no" true-label="yes" v-model="postingToSWM" @change="reset")
+          img(src="~/assets/icons/swm.png")
+          |  Active on SteemitWorldMap
 
+  .filters
+    el-select(v-model="lastPost" placeholder="Last publication" size="small" @change="reset")
+      el-option-group(label="Last publication")
+        el-option(label="Week" value="week")
+        el-option(label="Month" value="month")
+        el-option(label="All" value="all")
+
+  </el-select>
   .row
     .col
       p(v-if="total").lead Total: {{ total }}
@@ -28,8 +44,10 @@ export default {
       total: 0,
       accounts: [],
 
-      acceptingGuests: false,
-      wantsTomeetUp: false,
+      lastPost: 'all',
+      accepting_guests: false,
+      wants_meet_up: false,
+      postingToSWM: false,
 
       page: 1,
     }
@@ -49,10 +67,36 @@ export default {
     },
 
     async fetch_accounts() {
+      let date = new Date()
+      if (this.lastPost == 'month') {
+        date.setMonth(date.getMonth() - 1)
+      } else if (this.lastPost == 'week') {
+        date.setDate(date.getDate() - 7)
+      }
+
+      // TODO Account have steemitworldmap posts
+      //db.getCollection('account_object').aggregate([
+      //{
+      //    $lookup: {
+      //        "from":"post_object",
+      //        "localField":"name",
+      //        "foreignField":"author",
+      //        "as":"Aposts"
+      //    },
+      //}, {
+      //    $unwind: "$Aposts"}, {
+      //        
+      //    "$match":{"Aposts": {$exists: true}}
+      //}])
+
       let {data: { _items, _meta }} = await axios.get(`${process.env.API_URL}/accounts`, {
         params: {
           where: {
-            $text: this.search ? { $search: this.search } : undefined
+            'last_post': this.lastPost != 'all' ? { '$gt': date.toISOString() } : undefined,
+            'profile.accepting_guests': this.accepting_guests ? 'yes' : undefined,
+            'profile.wants_meet_up': this.wants_meet_up ? 'yes' : undefined,
+
+            $text: this.search ? { $search: this.search } : undefined,
           },
 
           page: this.page,

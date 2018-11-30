@@ -18,17 +18,25 @@
         .location(v-if="account.profile.location").mb-1
           | {{ account.profile.location }}
 
+      hr
       p.card-text
-        | {{ account.profile.about }}
-      a.btn.btn-primary(href='#') Go somewhere
+        about(:profile="account.profile")
+      a(:href="'https://steemit.com/@' + account.name" target="_blank")
+        el-button(size="small" native-type="a") steemit
     .card-footer.text-muted
       | Last publication: {{ account.last_post | formatDate }}
       
 </template>
 
 <script>
+import About from '~/components/account/About'
+
 export default {
   props: ['account'],
+
+  components: {
+    About
+  }
 }
 </script>
 
