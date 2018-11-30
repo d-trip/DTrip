@@ -5,7 +5,7 @@
       div(v-if="post.thumb")
         a(v-if="$device.isDesktop" @click="open_modal")
           .post-image
-            img(:src="post.thumb | steem_proxy('480x320')", :alt="post.title", :title="post.title")
+            img(:src="post.thumb | steem_proxy('800x600')", :alt="post.title", :title="post.title")
 
         nuxt-link(v-else :to="{name: 'post', params: {author: post.author, permlink: post.permlink}}")
           .post-image
