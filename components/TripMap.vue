@@ -1,12 +1,12 @@
 <template lang="pug">
-div
+div(v-loading="loading")
   gmap-autocomplete(@place_changed="setCenter"
                     :selectFirstOnEnter="true"
                     placeholder="Loaction search").vue-map-search.form-control#search
   gmap-map(
     :options="options",
     :center="center",
-    :zoom="zoom",
+    :zoom="4",
     @idle="updateMarkers",
     ref="mmm",
     map-type-id="terrain")
@@ -17,10 +17,27 @@ div
       :position="{lat: marker.meta.location.geometry.coordinates[1], lng: marker.meta.location.geometry.coordinates[0] }",
       :clickable="true",
       :draggable="false",
-      @click="open_modal(marker)"
+      @click="open_modal(marker.author, marker.permlink)"
       @mouseover="openInfoWindow(marker, 'post')",
       @mouseout="infoWindow.opened = false",
     )
+
+    gmap-cluster(@click="clusterClick" :zoomOnClick="false" :gridSize="gridSize")
+      gmap-marker(
+        v-for="marker in swm_markers",
+        :key="marker.permlink",
+        :title="marker.title"
+        :position="marker.position",
+        :clickable="true",
+        :draggable="false",
+        :label="marker.label"
+        @click="open_modal(...marker.label.split('/'))"
+        )
+
+    //
+      @mouseover="openInfoWindow(marker, 'post')",
+      @mouseout="infoWindow.opened = false",
+
 
     gmap-marker(
       v-for="marker in account_markers",
@@ -34,27 +51,51 @@ div
       @mouseout="infoWindow.opened = false",
     )
 
+    // For cluster View
+    gmap-info-window(
+      :options="clusterWindow.options",
+      :opened="clusterWindow.opened",
+      :position="clusterWindow.position",
+      @closeclick="clusterWindow.opened = false")
+      div(v-for="(post, index) in clusterWindow.posts")
+        a(href="#" @click="open_modal(post.author, post.permlink)") {{ post.title }}
+        hr(v-if="index != clusterWindow.posts.length - 1")
+
     gmap-info-window(
       :options="infoWindow.options",
       :opened="infoWindow.opened",
-      :content="infoWindow.content",
       :position="infoWindow.position",
       @closeclick="infoWindow.opened=false"
     )
+      div(v-html="infoWindow.content")
 
 
 </template>
 
 <script>
 import axios from 'axios'
+import xml from 'xml-js'
 
 import { map_options } from '@/config'
 import { mapActions, mapState } from 'vuex'
 import PostModal from '~/components/post/PostModal.vue'
 import GmapCluster from 'vue2-google-maps/dist/components/cluster'
+import { getContent } from '~/utils/steem'
 
 
 export default {
+  props: {
+    account: {
+      type: String,
+      default: ''
+    },
+
+    gridSize: {
+      type: Number,
+      default: undefined
+    }
+  },
+
   data() {
     return {
       zoom: 4,
@@ -62,6 +103,21 @@ export default {
         lat: 48,
         lng: 30
       },
+
+      clusterWindow: {
+        posts: [],
+
+        options: {
+          maxWidth: 400,
+          maxHeight: 100,
+        },
+        position: {
+          lat: 0.0,
+          lng: 0.0
+        },
+        opened: false,
+      },
+
       infoWindow: {
         options: {
           maxWidth: 250,
@@ -81,31 +137,22 @@ export default {
       options: map_options,
 
       post_markers: [],
-			account_markers: []
+      swm_markers: [], // SteemitWorldMap
+			account_markers: [],
+
+      loading: false
     }
   },
 
   async created() {
-    this.fetch_posts()
-    // TODO Markers for accounts
-    //let client = this.$apolloProvider.defaultClient
-
-    //let { data } = await client.query({query: ACCOUNT_MARKERS_QUERY})
-
-    //this.account_markers = data.accounts.edges.map(e => {
-    //  e = e.node
-
-    //  let avatar = e.meta.profile.profileImage || 'https://thumb.ibb.co/bHPoQz/icon_profile.png'
-    //  return {
-    //    name: e.name,
-    //    coords: {
-    //      lat: e.meta.dtripProfile.location.geometry.coordinates[0],
-    //      lng: e.meta.dtripProfile.location.geometry.coordinates[1]
-    //    },
-
-    //    icon: 'https://imgp.golos.io/32x32/' + avatar
-    //  }
-    //})
+    // Now SteemitWorldMap only for account page
+    this.loading = true
+    if (this.account) {
+      await this.swmFetch()
+    } else {
+      await this.fetch_posts()
+    }
+    this.loading = false
   },
 
   computed: {
@@ -118,6 +165,48 @@ export default {
     ...mapActions({
       'fetch_markers': 'map/fetch_markers'
     }),
+
+    async swmFetch() {
+      // TODO bbox
+      // db.getCollection('post_object').find({"geo.geometry.coordinates": {
+      //   "$geoWithin": {
+      //       "$box": [
+      //           [165.8694369, -52.61941849999999],
+      //           [175.831536, -29.2313419]
+      //       ]
+      //   }
+      //   }})
+
+      let {data: { _items, _meta }} = await axios.get(`${process.env.API_URL}/posts`, {
+        params: {
+          where: {"author": this.account, "geo.geometry.coordinates": {"$ne": null}},
+
+          max_results: 1000,
+          page: this.page,
+        }
+      })
+
+      this.swm_markers = _items.map(i => {
+        return {
+          title: i.title,
+          label: `${i.author}/${i.permlink}`,
+          position: {
+            lat: i.geo.geometry.coordinates[1],
+            lng: i.geo.geometry.coordinates[0],
+          },
+        }
+      })
+    },
+
+    async clusterClick(cluster) {
+      this.clusterWindow.opened = true
+      //this.clusterWindow.position = {lat: cluster.center.lat(), lng: cluster.center.lng()}
+      this.clusterWindow.position = cluster.center_
+      let markers = cluster.getMarkers()
+      console.log(markers)
+
+      this.clusterWindow.posts = await Promise.all(markers.map(m => getContent(...m.label.split('/'))))
+    },
 
     async fetch_posts() {
       // TODO Fetching by bbox with geohashes
@@ -146,6 +235,7 @@ export default {
       this.infoWindow.opened = true
 
       if (type == 'post') {
+        console.log(12)
         this.infoWindow.content = `<h6>${marker.title}</h6>`
 
         this.infoWindow.position = {
@@ -161,8 +251,8 @@ export default {
       this.infoWindow.options.maxWidth = 180
     },
 
-    async open_modal(marker) {
-      this.$modal.show(PostModal, {author: marker.author, permlink: marker.permlink}, {
+    async open_modal(author, permlink) {
+      this.$modal.show(PostModal, {author: author, permlink: permlink}, {
         height: 'auto',
         width: '60%',
         scrollable: true,

@@ -5,7 +5,7 @@
     feed
   .col.right-fixed-container(v-if="$device.isDesktop")
     no-ssr
-      trip-map#map
+      trip-map#map(:account="account.name" :gridSize="5")
 
 </template>
 

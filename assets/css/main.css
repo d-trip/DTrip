@@ -10,6 +10,10 @@
     background: url('~/assets/icons/icon-location.svg') no-repeat left 3px;
 }
 
+.gm-style-iw {
+    max-height: 200px;
+}
+
 .v--modal {
     margin-top: 60px;
     margin-bottom: 60px;
