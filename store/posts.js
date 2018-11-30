@@ -53,7 +53,8 @@ export const actions = {
     if (posts.length > 0) commit('set_after', posts[posts.length - 1])
 
     if (state.by == 'blog' && posts.length > 0) {
-      posts = posts.filter(p => p.meta.tags && p.meta.tags.includes(config.tag_for_post))
+      // Filter posts by app tag in blog
+      //posts = posts.filter(p => p.meta.tags && p.meta.tags.includes(config.tag_for_post))
 
       // Search posts recursive
       if (posts.length == 0) return await dispatch('fetch_posts')
