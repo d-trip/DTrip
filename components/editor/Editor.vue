@@ -48,7 +48,7 @@ no-ssr
         .d-flex
           el-tag(:key="index"
                   v-for="(tag, index) in editor.tags"
-                  :closable="manageAppTags(index)"
+                  :closable="true"
                   :disable-transitions="false"
                   @close="handleClose(tag)") {{ tag }}
 
@@ -61,11 +61,12 @@ no-ssr
                     @blur="handleInputConfirm")
 
           // TODO Implement situation when dtrip tag is already added
-          el-button(v-else-if="editor.tags.length < 3"
+          el-button(v-else-if="editor.tags.length < 4"
                     class="button-new-tag" size="small" @click="showInput") + Add tag
 
-          el-tooltip(v-if="editor.tags.length == 3" class="item" effect="dark" content="Publication type" placement="top")
-            el-select(v-model="editor.tags[3]" placeholder="Publication type" size="small").ml-2
+          el-tooltip(v-if="!typeSelected && editor.tags.length > 0"
+                     class="item" effect="dark" content="Publication type" placement="top")
+            el-select(v-model="editor.tags[editor.tags.length]" placeholder="Publication type" size="small").ml-2
               el-option(v-for="item in POST_TYPES" :key="item.value" :label="item.label" :value="item.value")
 
 
@@ -112,6 +113,10 @@ export default {
       editor: state => state.editor,
       user: state => state.auth.user
     }),
+
+    typeSelected() {
+      return this.editor.tags.some(r => this.POST_TYPES.map(t => t.value).includes(r))
+    },
 
     marker() {
       if (this.editor && this.editor.location && this.editor.location.geometry.coordinates[0]) {
@@ -162,20 +167,6 @@ export default {
   },
 
   methods: {
-    manageAppTags(index) {
-      let tagsCount = this.editor.tags.length
-
-      if (index < 4 && tagsCount <= 3) {
-        return true
-      } else if (index == 3 && tagsCount == 4) {
-        return true
-      } else if (index == 4) {
-        return true
-      } else {
-        return false
-      }
-    },
-
     async uploadImage (e) {
       this.image_loading = true
       e.preventDefault()
