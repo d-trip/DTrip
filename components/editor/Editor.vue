@@ -232,13 +232,13 @@ export default {
 
       // TODO Description
       //theDescription = $("#blogCodeDescription").val();
-      let stemit_wm_tag = `[//]:# (!steemitworldmap ${lat.toFixed(6)} lat ${lon.toFixed(6)} long ${''} d3scr)`
+      let stemit_wm_tag = `\n\n [//]:# (!steemitworldmap ${lat.toFixed(6)} lat ${lon.toFixed(6)} long ${''} d3scr)`
 
       // SteemitWorldMap integration
       if (this.editor.markdown.includes('[//]:# (!steemitworldmap ')) {
         this.editor.markdown = this.editor.markdown.replace(/.*\[\/\/\]:# \(!steemitworldmap.*?\)/gmi, stemit_wm_tag)
       } else {
-        this.editor.markdown += `\n${stemit_wm_tag}`
+        this.editor.markdown += stemit_wm_tag
       }
 
       this.codemirror.getDoc().setValue(this.editor.markdown)
