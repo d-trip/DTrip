@@ -255,7 +255,7 @@ export default {
       try {
         await this.submit()
 
-        this.$router.push({ name: 'AccountPage', params: {account: this.user.name}})
+        this.$router.push({ name: 'account', params: {account: this.user.name}})
         this.$notify.success('Published')
       } catch (e) {
         console.log(e)
