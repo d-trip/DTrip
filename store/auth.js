@@ -45,10 +45,16 @@ export const actions = {
   },
 
   async fetch_user ({ commit, dispatch, state }) {
-    let { name } = await Vue.SteemConnect().me()
+    try {
+      var { name } = await Vue.SteemConnect().me()
+    } catch(e) {
+      dispatch('logout')
+    }
+
     let user = await getAccount(name || state.user.name)
 
     if (!user) {
+      // FIXME May be not used
       commit('set_user', null)
     } else {
       profile_copy = Object.assign({}, user.meta.profile)
