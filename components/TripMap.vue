@@ -289,7 +289,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .vue-map-search {
     z-index: 999;
     position: absolute;
