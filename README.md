@@ -3,15 +3,15 @@ DTrip client
 Env:
 > API_QL_URL: dtrip-api url
  
-## Run local
+## Run for local development
 ```yarn run dev```
 
 ## SPA version
 #### https://cloudflare-ipfs.com/ipns/dtrip.app/
 ```
-yarn run build --spa
+docker-compose run --rm spa-build
 ```
-After that you can use the static version of the application from the dist folder.
+After that you can use the static version of the application from the ```dist``` folder.
 
 
 ## Run docker
