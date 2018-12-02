@@ -27,7 +27,10 @@ div
   account-item(v-for="account in accounts" :account="account" :key="account.name")
 
   no-ssr
-    infinite-loading(ref="infiniteload" @infinite="handleLoading")
+    .row
+      .col
+        | asdf
+        infinite-loading(:identifier="loadId" @infinite="handleLoading")
     // infinite-loading(ref="infiniteload" @infinite="handleLoading" :forceUseInfiniteWrapper="true")
 
 </template>
@@ -51,6 +54,8 @@ export default {
       postingToSWM: false,
 
       page: 1,
+
+      loadId: +new Date(),
     }
   },
 
@@ -64,7 +69,7 @@ export default {
     reset() {
       this.accounts = []
       this.page = 1
-      this.$refs.infiniteload.stateChanger.reset()
+      this.loadId += 1
     },
 
     async fetch_accounts() {
@@ -112,6 +117,7 @@ export default {
     },
 
     async handleLoading($state) {
+      console.log('load..')
       let prev_count = this.accounts.length
 
       this.fetch_accounts().then(() => {
