@@ -42,6 +42,6 @@ export default {
 
 <style>
 .name {
-  font: 700 20px/20px PT Sans;
+  font: PT Sans;
 }
 </style>
