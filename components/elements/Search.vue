@@ -16,6 +16,14 @@ export default {
     }
   },
 
+  watch: {
+    search(val) {
+      if (val == '') {
+        this.$emit('enter', val)
+      }
+    }
+  },
+
   methods: {
     enter() {
       this.$emit('enter', this.search)
