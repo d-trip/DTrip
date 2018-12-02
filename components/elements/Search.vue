@@ -1,5 +1,6 @@
 <template lang="pug">
   el-input(:placeholder="placeholder"
+           type="text"
            prefix-icon="el-icon-search"
            v-model="search"
           @keyup.enter.native="enter")
