@@ -7,8 +7,8 @@ div(v-loading="loading")
     :options="options",
     :center="center",
     :zoom="4",
-    @idle="updateMarkers",
     ref="mmm",
+    @idle="updateMarkers",
     map-type-id="terrain")
 
     gmap-marker(
@@ -32,12 +32,9 @@ div(v-loading="loading")
         :draggable="false",
         :options="marker.options"
         @click="open_modal(...marker.options.meta.split('/'))"
+        @mouseover="openInfoWindow(marker)",
+        @mouseout="infoWindow.opened = false",
         )
-
-    //
-      @mouseover="openInfoWindow(marker, 'post')",
-      @mouseout="infoWindow.opened = false",
-
 
     gmap-marker(
       v-for="marker in account_markers",
@@ -57,7 +54,7 @@ div(v-loading="loading")
       :opened="clusterWindow.opened",
       :position="clusterWindow.position",
       @closeclick="clusterWindow.opened = false")
-      .info-window
+      .info-window(v-loading="clusterLoading")
         div(v-for="(post, index) in clusterWindow.posts")
           nuxt-link.name(:to="{name: 'account', params: {account: post.author}}") @{{ post.author }}  
           a(href="#" @click="open_modal(post.author, post.permlink)") {{ post.title }}
@@ -69,8 +66,7 @@ div(v-loading="loading")
       :position="infoWindow.position",
       @closeclick="infoWindow.opened=false"
     )
-      div(v-html="infoWindow.content")
-
+      p.leader {{ infoWindow.marker.title }}
 
 </template>
 
@@ -130,7 +126,7 @@ export default {
           maxWidth: 250,
           pixelOffset: {
             width: 0,
-            height: -52
+            height: -45
           }
         },
         position: {
@@ -138,7 +134,7 @@ export default {
           lng: 0.0
         },
         opened: false,
-        content: ''
+        marker: {}
       },
 
       options: map_options,
@@ -147,19 +143,19 @@ export default {
       swm_markers: [], // SteemitWorldMap
 			account_markers: [],
 
-      loading: false
+      loading: false,
+      clusterLoading: true,
     }
   },
 
   async created() {
-    // Now SteemitWorldMap only for account page
     this.loading = true
-    if (this.account) {
+
+    try {
       await this.swmFetch()
-    } else {
-      await this.fetch_posts()
+    } finally {
+      this.loading = false
     }
-    this.loading = false
   },
 
   computed: {
@@ -206,23 +202,27 @@ export default {
       })
 		},
 
-    async swmFetch() {
-      // TODO bbox
-      // db.getCollection('post_object').find({"geo.geometry.coordinates": {
-      //   "$geoWithin": {
-      //       "$box": [
-      //           [165.8694369, -52.61941849999999],
-      //           [175.831536, -29.2313419]
-      //       ]
-      //   }
-      //   }})
+    updateMarkers() {
+      let bounds = this.$refs.mmm.$mapObject.getBounds()
+      if (!this.account) this.swmFetch(bounds)
+    },
 
+    async swmFetch(bounds = false) {
       let {data: { _items, _meta }} = await axios.get(`${process.env.API_URL}/posts`, {
         params: {
-          where: {"author": this.account, "geo.geometry.coordinates": {"$ne": null}},
+          where: {
+            "author": this.account ? this.account : undefined,
+            "geo.geometry.coordinates": !this.account && bounds ? {
+              "$geoWithin": {
+                "$box": [
+                    [bounds.j.j, bounds.l.j],
+                    [bounds.j.l, bounds.l.l]
+                ]
+              }
+            } : {"$ne": null},
+          },
 
           max_results: 1000,
-          page: this.page,
         }
       })
 
@@ -230,12 +230,15 @@ export default {
     },
 
     async clusterClick(cluster) {
+      this.clusterWindow.posts = []
+      this.clusterLoading = true
       this.clusterWindow.opened = true
-      //this.clusterWindow.position = {lat: cluster.center.lat(), lng: cluster.center.lng()}
       this.clusterWindow.position = cluster.center_
+
       let markers = cluster.getMarkers()
 
       this.clusterWindow.posts = await Promise.all(markers.map(m => getContent(...m.meta.split('/'))))
+      this.clusterLoading = false
     },
 
     async fetch_posts() {
@@ -261,23 +264,11 @@ export default {
       }
     },
 
-    openInfoWindow (marker, type) {
+    openInfoWindow (marker) {
       this.infoWindow.opened = true
+      this.infoWindow.marker = marker
 
-      if (type == 'post') {
-        console.log(12)
-        this.infoWindow.content = `<h6>${marker.title}</h6>`
-
-        this.infoWindow.position = {
-          lat: marker.meta.location.geometry.coordinates[1],
-          lng: marker.meta.location.geometry.coordinates[0]
-        }
-      } else {
-        this.infoWindow.content = `Здесь сейчас находится <span class="name">@${marker.name}</span>`
-
-        this.infoWindow.position = marker.coords
-      }
-
+      this.infoWindow.position = marker.position
       this.infoWindow.options.maxWidth = 180
     },
 
@@ -289,10 +280,6 @@ export default {
         classes: ['v--modal', 'post-modal']
       })
     },
-
-    async updateMarkers() {
-      // TODO Implement Filre
-    }
   },
 
   components: {
@@ -322,7 +309,10 @@ export default {
 .info-window {
 	padding: 20px;
   overflow: scroll !important;
-  height: 200px !important;
+  min-height: 120px !important;
+  min-width: 400px !important;
+  max-height: 200px !important;
+  z-index: 300;
 }
 
 </style>
