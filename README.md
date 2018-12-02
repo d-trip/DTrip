@@ -1,7 +1,8 @@
-DTrip client
+## DTrip client
 
-Env:
-> API_QL_URL: dtrip-api url
+![](https://ipfs.io/ipfs/QmRH3Crr2L2zU95vg5SJYwuqBDTVxpi2f16JdMk9j5CLhG)
+
+Web client for decentralized travel application. Based on STEEM and IPFS.
  
 ## Run for local development
 ```yarn run dev```
