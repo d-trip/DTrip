@@ -14,7 +14,13 @@ services:
     ports:
       - 127.0.0.1:1000:3000
 
-networks:
-  default:
-    external:
-      name: dtrip-api_default
+  spa-build:
+    volumes:
+      - "./dist/:/app/_dist"
+    image: avral/dtrip
+    command: sh -c "yarn run build --spa && mv -v dist/* _dist"
+
+#networks:
+#  default:
+#    external:
+#      name: dtrip-api_default
