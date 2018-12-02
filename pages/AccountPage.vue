@@ -1,6 +1,6 @@
 <template lang="pug">
 .row
-  .col-md-4
+  .col-lg-4.col-sm-6
     account(:account="account")
     feed
   .col.right-fixed-container(v-if="$device.isDesktop")

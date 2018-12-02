@@ -114,7 +114,6 @@ export default {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     border: solid 1px rgba(72, 84, 101, 0.2);
     box-sizing: border-box;
-    max-width: 494px;
     width: 100%;
     margin-bottom: 20px;
   }
