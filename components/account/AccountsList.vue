@@ -29,7 +29,6 @@ div
   no-ssr
     .row
       .col
-        | asdf
         infinite-loading(:identifier="loadId" @infinite="handleLoading")
     // infinite-loading(ref="infiniteload" @infinite="handleLoading" :forceUseInfiniteWrapper="true")
 
