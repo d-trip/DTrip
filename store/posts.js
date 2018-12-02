@@ -36,7 +36,8 @@ export const actions = {
       if (!state.search || state.pg > 10) return
 
       let { data } = await axios.get(
-				`https://api.asksteem.com/search?q=${state.search}+AND+tags:${config.tag_for_post}&pg=${state.pg}`
+				//`https://api.asksteem.com/search?q=${state.search}+AND+tags:${config.tag_for_post}&pg=${state.pg}`
+				`https://api.asksteem.com/search?q=${state.search}&pg=${state.pg}`
 			)
 
       posts = await Promise.all(data.results.map(p => getContent(p.author, p.permlink)))
