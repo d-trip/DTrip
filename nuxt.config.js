@@ -146,31 +146,31 @@ module.exports = {
     maxAge: 1000 * 60 * 2
   },
 
-  sitemap: isSPA ? {
-    //cacheTime: 1000 * 60 * 15,
-    gzip: true,
-    exclude: [
-      '/errors/**'
-    ],
+  //sitemap: isSPA ? {
+  //  //cacheTime: 1000 * 60 * 15,
+  //  gzip: true,
+  //  exclude: [
+  //    '/errors/**'
+  //  ],
 
-    async routes() {
-      const client = await MongoClient.connect('mongodb://db:27017', { useNewUrlParser: true })
-      const db = client.db('dtrip_steem')
+  //  async routes() {
+  //    const client = await MongoClient.connect('mongodb://db:27017', { useNewUrlParser: true })
+  //    const db = client.db('dtrip_steem')
 
-      let [posts, authors] = await Promise.all([
-        db.collection("post_model").find({'depth': 0})
-            .project({author: true, permlink: true, last_update: true}).toArray(),
+  //    let [posts, authors] = await Promise.all([
+  //      db.collection("post_model").find({'depth': 0})
+  //          .project({author: true, permlink: true, last_update: true}).toArray(),
 
-        //db.collection("account_object").find({'json_metadata.dtripProfile': {'$exists': true}})
-        //    .project({name: true}).toArray()
-      ])
+  //      //db.collection("account_object").find({'json_metadata.dtripProfile': {'$exists': true}})
+  //      //    .project({name: true}).toArray()
+  //    ])
 
-      return [
-          //...authors.map(a => `/@${a.name}`),
-          ...posts.map(p => ({ url: `/@${p.author}/${p.permlink}`, lastmodISO: p.last_update.toISOString()})),
-      ]
-    }
-  } : undefined,
+  //    return [
+  //        //...authors.map(a => `/@${a.name}`),
+  //        ...posts.map(p => ({ url: `/@${p.author}/${p.permlink}`, lastmodISO: p.last_update.toISOString()})),
+  //    ]
+  //  }
+  //} : undefined,
 
   sentry: {
     dsn: process.env.SENTRY_DSN || 'https://e00d35317557416b9ef3e69b7df52b50@sentry.io/1306350',
