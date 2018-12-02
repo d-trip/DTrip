@@ -27,7 +27,8 @@ div
   account-item(v-for="account in accounts" :account="account" :key="account.name")
 
   no-ssr
-    infinite-loading(ref="infiniteload" @infinite="handleLoading" :forceUseInfiniteWrapper="true")
+    infinite-loading(ref="infiniteload" @infinite="handleLoading")
+    // infinite-loading(ref="infiniteload" @infinite="handleLoading" :forceUseInfiniteWrapper="true")
 
 </template>
 
@@ -67,6 +68,7 @@ export default {
     },
 
     async fetch_accounts() {
+      // FIXME In Safary reload only when select true
       let date = new Date()
       if (this.lastPost == 'month') {
         date.setMonth(date.getMonth() - 1)
@@ -139,5 +141,3 @@ export default {
   justify-content: center;
 }
 </style>
-
-

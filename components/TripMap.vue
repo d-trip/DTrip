@@ -30,8 +30,8 @@ div(v-loading="loading")
         :position="marker.position",
         :clickable="true",
         :draggable="false",
-        :label="marker.label"
-        @click="open_modal(...marker.label.split('/'))"
+        :options="marker.options"
+        @click="open_modal(...marker.options.meta.split('/'))"
         )
 
     //
@@ -57,9 +57,11 @@ div(v-loading="loading")
       :opened="clusterWindow.opened",
       :position="clusterWindow.position",
       @closeclick="clusterWindow.opened = false")
-      div(v-for="(post, index) in clusterWindow.posts")
-        a(href="#" @click="open_modal(post.author, post.permlink)") {{ post.title }}
-        hr(v-if="index != clusterWindow.posts.length - 1")
+      .info-window
+        div(v-for="(post, index) in clusterWindow.posts")
+          nuxt-link.name(:to="{name: 'account', params: {account: post.author}}") @{{ post.author }}  
+          a(href="#" @click="open_modal(post.author, post.permlink)") {{ post.title }}
+          hr(v-if="index != clusterWindow.posts.length - 1")
 
     gmap-info-window(
       :options="infoWindow.options",
@@ -93,6 +95,11 @@ export default {
     gridSize: {
       type: Number,
       default: undefined
+    },
+
+    search: {
+      type: String,
+      default: ''
     }
   },
 
@@ -161,10 +168,43 @@ export default {
     })
   },
 
+  watch: {
+    search(search) {
+			this.loading = true
+
+      axios.get(`${process.env.API_URL}/posts/`, {
+        params: {
+          where: {
+            "geo.geometry.coordinates": {"$ne": null},
+
+            $text: this.search ? { $search: search } : undefined,
+          },
+
+          max_results: 1000,
+          // sort: "-sp",
+        }
+      }).then(r => this.swm_markers = this.itemsToMarkers(r.data._items))
+				.finally(() => this.loading = false)
+    }
+  },
+
   methods: {
     ...mapActions({
       'fetch_markers': 'map/fetch_markers'
     }),
+
+		itemsToMarkers(items) {
+			return items.map(i => {
+        return {
+          title: i.title,
+          options: {meta: `${i.author}/${i.permlink}`},
+          position: {
+            lat: i.geo.geometry.coordinates[1],
+            lng: i.geo.geometry.coordinates[0],
+          },
+        }
+      })
+		},
 
     async swmFetch() {
       // TODO bbox
@@ -186,16 +226,7 @@ export default {
         }
       })
 
-      this.swm_markers = _items.map(i => {
-        return {
-          title: i.title,
-          label: `${i.author}/${i.permlink}`,
-          position: {
-            lat: i.geo.geometry.coordinates[1],
-            lng: i.geo.geometry.coordinates[0],
-          },
-        }
-      })
+      this.swm_markers = this.itemsToMarkers(_items)
     },
 
     async clusterClick(cluster) {
@@ -203,9 +234,8 @@ export default {
       //this.clusterWindow.position = {lat: cluster.center.lat(), lng: cluster.center.lng()}
       this.clusterWindow.position = cluster.center_
       let markers = cluster.getMarkers()
-      console.log(markers)
 
-      this.clusterWindow.posts = await Promise.all(markers.map(m => getContent(...m.label.split('/'))))
+      this.clusterWindow.posts = await Promise.all(markers.map(m => getContent(...m.meta.split('/'))))
     },
 
     async fetch_posts() {
@@ -284,8 +314,15 @@ export default {
 }
 
 .name {
-    font: 700 16px/20px PT Sans;
-    letter-spacing: -.5px;
-    color: #6d9ee1;
+    font: 700 16px/20px PT Sans !important;
+    letter-spacing: -.5px !important;
+    color: #6d9ee1 !important;
 }
+
+.info-window {
+	padding: 20px;
+  overflow: scroll !important;
+  height: 200px !important;
+}
+
 </style>

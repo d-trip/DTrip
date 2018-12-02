@@ -25,7 +25,7 @@
 
   .col.right-fixed-container(v-if="$device.isDesktop")
     no-ssr
-      trip-map#map
+      trip-map(:search="search")#map
 </template>
 
 <script>
