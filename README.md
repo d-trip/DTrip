@@ -13,7 +13,7 @@ docker-compose run --rm spa-build
 ```
 After that you can use the static version of the application from the ```dist``` folder.
 ```
-ipfs add -r dist/ && ipfs pin add -r QmfNahuxXhmr39iWvzJGDAYpXjwvTH5ZfNgS4EJgtHDsaa
+ipfs add -r dist | tail -n 1 | awk '{print $2;}' | ipfs pin add -r
 ```
 
 
