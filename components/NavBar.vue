@@ -2,7 +2,7 @@
 // TODO https://steemhunt.com/sign-up
 div
   .top-navbar.container-fluid
-    nuxt-link(:to="{name: 'index'}").d-flex.align-items-center
+    a(:href="BASE_URL").d-flex.align-items-center
       //img(src="") TODO Main logo
       h2.mb-0
         | DTrip
@@ -38,6 +38,7 @@ import { mapMutations, mapGetters } from 'vuex'
 import { mixin as clickaway } from 'vue-clickaway'
 import { Loading } from 'element-ui'
 import steem from 'steem'
+import config from '~/config'
 
 import SideBar from '~/components/SideBar.vue'
 
@@ -50,6 +51,7 @@ export default {
 
   data () {
     return {
+      BASE_URL: config.BASE_URL,
       isMenuOpened: false,
       totalPayout: 0,
     }
