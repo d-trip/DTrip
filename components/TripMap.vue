@@ -220,6 +220,8 @@ export default {
                 ]
               }
             } : {"$ne": null},
+
+            $text: this.search ? { $search: this.search } : undefined,
           },
 
           max_results: 1000,
