@@ -53,6 +53,7 @@ module.exports = {
     'nuxt-device-detect',
     '@nuxtjs/font-awesome',
     '@nuxtjs/sitemap',
+    'vue-github-buttons/nuxt',
   ],
   apollo: {
     clientConfigs: {

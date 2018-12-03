@@ -3821,6 +3821,11 @@ for-in@^1.0.2:
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
   integrity sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=
 
+format-thousands@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/format-thousands/-/format-thousands-1.1.1.tgz#7975bee30338d9006390da5831db0b41c323fbfa"
+  integrity sha1-eXW+4wM42QBjkNpYMdsLQcMj+/o=
+
 forwarded@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
@@ -8807,6 +8812,14 @@ vue-functional-data-merge@^2.0.5:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/vue-functional-data-merge/-/vue-functional-data-merge-2.0.7.tgz#bdee655181eacdcb1f96ce95a4cc14e75313d1da"
   integrity sha512-pvLc+H+x2prwBj/uSEIITyxjz/7ZUVVK8uYbrYMmhDvMXnzh9OvQvVEwcOSBQjsubd4Eq41/CSJaWzy4hemMNQ==
+
+vue-github-buttons@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/vue-github-buttons/-/vue-github-buttons-2.1.1.tgz#da2f7f96415e16b52cdf996f09f2b0fd8dd67ea6"
+  integrity sha1-2i9/lkFeFrUs35lvCfKw/Y3WfqY=
+  dependencies:
+    axios "^0.18.0"
+    format-thousands "^1.1.1"
 
 vue-hot-reload-api@^2.2.0:
   version "2.3.1"

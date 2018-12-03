@@ -1,13 +1,15 @@
 <template lang="pug">
 div
-  #mySidenav.sidenav
-    a.closebtn(href="#", @click="close") ×
-    nuxt-link(to="about") About
-    nuxt-link(to="faq") FAQ
-    a(href="https://cloudflare-ipfs.com/ipns/dtrip.app" target="_blank") IPFS Version
+  #mySidenav
+    gh-btns-star(slug="d-trip/dtrip" show-count)
+    .sidenav
+      a.closebtn(href="#", @click="close") ×
+      nuxt-link(to="about") About
+      nuxt-link(to="faq") FAQ
+      a(href="https://cloudflare-ipfs.com/ipns/dtrip.app" target="_blank") IPFS Version
 
-    .bottom
-      a(href='https://github.com/d-trip/dtrip' target="_blank") GitHub
+      .bottom
+        a(href='https://github.com/d-trip/dtrip' target="_blank") GitHub
   .open(@click="open" v-on-clickaway="close")
     i.fa.fa-bars
 </template>
@@ -38,7 +40,7 @@ export default {
 
 <style>
 /* The side navigation menu */
-.sidenav {
+#mySidenav {
     height: 100%;
     width: 0;
     position: fixed;
@@ -49,6 +51,9 @@ export default {
     overflow-x: hidden;
     padding-top: 15px;
     transition: 0.2s;
+    background: url(~/assets/img/sidebar.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 /* The navigation menu links */
@@ -56,14 +61,14 @@ export default {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #696464;
+    color: #fff;
     display: block;
     transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: black;
+    color: #b9aeae;
 }
 
 /* Position and style the close button (top right corner) */
@@ -89,5 +94,11 @@ export default {
   cursor: pointer;
   width: 100%;
   height: 100;
+}
+
+.gh-button-container {
+  float: none;
+  margin: none;
+  padding: 8px 8px 8px 25px;
 }
 </style>
