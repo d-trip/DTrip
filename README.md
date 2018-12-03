@@ -1,20 +1,25 @@
-DTrip client
+## [/ipns/dtrip.app/](https://ipfs.io/ipns/dtrip.app)
 
-Env:
-> API_QL_URL: dtrip-api url
+![](https://ipfs.io/ipfs/QmRH3Crr2L2zU95vg5SJYwuqBDTVxpi2f16JdMk9j5CLhG)
+
+Web client for decentralized travel application. Based on STEEM and IPFS.
  
-## Run local
+## Run for local development
 ```yarn run dev```
 
 ## SPA version
-#### https://cloudflare-ipfs.com/ipns/dtrip.app/
+#### https://ipfs.io/ipns/dtrip.app/
 ```
-yarn run build --spa
+docker-compose run --rm spa-build
 ```
-After that you can use the static version of the application from the dist folder.
+After that you can use the static version of the application from the ```dist``` folder.
+```
+ipfs add -r dist | tail -n 1 | awk '{print $2;}' | ipfs pin add -r
+```
 
-
-## Run docker
+## SSR version
+### [dtrip.app](https://dtrip.app)
+#### Run docker
 Create .env file
 ```
 docker-compose pull && docker-compose up -d
