@@ -148,15 +148,15 @@ export default {
     }
   },
 
-  async created() {
-    this.loading = true
+  // async created() {
+  //   this.loading = true
 
-    try {
-      await this.swmFetch()
-    } finally {
-      this.loading = false
-    }
-  },
+  //   try {
+  //     await this.swmFetch()
+  //   } finally {
+  //     this.loading = false
+  //   }
+  // },
 
   computed: {
     ...mapState({
@@ -208,6 +208,9 @@ export default {
     },
 
     async swmFetch(bounds = false) {
+      let lb = bounds.getSouthWest()
+      let ur = bounds.getNorthEast()
+
       let {data: { _items, _meta }} = await axios.get(`${process.env.API_URL}/posts`, {
         params: {
           where: {
@@ -215,8 +218,8 @@ export default {
             "geo.geometry.coordinates": !this.account && bounds ? {
               "$geoWithin": {
                 "$box": [
-                    [bounds.j.j, bounds.l.j],
-                    [bounds.j.l, bounds.l.l]
+                    [lb.lng(), lb.lat()],
+                    [ur.lng(), ur.lat()]
                 ]
               }
             } : {"$ne": null},
