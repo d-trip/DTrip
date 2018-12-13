@@ -2,7 +2,8 @@
 // TODO https://steemhunt.com/sign-up
 div
   .top-navbar.container-fluid
-    a(:href="BASE_URL").d-flex.align-items-center
+    // a(:href="BASE_URL").d-flex.align-items-center
+    nuxt-link(:to="{name: 'index'}").d-flex.align-items-center
       //img(src="") TODO Main logo
       h2.mb-0
         | DTrip
@@ -28,6 +29,7 @@ div
           div.divd
           div.mn
             nuxt-link(v-if="user" :to="{name: 'account', params: {account: user.name}}").m_item.white-text Profile
+            //nuxt-link(v-if="user" :to="{name: 'settings'}").m_item.white-text Settings
             a(href="#" class="m_item", @click.prevent="logout").white-text Logout
 
         side-bar.ml-3
@@ -64,6 +66,10 @@ export default {
   },
 
   methods: {
+    test() {
+      //this.$router.push({name: 'index-accounts'})
+      //this.$router.push({name: 'index'})
+    },
     toggle() {
       let navs = document.querySelectorAll('.mobile-menu')
       navs.forEach(nav => nav.classList.toggle('navbar-toggle-show'))
