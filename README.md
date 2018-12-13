@@ -22,13 +22,13 @@ ipfs add -r dist | tail -n 1 | awk '{print $2;}' | ipfs pin add -r
 #### Run docker
 Create .env file
 ```
-docker-compose pull && docker-compose up -d
+docker-compose pull && docker-compose up web -d
 ```
 
 or build by you self
 
 ```
-docker-compose up -d --build
+docker-compose up web -d --build
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
