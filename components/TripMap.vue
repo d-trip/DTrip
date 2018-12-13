@@ -204,7 +204,7 @@ export default {
 
     updateMarkers() {
       let bounds = this.$refs.mmm.$mapObject.getBounds()
-      if (!this.account) this.swmFetch(bounds)
+      this.swmFetch(bounds)
     },
 
     async swmFetch(bounds = false) {
