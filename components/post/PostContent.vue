@@ -30,9 +30,10 @@ export default {
 }
 
 .content img {
-  width: 100%;
-  text-align: center;
-  height: 100%;
+  max-width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (max-width: 992px) {
