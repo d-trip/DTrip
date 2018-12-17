@@ -22,7 +22,7 @@ ipfs add -r dist | tail -n 1 | awk '{print $2;}' | ipfs pin add -r
 #### Run docker
 Create .env file
 ```
-docker-compose pull && docker-compose up web -d
+docker-compose pull && docker-compose up -d web
 ```
 
 or build by you self
