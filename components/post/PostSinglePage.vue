@@ -1,6 +1,6 @@
 <template lang="pug">
 .row
-  .container
+  .container.mb-5
     post(:post="post")
 
 </template>
