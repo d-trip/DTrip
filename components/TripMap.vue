@@ -143,7 +143,7 @@ export default {
       swm_markers: [], // SteemitWorldMap
 			account_markers: [],
 
-      loading: false,
+      loading: true,
       clusterLoading: true,
     }
   },
@@ -202,9 +202,10 @@ export default {
       })
 		},
 
-    updateMarkers() {
+    async updateMarkers() {
       let bounds = this.$refs.mmm.$mapObject.getBounds()
-      this.swmFetch(bounds)
+      await this.swmFetch(bounds)
+      this.loading = false
     },
 
     async swmFetch(bounds = false) {
