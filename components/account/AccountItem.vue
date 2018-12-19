@@ -1,31 +1,29 @@
 <template lang="pug">
-  //el-card(:body-style="{ padding: '0px' }").mb-4
-    img.image(:src="account.name | avatar('large')", alt="Card image cap").w-100
+  .user-card.mb-3
+    nuxt-link.card-link(:to="{name: 'account', params: {account: account.name}}").d-flex
+      img.avatar-image(:src="account.name | avatar('big')").user-image
 
-    div(style='padding: 14px;')
-      p.name {{ account.name }}
+      .user-info.ml-3
+        .name.lead {{ account.name }}
 
-      ////.bottom.clearfix
-        time.time sdf
-        el-button.button(type='text') Operating button
+        .text-muted.small
+          | last activity: {{ account.last_post | formatDate }}
 
-  .card.mb-4
-    img.card-img-top(:src="account.name | avatar('large')", alt="Card image cap")
-    .card-body
-      .top.d-flex.align-items-baseline.justify-content-between
-        nuxt-link(tag="h2" :to="{name: 'account', params: {account: account.name}}").card-title.name.pointer {{ account.name }}
+        .span(v-if="account.profile.accepting_guests == 'yes'")
+          i.el-icon-success.name  Accepting Guests
+        .span(v-if="account.profile.wants_meet_up == 'yes'")
+          i.el-icon-info.name  Wants to meet up
 
-        .location(v-if="account.profile.location").mb-1
-          | {{ account.profile.location }}
+        //span.text
+          b 3 
+          | References
 
-      hr
-      p.card-text
-        about(:profile="account.profile")
-      a(:href="'https://steemit.com/@' + account.name" target="_blank")
-        el-button(size="small" native-type="a") steemit
-    .card-footer.text-muted
-      | Last publication: {{ account.last_post | formatDate }}
-      
+    .mt-3(v-if="account.profile.about")
+      | {{ account.profile.about }}
+
+
+    .location(v-if="account.profile.location").mb-1.mt-3
+      | {{ account.profile.location }}
 </template>
 
 <script>
@@ -43,5 +41,23 @@ export default {
 <style>
 .name {
   font: PT Sans;
+}
+
+.user-card {
+  padding: 20px 20px 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, .1);
+  border: 1px solid rgba(72, 84, 101, .2);
+}
+
+.user-image {
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50%;
+}
+
+.user-info {
+  padding: 5px;
 }
 </style>
