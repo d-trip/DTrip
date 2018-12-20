@@ -12,9 +12,10 @@
 
     .location(v-if="post.meta.location && post.meta.location.properties").ml-auto {{ post.meta.location.properties.name }}
 
-    nuxt-link(v-if="user && user.name == post.author"
-            :to="{name: 'editor-permlink', params: {permlink: post.permlink}}")
-      el-button(size="medium" icon="el-icon-edit").ml-4 Edit
+    no-ssr
+      nuxt-link(v-if="user && user.name == post.author"
+              :to="{name: 'editor-permlink', params: {permlink: post.permlink}}")
+        el-button(size="medium" icon="el-icon-edit").ml-4 Edit
 
   .content
     h1.c_header {{ post.title }}
