@@ -1,25 +1,31 @@
 <template lang="pug">
+// Add contacts of user
+// Add Short preview of user
 div
   .filters.mt-2
-    .row
-      .col
-        el-checkbox(label="Accepting guests", v-model="accepting_guests" @change="reset")
-      .col
-        el-checkbox(label="Wants to Meet Up", v-model="wants_meet_up" @change="reset")
+    el-checkbox(label="Accepting guests", v-model="accepting_guests" @change="reset")
+    el-checkbox(label="Wants to Meet Up", v-model="wants_meet_up" @change="reset")
       //.col TODO
         //el-tooltip(placement="right" content="User create publications for SteemitWorldMap")
         el-checkbox(false-label="no" true-label="yes" v-model="postingToSWM" @change="reset")
           img(src="~/assets/icons/swm.png")
           |  Active on SteemitWorldMap
 
-  .filters
+  .filters.text-muted.mb-3
+    //label Last activity: 
+    //el-select(v-model="lastPost" placeholder="Last publication" size="small" @change="reset").ml-auto
+    .sub-title.ml-3 Last activity 
     el-select(v-model="lastPost" placeholder="Last publication" size="small" @change="reset")
-      el-option-group(label="Last publication")
+      el-option-group(label="Last activity")
         el-option(label="Week" value="week")
         el-option(label="Month" value="month")
         el-option(label="All" value="all")
 
-  </el-select>
+    //el-select(disabled placeholder="Travelers" size="small" @change="reset").ml-2
+      el-option-group(label="Last activity")
+        el-option(label="Week" value="week")
+        el-option(label="Month" value="month")
+        el-option(label="All" value="all")
   .row
     .col
       p(v-if="total").lead Total: {{ total }}
@@ -141,7 +147,6 @@ export default {
 
 <style>
 .filters {
-  padding: 5px 0px;
   display: flex;
   justify-content: center;
 }
