@@ -15,6 +15,7 @@ export function preparePost(post) {
   post.meta = jsonParseSafe(post.json_metadata)
 
   // Hide link to dtrip
+  // FIXME Old standart, so delete this after a while
   let r = /\[PUBLISHED BY DTRIP.APP\]\(.*\)/
   post.body = post.body.replace(r, '')
 

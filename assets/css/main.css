@@ -1,3 +1,7 @@
+.dtrip-banner {
+    display: none;
+}
+
 .name {
     letter-spacing: -.5px !important;
     color: #6d9ee1 !important;

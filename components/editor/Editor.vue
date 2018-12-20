@@ -64,7 +64,7 @@ no-ssr
           el-button(v-else-if="editor.tags.length < 4"
                     class="button-new-tag" size="small" @click="showInput") + Add tag
 
-          el-tooltip(v-if="!typeSelected && editor.tags.length > 0"
+          el-tooltip(v-if="!typeSelected && editor.tags.length > 0 && editor.tags.length < 5"
                      class="item" effect="dark" content="Publication type" placement="top")
             el-select(v-model="editor.tags[editor.tags.length]" placeholder="Publication type" size="small").ml-2
               el-option(v-for="item in POST_TYPES" :key="item.value" :label="item.label" :value="item.value")

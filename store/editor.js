@@ -80,10 +80,10 @@ export const actions = {
     let url = `${config.BASE_URL}@${rootState.auth.user.name}/${permlink}`
     let body = state[state.format]
 
-    if (!body.includes('PUBLISHED BY DTRIP.APP')) {
+    if (!body.includes('div class="dtrip-banner"')) {
       if (state.format == 'markdown') {
         body += `
-          \n\n[PUBLISHED BY DTRIP.APP](${url})
+          \n\n<div class="dtrip-banner">Published by <a href="${url}">DTrip</a> travel app.</div>
         `
       } else {
         body += `
@@ -94,9 +94,6 @@ export const actions = {
         `
       }
     }
-
-
-    // TODO DTrip banner or link to original post
 
     // TODO https://github.com/steemit/hivemind/blob/master/docs/communities.md
     // TODO https://github.com/steemit/condenser/pull/2995
