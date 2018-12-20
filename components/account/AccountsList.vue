@@ -14,8 +14,8 @@ div
   .filters.text-muted.mb-3
     //label Last activity: 
     //el-select(v-model="lastPost" placeholder="Last publication" size="small" @change="reset").ml-auto
-    .sub-title.ml-3 Last activity 
-    el-select(v-model="lastPost" placeholder="Last publication" size="small" @change="reset")
+    .sub-title Last activity 
+    el-select(v-model="lastPost" placeholder="Last publication" size="small" @change="reset").ml-3
       el-option-group(label="Last activity")
         el-option(label="Week" value="week")
         el-option(label="Month" value="month")
