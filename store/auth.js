@@ -41,7 +41,6 @@ export const actions = {
 
     let url = Object.entries(for_update).map(([key, val]) => `${key}=${val}`).join('&')
     window.open(`https://steemconnect.com/sign/profile-update?${url}`)
-    dispatch('fetch_user')
   },
 
   async fetch_user ({ commit, dispatch, state }) {
