@@ -166,6 +166,9 @@ export default {
 
   watch: {
     search(search) {
+      // Disable map
+      if (this.$route.name == 'index-accounts') return;
+
 			this.loading = true
 
       axios.get(`${process.env.API_URL}/posts/`, {
@@ -203,6 +206,13 @@ export default {
 		},
 
     async updateMarkers() {
+      if (this.$route.name == 'index-accounts') {
+        // Just disable(mute) map for now
+        let e = document.body.querySelector("#map > div.el-loading-mask > div");
+        e.style.display = 'none';
+        return
+      }
+
       let bounds = this.$refs.mmm.$mapObject.getBounds()
       await this.swmFetch(bounds)
       this.loading = false

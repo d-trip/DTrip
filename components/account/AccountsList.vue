@@ -19,7 +19,7 @@ div
       el-option-group(label="Last activity")
         el-option(label="Week" value="week")
         el-option(label="Month" value="month")
-        el-option(label="All" value="all")
+        el-option(label="All time" value="all")
 
     //el-select(disabled placeholder="Travelers" size="small" @change="reset").ml-2
       el-option-group(label="Last activity")
@@ -53,7 +53,7 @@ export default {
       total: 0,
       accounts: [],
 
-      lastPost: 'month',
+      lastPost: 'all',
       accepting_guests: false,
       wants_meet_up: false,
       postingToSWM: false,
