@@ -1,19 +1,26 @@
 <template lang="pug">
 div
   .row
-    .col
-      el-checkbox(false-label="no" true-label="yes" v-model="profile.accepting_guests") Accepting Guests
-      el-checkbox(false-label="no" true-label="yes" label="Wants to Meet Up", v-model="profile.wants_meet_up")
-  .row
-    .col
-      label Loaction:
+    .col.d-flex
+      .location
       gmap-autocomplete(:value="user.meta.profile.location"
                         @place_changed="setLocation"
                         :selectFirstOnEnter="true").el-input__inner
+  .row.mt-2
+    .col
+      el-checkbox(false-label="no" true-label="yes" v-model="profile.accepting_guests") Accepting Guests
+      el-checkbox(false-label="no" true-label="yes" label="Wants to Meet Up", v-model="profile.wants_meet_up")
 
   .row.mt-2
     .col
-      el-button(@click="update" size="small").w-100 Update
+      nuxt-link(tag="el-button"
+                :to="{name: 'editor-permlink', params: {permlink:'date-to-share-dtrip'}}").el-button--small
+        | Update DareToShare post
+
+  .row.mt-2
+    .col
+      el-button(@click="update" size="small" type="primary").w-100 Update
+
 </template>
 
 
@@ -54,3 +61,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.location {
+  background-position-y: 7px;
+}
+</style>

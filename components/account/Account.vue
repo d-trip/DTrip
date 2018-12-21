@@ -12,18 +12,25 @@ div.pf
 
   no-ssr
     .user-data
-      .location(v-if="profile.meta.profile.location").mb-1
-        | {{ profile.meta.profile.location }}
+      div(v-if="!showEditAccount")
+        .location(v-if="profile.meta.profile.location").mb-2
+          | {{ profile.meta.profile.location }}
 
-      about(:profile="profile.meta.profile")
+        about(:profile="profile.meta.profile")
 
-      div
-        el-button(v-if="user && user.name == account.name"
-                  size="small" @click="showEditAccount = !showEditAccount").edit-button Edit
+        div.mt-2
+
+          el-button(size="small") DareToShare
+
+      edit-account(v-if="showEditAccount" @editingStop="showEditAccount = false").mt-3
+
+      el-button(v-if="user && user.name == account.name"
+                size="small" @click="showEditAccount = !showEditAccount").edit-button Edit
+
 
         // TODO Accept guests!
 
-        edit-account(v-if="showEditAccount" @editingStop="showEditAccount = false").mt-3
+
 
 //  div.bottom_bl
     nuxt-link
