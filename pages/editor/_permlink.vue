@@ -18,7 +18,7 @@ export default {
     Preview
   },
 
-  async created() {
+  async mounted() {
     let store = this.$store
 
     let editor = store.state.editor

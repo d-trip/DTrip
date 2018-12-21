@@ -122,7 +122,6 @@ export default {
     },
 
     async handleLoading($state) {
-      console.log('load..')
       let prev_count = this.accounts.length
 
       this.fetch_accounts().then(() => {
