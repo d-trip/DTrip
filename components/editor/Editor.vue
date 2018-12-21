@@ -9,19 +9,11 @@ no-ssr
           input(v-model="editor.title", placeholder="title").form-control
 
       .col-4.d-flex.flex-row-reverse
-        // FIXME Only markdown for a while
-        //div(v-show="editor.format == 'markdown'")
-          button.btn.btn-secondary(@click="toggle_editor") HTML Редактор
-
-        div(v-show="editor.format == 'html'")
-          button.btn.btn-secondary(@click="toggle_editor") Markdown
-
         button.btn.btn-info(@click="clear").ml-auto Clear
 
     .row.mt-3
       .col
-        div(v-show="editor.format == 'markdown'")
-          textarea.form-control
+        textarea.form-control
 
     .row.mt-2
       .col.d-flex
@@ -105,6 +97,7 @@ export default {
 
       inputVisible: false,
       inputValue: '',
+      simplemde: null,
     }
   },
 
@@ -137,7 +130,7 @@ export default {
       autofocus: true,
       spellChecker: false,
       promptURLs: true,
-      initialValue: this.editor.markdown,
+      initialValue: this.editor.body,
 
       // TODO Insert imge in cursor position
       hideIcons: ['image'],
@@ -148,9 +141,10 @@ export default {
       //  uniqueId: this.$route.params.permlink || 'default'
       //}
     })
+    this.simplemde = simplemde
 
     simplemde.codemirror.on("change", () => {
-      this.editor.markdown = simplemde.value()
+      this.editor.body = simplemde.value()
     })
 
     this.codemirror = simplemde.codemirror
@@ -176,13 +170,9 @@ export default {
 
       try {
         const imgUrl = await uploadImage(this.$refs.inputImage.files[0], this.$store.state.auth)
-
-        if (this.editor.format == 'markdown') {
-          this.codemirror.getDoc().setValue(`${this.editor.markdown}\n![${this.editor.title}](${imgUrl})`)
-        } else {
-          this.editor.html += `\n<img src="${imgUrl} alt="${this.editor.title}">`
-        }
-
+        let pos = this.simplemde.codemirror.getCursor()
+        this.simplemde.codemirror.setSelection(pos, pos)
+        this.simplemde.codemirror.replaceSelection(`\n![${this.editor.title}](${imgUrl})`)
       } catch (e) {
         this.$notify({ message: e.message, type: 'warning' })
       } finally {
@@ -235,20 +225,24 @@ export default {
       let stemit_wm_tag = `\n\n [//]:# (!steemitworldmap ${lat.toFixed(6)} lat ${lon.toFixed(6)} long ${''} d3scr)`
 
       // SteemitWorldMap integration
-      if (this.editor.markdown.includes('[//]:# (!steemitworldmap ')) {
-        this.editor.markdown = this.editor.markdown.replace(/.*\[\/\/\]:# \(!steemitworldmap.*?\)/gmi, stemit_wm_tag)
+      if (this.editor.body.includes('[//]:# (!steemitworldmap ')) {
+        this.editor.body = this.editor.body.replace(/.*\[\/\/\]:# \(!steemitworldmap.*?\)/gmi, stemit_wm_tag)
       } else {
-        this.editor.markdown += stemit_wm_tag
+        this.editor.body += stemit_wm_tag
       }
 
-      this.codemirror.getDoc().setValue(this.editor.markdown)
+      this.codemirror.getDoc().setValue(this.editor.body)
     },
 
     async _submit() {
       if (!this.editor.title) return this.$message.warning('Title is empty')
       if (!this.editor[this.editor.format]) return this.$message.warning('Body is empty')
-      if (this.withLocation && !this.editor.location.properties.name) return this.$message.warning('Location is empty')
-      if (!this.editor.tags[1]) return this.$message.warning('Select publication type tag!')
+      if (this.withLocation && !this.editor.location) return this.$message.warning('Location is empty')
+      // if (!this.editor.tags[1]) return this.$message.warning('Select publication type tag!')
+
+      if (!this.withLocation) {
+        this.editor.location = undefined
+      }
 
       this.loading = true
 
@@ -261,7 +255,7 @@ export default {
         console.log(e)
         this.$notify.error({
           title: 'Error',
-          message: JSON.stringify(e)
+          message: e
         })
       } finally {
         this.loading = false

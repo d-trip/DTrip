@@ -10,9 +10,6 @@ export const state = () => ({
   // TODO тип выплат
   // TODO Переработать баннер
 
-  format: 'markdown',
-  markdown: '',
-  html: '',
   title: '',
   permlink: null,
   body: '',
@@ -41,7 +38,6 @@ export const mutations = {
   clear(state) {
     state.title = ''
     state.body = ''
-    state[state.format] = ''
     state.tags = []
     state.permlink = null
     state.geohash = ''
@@ -60,16 +56,7 @@ export const mutations = {
 }
 
 export const actions = {
-  toggle({ state, commit }) {
-    commit('set_format', state.format == 'markdown' ? 'html' : 'markdown')
-    commit('update_body')
-  },
-
   async submit({ state, commit, dispatch, rootState }) {
-    //if (!rootState.auth.wif && !rootState.auth.account.name) {
-    //  throw new Error('Добавьте постинг ключ или имя пользователя')
-    //}
-
     if (!rootState.auth.user) {
       throw new Error('Pleace login!')
     }
@@ -78,21 +65,10 @@ export const actions = {
 
     let permlink = state.permlink || await createUniqPermlink(rootState.auth.user.name, state.title)
     let url = `${config.BASE_URL}@${rootState.auth.user.name}/${permlink}`
-    let body = state[state.format]
+    let body = state.body
 
     if (!body.includes('div class="dtrip-banner"')) {
-      if (state.format == 'markdown') {
-        body += `
-          \n\n<div class="dtrip-banner">Published by <a href="${url}">DTrip</a> travel app.</div>
-        `
-      } else {
-        body += `
-          \n\n
-          <a href="${url}">
-            PUBLISHED BY DTRIP.APP
-          </a>
-        `
-      }
+      body += `\n\n<div class="dtrip-banner">Published by <a href="${url}">DTrip</a> travel app.</div>`
     }
 
     // TODO https://github.com/steemit/hivemind/blob/master/docs/communities.md
@@ -108,7 +84,7 @@ export const actions = {
         {tags: tags,
          geohash: state.geohash,
          location: state.location,
-         format: state.format}
+         format: 'markdown'}
       )
         
       commit('clear')
@@ -116,7 +92,7 @@ export const actions = {
     } catch (e) {
       Raven.captureMessage(e)
       console.log(e)
-      throw e.message
+      throw e.error_description
     }
   }
 }

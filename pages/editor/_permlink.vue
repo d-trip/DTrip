@@ -2,13 +2,6 @@
 .container.mt-4
   no-ssr
     editor
-    //el-tabs(type="border-card")
-      el-tab-pane(label="Markdown")
-        editor
-
-      el-tab-pane(label="Предпросмотр")
-        preview
-
 </template>
 
 <script>
@@ -25,32 +18,33 @@ export default {
     Preview
   },
 
-  async fetch({ app, store, route, redirect }) {
-    if(process.server) {
-      return
-    }
+  async created() {
+    let store = this.$store
 
     let editor = store.state.editor
-    let permlink = route.params.permlink
+    let permlink = this.$route.params.permlink || null
 
     if (permlink) {
       // IF it is editing post
       let post = await getContent(store.state.auth.user.name, permlink)
 
-      editor.format = post.meta.format || 'html'
-      store.commit('editor/clear')
+      if (post.id == 0) {
+        // IF permlink is strict setted
+        store.commit('editor/clear')
+        editor.permlink = permlink
+      } else {
+        store.commit('editor/clear')
 
-      editor.permlink = permlink
+        editor.permlink = permlink
+        editor.title = post.title
+        editor.body = post.body
+        editor.tags = post.meta.tags
+        editor.location = post.meta.location
 
-      editor.title = post.title
-      editor[editor.format] = post.body
-      editor.tags = post.meta.tags
-      editor.location = post.meta.location
+        if (post.meta.geohash) editor.geohash = post.meta.geohash
 
-      if (post.meta.geohash) editor.geohash = post.meta.geohash
-
-
-      store.commit('editor/update_body')
+        store.commit('editor/update_body')
+      }
     } else {
       // Создание нового поста
       store.commit('editor/clear')
