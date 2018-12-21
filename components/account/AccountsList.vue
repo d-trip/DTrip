@@ -53,7 +53,7 @@ export default {
       total: 0,
       accounts: [],
 
-      lastPost: 'all',
+      lastPost: 'month',
       accepting_guests: false,
       wants_meet_up: false,
       postingToSWM: false,
@@ -112,7 +112,7 @@ export default {
           },
 
           page: this.page,
-          // sort: "-sp",
+          sort: `[("profile.accepting_guests",-1),("profile.wants_meet_up",-1),("rep",-1),("last_post",-1)]`
         }
       })
 
