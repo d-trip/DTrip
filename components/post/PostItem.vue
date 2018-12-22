@@ -24,7 +24,7 @@
             .date {{ post.created | formatDate }}
 
           // Новый стандарт
-          div(v-if="post.meta.location && post.meta.location.properties")
+          div(v-if="post.meta.location && post.meta.location.properties").ml-auto
             .location(v-if="post.meta.location.properties") {{ post.meta.location.properties.name }}
 
             // Старый стандарт
