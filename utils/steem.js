@@ -12,6 +12,11 @@ import { preparePost, jsonParseSafe } from '~/utils/'
 
 export async function comment(parentAuthor, parentPermlink, author, permlink, title, body, meta) {
   try {
+    let url = `${config.BASE_URL}@${author}/${permlink}`
+    if (!body.includes('div class="dtrip-banner"')) {
+      body += `\n\n<div class="dtrip-banner">Published by <a href="${url}">DTrip</a> travel app.</div>`
+    }
+
     let res = await Vue.SteemConnect().comment(
         parentAuthor,
         parentPermlink,

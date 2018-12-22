@@ -79,12 +79,7 @@ export const actions = {
     let tags = state.tags.includes(config.tag_for_post) ? state.tags : state.tags.concat([config.tag_for_post])
 
     let permlink = state.permlink || await createUniqPermlink(rootState.auth.user.name, state.title)
-    let url = `${config.BASE_URL}@${rootState.auth.user.name}/${permlink}`
     let body = state.body
-
-    if (!body.includes('div class="dtrip-banner"')) {
-      body += `\n\n<div class="dtrip-banner">Published by <a href="${url}">DTrip</a> travel app.</div>`
-    }
 
     // TODO https://github.com/steemit/hivemind/blob/master/docs/communities.md
     // TODO https://github.com/steemit/condenser/pull/2995
