@@ -19,6 +19,10 @@ export function preparePost(post) {
   let r = /\[PUBLISHED BY DTRIP.APP\]\(.*\)/
   post.body = post.body.replace(r, '')
 
+  // New banner standart
+  r = /<div.*class=.dtrip-banner.*?<\/div>/
+  post.body = post.body.replace(r, '')
+
   let text = post.body
   if (!text) text = ''; // text can be empty, still view the link meta data
   let html = false;
