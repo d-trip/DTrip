@@ -18,7 +18,7 @@ div.pf
 
         about(:profile="profile.meta.profile")
 
-        div.mt-2
+        //div.mt-2
 
           el-button(size="small") DareToShare
 

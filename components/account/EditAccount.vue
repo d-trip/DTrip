@@ -11,7 +11,7 @@ div
       el-checkbox(false-label="no" true-label="yes" v-model="profile.accepting_guests") Accepting Guests
       el-checkbox(false-label="no" true-label="yes" label="Wants to Meet Up", v-model="profile.wants_meet_up")
 
-  .row.mt-2
+  //.row.mt-2
     .col
       nuxt-link(tag="el-button"
                 :to="{name: 'editor-permlink', params: {permlink:'date-to-share-dtrip'}}").el-button--small
