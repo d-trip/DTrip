@@ -10,6 +10,10 @@ div
 
     no-ssr
       .right
+        a(href="https://t.me/joinchat/EPzxdVfxrDb9GamQcEeAJg" target="_blank")
+          img(src="~/assets/icons/telegram.svg").telegram.mr-2
+
+
         .user-lk(v-if="user" @click="toggleMenu" v-on-clickaway="closeMenu").noselect
           .user_name.mr-2 @{{ user.name }}
 
@@ -99,6 +103,10 @@ export default {
 </script>
 
 <style scoped>
+.telegram {
+  height: 38px;
+}
+
 a {
   color: #fff;
   text-decoration: none;
