@@ -91,7 +91,7 @@ export default {
       loading: false,
       image_loading: false,
       codemirror: null,
-      withLocation: true,
+      withLocation: false,
 
       POST_TYPES: POST_TYPES,
 
