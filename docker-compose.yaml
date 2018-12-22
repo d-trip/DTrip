@@ -18,7 +18,7 @@ services:
     volumes:
       - "./dist/:/app/_dist"
     image: avral/dtrip
-    command: sh -c "yarn run build --spa && rm -rf dist/ && mv -v dist/* _dist"
+    command: sh -c "yarn run build --spa && mv -v dist/* _dist"
 
 #networks:
 #  default:
