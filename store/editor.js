@@ -3,8 +3,9 @@ import Raven from 'raven-js'
 
 import steem from 'steem'
 import config from '~/config'
-import { comment, createUniqPermlink } from '~/utils/steem'
+import { getContent, comment, createUniqPermlink } from '~/utils/steem'
 import { POST_TYPES } from '~/constants'
+
 
 export const state = () => ({
   // TODO тип выплат
@@ -31,10 +32,6 @@ export const mutations = {
   set_tag: (state, tag) => state.tags.push(tag),
   set_format: (state, format) => state.format = format,
 
-  update_body (state) {
-    state.body = state[state.format]
-  },
-
   clear(state) {
     state.title = ''
     state.body = ''
@@ -56,6 +53,24 @@ export const mutations = {
 }
 
 export const actions = {
+  async setPost({ rootState, state, commit, dispatch }) {
+    commit('clear')
+
+    let { permlink } = rootState.route.params
+
+    if (permlink) {
+      // IF it is editing post
+      let post = await getContent(rootState.auth.user.name, permlink)
+
+      // TODO Create mutatin for this
+      state.permlink = permlink
+      state.title = post.title
+      state.body = post.body
+      state.tags = post.meta.tags || []
+      state.location = post.meta.location
+    }
+  },
+
   async submit({ state, commit, dispatch, rootState }) {
     if (!rootState.auth.user) {
       throw new Error('Pleace login!')

@@ -123,7 +123,10 @@ export default {
   },
 
   async created() {
-    var store = this.$store
+    if (!this.$store.getters['auth/user']) return this.$router.push({name: 'index'})
+
+    await this.$store.dispatch('editor/setPost')
+
     let SimpleMDE = await import('simplemde')
     var simplemde = new SimpleMDE({
       forceSync: true,
@@ -155,7 +158,7 @@ export default {
       oldEditorSetOption.apply(this, arguments);
 
       if (option === 'fullScreen') {
-        store.dispatch('showTopToggle')
+        this.$store.dispatch('showTopToggle')
       }
 		}
   },
