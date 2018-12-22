@@ -3,15 +3,15 @@
 div
   .top-navbar.container-fluid
     // a(:href="BASE_URL").d-flex.align-items-center
-    nuxt-link(:to="{name: 'index'}").d-flex.align-items-center
-      //img(src="") TODO Main logo
-      h2.mb-0
+    nuxt-link(:to="{name: 'index'}").d-flex.align-items-center.logo
+      img(src="logo_white.png" height="25")
+      //h2.mb-0
         | DTrip
 
     no-ssr
       .right
         a(href="https://t.me/joinchat/EPzxdVfxrDb9GamQcEeAJg" target="_blank")
-          img(src="~/assets/icons/telegram.svg").telegram.mr-2
+          img(src="~/assets/icons/telegram.svg").telegram.mr-3
 
 
         .user-lk(v-if="user" @click="toggleMenu" v-on-clickaway="closeMenu").noselect
@@ -103,8 +103,17 @@ export default {
 </script>
 
 <style scoped>
+.logo {
+  z-index: 99;
+}
+
+.logo img {
+  height: 30px;
+  margin-top: 2px;
+}
+
 .telegram {
-  height: 38px;
+  height: 35px;
 }
 
 a {
@@ -138,9 +147,10 @@ a {
 .top-navbar {
   height: 42px;
   /* background-image: linear-gradient(180deg,#5d7394,#4b5e7a); */
-  background-color: rgb(85, 118, 151);
+  /* background-color: rgb(85, 118, 151); */
   /* background-color: rgb(96, 112, 132); */
   /* background-color: rgb(80, 113, 158); */
+  background-image: linear-gradient(to right, #00a8f1, #0f92e5, #3a7bd5);
   color: #eaecee;
   display: flex;
   font-family: sans-serif;
