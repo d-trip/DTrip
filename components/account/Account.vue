@@ -18,8 +18,7 @@ div.pf
 
         about(:profile="profile.meta.profile")
 
-        //div.mt-2
-
+        div.mt-2(v-if="hasDTS")
           el-button(size="small") DareToShare
 
       edit-account(v-if="showEditAccount" @editingStop="showEditAccount = false").mt-3
@@ -47,6 +46,7 @@ div.pf
 import { mapGetters } from 'vuex'
 import EditAccount from '~/components/account/EditAccount.vue'
 import About from '~/components/account/About'
+import steem from 'steem'
 
 export default {
   props: ['account'],
@@ -65,8 +65,15 @@ export default {
 
   data() {
     return {
+      hasDTS: false,
+
       showEditAccount: false
     }
+  },
+
+  created() {
+    steem.api.getContentAsync(this.account.name, 'date-to-share-dtrip')
+      .then(r => this.hasDTS = r.id !== 0)
   },
 
   components: {
