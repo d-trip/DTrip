@@ -104,7 +104,7 @@ export default {
 
 <style scoped>
 .logo {
-  z-index: 99;
+  z-index: 999999;
 }
 
 .logo img {
@@ -171,7 +171,7 @@ a {
 }
 
 .user_menu {
-  background-color: rgb(85, 118, 151);
+  background-image: linear-gradient(to right, #0f92e5, #3a7bd5);
   width: 350px;
   display: none;
   padding: 35px 0 16px;
@@ -183,7 +183,7 @@ a {
   z-index: 99;
 }
 
-.user_menuMobile{
+.user_menuMobile {
   right: 5px!important;
   width: 300px!important;
 }
@@ -219,7 +219,6 @@ a {
 .user_menu .m_item{
   text-decoration: none;
   display: block;
-  opacity: 0.87;
   color: #fff;
   margin-bottom: 23px;
   font: 700 16px 'PT Sans';
