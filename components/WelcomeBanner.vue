@@ -1,15 +1,15 @@
 <template lang="pug">
-no-ssr
-  .welcome-banner(v-if="$store.state.showWelcome && !this.$store.getters['auth/isAuth']")
-    a.close-button(aria-label="Close" @click="$store.commit('showWelcome', false)")
-      span(aria-hidden="true") &times;
+div
 
-    .welcome
-      .welcome-text
-        h1
-          | Write about travel, earn, travel.
-          br
-          | Repeat.
+  no-ssr
+    .welcome-banner(v-if="$store.state.showWelcome && !this.$store.getters['auth/isAuth']")
+      a.close-button(aria-label="Close" @click="$store.commit('showWelcome', false)")
+        span(aria-hidden="true") &times;
+
+      .welcome
+        .welcome-text
+          //img(src="logo_white.png" height="50")
+          h1 Share travel experience, meet up, get rewards.
 
 </template>
 
@@ -17,11 +17,11 @@ no-ssr
 .close-button {
   z-index: 1;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   position:absolute;
   top:0;
   bottom:0;
-  right:10px;
+  right:20px;
 }
 
 .welcome-banner {

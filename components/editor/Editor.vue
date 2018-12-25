@@ -1,4 +1,5 @@
 <template lang="pug">
+// TODO IMPORTANT!! Format rewards 50/50, 100%
 no-ssr
   div.mb-5
     .row
