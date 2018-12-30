@@ -92,7 +92,7 @@ export default {
       loading: false,
       image_loading: false,
       codemirror: null,
-      withLocation: false,
+      withLocation: false, // FIXME Depends on exist location or no,
 
       POST_TYPES: POST_TYPES,
 
@@ -127,6 +127,9 @@ export default {
     if (!this.$store.getters['auth/user']) return this.$router.push({name: 'index'})
 
     await this.$store.dispatch('editor/setPost')
+
+    this.withLocation = !!(this.editor && this.editor.location && this.editor.location.geometry.coordinates[0])
+    console.log(this.withLocation)
 
     let SimpleMDE = await import('simplemde')
     var simplemde = new SimpleMDE({
