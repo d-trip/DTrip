@@ -1,13 +1,23 @@
 <template lang="pug">
 // TODO Youtube/DTube videos not rendering
 div
-  div(v-html="body").content
+  div(v-html="html").content
 
 </template>
 
 <script>
+import sanitizeHtml from 'sanitize-html'
+
 export default {
   props: ['body', 'format'],
+
+  computed: {
+    html() {
+      return sanitizeHtml(this.body, {
+        allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img'])
+      })
+    }
+  }
 }
 </script>
 
