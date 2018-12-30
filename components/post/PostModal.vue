@@ -1,4 +1,5 @@
 <template lang="pug">
+// FIXME When app runs from single post, the modal does not register post component corectly
 .row
   .col(v-loading="loading").loading.post-in-modal
     post(v-if="post" :post="post")
