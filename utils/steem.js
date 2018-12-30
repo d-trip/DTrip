@@ -11,6 +11,7 @@ import { preparePost, jsonParseSafe } from '~/utils/'
 
 
 export async function comment(parentAuthor, parentPermlink, author, permlink, title, body, meta) {
+  // TODO Comment options percent_steem_dollars: 0
   try {
     //let url = `${config.BASE_URL}@${author}/${permlink}`
     let url = `${config.BASE_URL}@${author}`
