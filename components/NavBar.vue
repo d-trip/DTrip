@@ -4,7 +4,7 @@ div
   .top-navbar.container-fluid
     // a(:href="BASE_URL").d-flex.align-items-center
     nuxt-link(:to="{name: 'index'}").d-flex.align-items-center.logo
-      img(src="logo_white.png" height="25")
+      img(src="/logo_white.png" height="25")
       //h2.mb-0
         | DTrip
 
