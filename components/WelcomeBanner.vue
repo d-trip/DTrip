@@ -10,6 +10,7 @@ div
         .welcome-text
           //img(src="logo_white.png" height="50")
           h1 Share travel experience, meet up, get rewards.
+          span.lead DTrip - a decentralized travel application based on the STEEM blockchain.
 
 </template>
 
