@@ -158,11 +158,12 @@ export default {
 
 		const oldEditorSetOption = simplemde.codemirror.setOption
 
+    let store = this.$store
 		simplemde.codemirror.setOption = function(option, value) {
       oldEditorSetOption.apply(this, arguments);
 
       if (option === 'fullScreen') {
-        this.$store.dispatch('showTopToggle')
+        store.dispatch('showTopToggle')
       }
 		}
   },
