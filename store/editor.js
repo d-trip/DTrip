@@ -54,8 +54,6 @@ export const mutations = {
 
 export const actions = {
   async setPost({ rootState, state, commit, dispatch }) {
-    commit('clear')
-
     let { permlink } = rootState.route.params
 
     if (permlink) {

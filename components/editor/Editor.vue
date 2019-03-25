@@ -129,7 +129,6 @@ export default {
     await this.$store.dispatch('editor/setPost')
 
     this.withLocation = !!(this.editor && this.editor.location && this.editor.location.geometry.coordinates[0])
-    console.log(this.withLocation)
 
     let SimpleMDE = await import('simplemde')
     var simplemde = new SimpleMDE({
@@ -188,12 +187,27 @@ export default {
       }
     },
 
+    clear() {
+      this.$confirm('Are sure want clear editor. Continue?', 'Warning', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$store.commit('editor/clear')
+          this.simplemde.value("")
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: 'Delete canceled'
+          });          
+        });
+    },
+
     imageUploadHandler () {
       this.$refs.inputImage.click()
     },
 
     ...mapMutations({
-      clear: 'editor/clear',
       set_title: 'editor/set_title',
     }),
 
