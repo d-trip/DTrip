@@ -23,7 +23,8 @@
   
   .row
     .col
-      post-bottom(:post="post")
+      adsbygoogle
+      post-bottom(:post="post").mt-3
       comments-block(:post="post")
 
 </template>

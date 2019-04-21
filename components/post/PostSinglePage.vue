@@ -1,6 +1,7 @@
 <template lang="pug">
 .row
   .container.mb-5
+    adsbygoogle
     post(:post="post")
 
 </template>

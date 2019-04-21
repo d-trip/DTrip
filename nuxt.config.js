@@ -54,6 +54,11 @@ module.exports = {
     '@nuxtjs/font-awesome',
     '@nuxtjs/sitemap',
     'vue-github-buttons/nuxt',
+
+    // Google AdSense
+    ['@nuxtjs/google-adsense', {
+      id: 'ca-pub-7627079610692780'
+    }]
   ],
   apollo: {
     clientConfigs: {
