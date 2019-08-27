@@ -1,4 +1,4 @@
-## [/ipns/dtrip.app/](https://ipfs.io/ipns/dtrip.app)
+## [dtrip.app](https://dtrip.app)
 
 ![DTrip app](https://imgur.com/download/gMUtR4O)
 
