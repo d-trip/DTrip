@@ -1,7 +1,8 @@
 <template lang="pug">
 .row
   .container.mb-5
-    adsbygoogle
+    adsbygoogle(v-if="post.body.length > 600")
+
     post(:post="post")
 
 </template>

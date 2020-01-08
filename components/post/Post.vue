@@ -23,7 +23,7 @@
   
   .row
     .col
-      adsbygoogle
+      adsbygoogle(v-if="post.body.length > 600")
       post-bottom(:post="post").mt-3
       comments-block(:post="post")
 

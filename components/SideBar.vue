@@ -2,6 +2,7 @@
 div
   #mySidenav
     gh-btns-star(slug="d-trip/dtrip" show-count)
+
     .sidenav
       a.closebtn(href="#", @click="close") ×
       nuxt-link(to="about") About
