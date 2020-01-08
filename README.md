@@ -1,6 +1,7 @@
-## [/ipns/dtrip.app/](https://ipfs.io/ipns/dtrip.app)
+## [dtrip.app](https://dtrip.app)
 
-![](https://ipfs.io/ipfs/QmRH3Crr2L2zU95vg5SJYwuqBDTVxpi2f16JdMk9j5CLhG)
+![DTrip app](https://imgur.com/download/gMUtR4O)
+
 
 Web client for decentralized travel application. Based on STEEM and IPFS.
  
