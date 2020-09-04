@@ -26,7 +26,7 @@
     "geo-hash": "^0.0.2",
     "graphql-tag": "^2.9.2",
     "moment": "^2.22.1",
-    "mongodb": "^3.1.4",
+    "mongodb": "^3.1.13",
     "nuxt": "^1.4.2",
     "nuxt-device-detect": "^1.1.1",
     "pug": "^2.0.3",
